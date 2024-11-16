@@ -11,3 +11,5 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/pages/dashboard3.js"></script>
 
     @yield('scripts')
+
+    @livewireScripts

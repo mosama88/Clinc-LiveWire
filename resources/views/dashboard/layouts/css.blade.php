@@ -4,6 +4,7 @@
 
 <title>AdminLTE 3 | @yield('admin_title')</title>
 
+@livewireStyles
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/fontawesome-free/css/all.min.css">
