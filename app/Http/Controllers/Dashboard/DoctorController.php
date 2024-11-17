@@ -62,7 +62,7 @@ class DoctorController extends Controller
             DB::commit();
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم أضافة الطبيب بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -111,7 +111,7 @@ class DoctorController extends Controller
             DB::commit();
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم تعديل الطبيب بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -130,7 +130,7 @@ class DoctorController extends Controller
             DB::commit();
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم حذف الطبيب بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

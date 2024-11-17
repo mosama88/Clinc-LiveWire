@@ -49,7 +49,7 @@ class SectionController extends Controller
             DB::commit();
             return redirect()->route('dashboard.sections.index')->with('success', 'تم أضافة القسم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -93,7 +93,7 @@ class SectionController extends Controller
             DB::commit();
             return redirect()->route('dashboard.sections.index')->with('success', 'تم تعديل القسم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -112,7 +112,7 @@ class SectionController extends Controller
             DB::commit();
             return redirect()->route('dashboard.sections.index')->with('success', 'تم حذف القسم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

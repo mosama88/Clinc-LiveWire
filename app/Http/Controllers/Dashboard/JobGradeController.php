@@ -48,7 +48,7 @@ class JobGradeController extends Controller
             DB::commit();
             return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم أضافة الدرجه الوظيفية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -92,7 +92,7 @@ class JobGradeController extends Controller
             DB::commit();
             return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم تعديل الدرجه الوظيفية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -111,7 +111,7 @@ class JobGradeController extends Controller
             DB::commit();
             return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم حذف الدرجه الوظيفية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

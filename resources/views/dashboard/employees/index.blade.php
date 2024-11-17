@@ -28,7 +28,81 @@
             {{-- Content --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">جدول الموظفين</h3>
+
+                    <div class="row">
+                        {{-- أسم الموظف --}}
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control font-w" name="name" id="exampleInputName"
+                                placeholder="أبحث باسم الموظف">
+                        </div>
+
+
+
+                        {{-- كود الموظف --}}
+                        <div class="form-group col-4">
+                            <input type="text" class="form-control font-w" name="employee_code"
+                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="employee_code"
+                                placeholder="أبحث بكود الموظف">
+                        </div>
+
+
+                        <div class="form-group col-4">
+                            <select name="gender" id="gender" class="form-control font-w">
+                                <option value="" disabled selected>-- بحث بنوع الجنس --</option>
+                                <option value="1">ذكر</option>
+                                <option value="2">أنثى</option>
+                            </select>
+                        </div>
+
+
+
+                        {{-- الجنسية --}}
+                        <div class="form-group col-4">
+                            <select name="nationality_id" id="nationality_id" class="form-control select2 font-w">
+                                <option value="" disabled selected>-- بحث بالجنسيات --</option>
+                                @if (!empty($other['nationalities']) && isset($other['nationalities']))
+                                    @foreach ($other['nationalities'] as $nationality)
+                                        <option @if ($nationality['nationality_id'] == $nationality->id) ) selected @endif
+                                            value="{{ $nationality->id }}">{{ $nationality->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    لا توجد بيانات
+                                @endif
+                            </select>
+                        </div>
+
+
+                        {{-- الأدارة --}}
+                        <div class="form-group col-4">
+                            <select name="department_id" id="department_id" class="form-control select2 font-w">
+                                <option value="" disabled selected>-- بحث بالاداره --</option>
+                                @if (!empty($other['departments']) && isset($other['departments']))
+                                    @foreach ($other['departments'] as $department)
+                                        <option @if (old('department_id', $department['department_id'] == $department->id)) selected @endif
+                                            value="{{ $department->id }}">{{ $department->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    لا توجد بيانات
+                                @endif
+                            </select>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="card-header">
                     <a href="{{ route('dashboard.employees.create') }}" type="button"
@@ -89,16 +163,16 @@
 
 
                                                 <a class="dropdown-item" type="button"
-                                                   class="btn btn-md btn-primary btn-flat"
-                                                   href="{{ route('dashboard.employees.show', $info->id) }}">
+                                                    class="btn btn-md btn-primary btn-flat"
+                                                    href="{{ route('dashboard.employees.show', $info->id) }}">
                                                     <i class="fas fa-eye ml-2"></i>
                                                     عرض بيانات
                                                 </a>
 
 
                                                 <a class="dropdown-item" type="button"
-                                                   class="btn btn-md btn-primary btn-flat"
-                                                   href="{{ route('dashboard.employees.edit', $info->id) }}">
+                                                    class="btn btn-md btn-primary btn-flat"
+                                                    href="{{ route('dashboard.employees.edit', $info->id) }}">
                                                     <i class="fas fa-edit ml-2"></i>
                                                     تعديل
                                                 </a>

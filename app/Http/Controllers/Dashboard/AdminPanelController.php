@@ -93,7 +93,7 @@ class AdminPanelController extends Controller
     DB::commit();
             return redirect()->route('dashboard.admin_panels.index')->with('success', 'تم تعديل بيانات الشركة بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.admin_panels.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

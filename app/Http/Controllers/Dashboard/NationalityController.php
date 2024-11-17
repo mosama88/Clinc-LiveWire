@@ -49,7 +49,7 @@ class NationalityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.nationalities.index')->with('success', 'تم أضافة الجنسية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -93,7 +93,7 @@ class NationalityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.nationalities.index')->with('success', 'تم تعديل الجنسية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -112,7 +112,7 @@ class NationalityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.nationalities.index')->with('success', 'تم حذف الجنسية بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

@@ -48,7 +48,7 @@ class QualificationController extends Controller
             DB::commit();
             return redirect()->route('dashboard.qualifications.index')->with('success', 'تم أضافة المؤهل بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -92,7 +92,7 @@ class QualificationController extends Controller
             DB::commit();
             return redirect()->route('dashboard.qualifications.index')->with('success', 'تم تعديل المؤهل بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -111,7 +111,7 @@ class QualificationController extends Controller
             DB::commit();
             return redirect()->route('dashboard.qualifications.index')->with('success', 'تم حذف المؤهل بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

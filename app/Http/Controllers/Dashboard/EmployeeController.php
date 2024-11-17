@@ -31,8 +31,19 @@ class EmployeeController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
+        $other['nationalities'] = Nationality::get();
+        $other['sections'] = Section::get();
+        $other['blood_types'] = BloodTypes::get();
+        $other['branches'] = Branch::get();
+        $other['departments'] = Department::get();
+        $other['governorates'] = Governorate::get();
+        $other['job_categories'] = JobCategory::get();
+        $other['qualifications'] = Qualification::get();
+        $other['shift_types'] = ShiftType::get();
+        $other['cities'] = City::get();
+        $other['job_grades'] = JobGrade::get();
         $data = Employee::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
-        return view('dashboard.employees.index',compact('data'));
+        return view('dashboard.employees.index',compact('data','other'));
     }
 
     /**
@@ -138,7 +149,7 @@ class EmployeeController extends Controller
             DB::commit();
             return redirect()->route('dashboard.employees.index')->with('success', 'تم أضافة بيانات ' . $request->name . ' بنجاح ');
 
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.employees.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -276,7 +287,7 @@ class EmployeeController extends Controller
             DB::commit();
             return redirect()->route('dashboard.employees.index')->with('success', 'تم تعديل بيانات ' . $request->name . ' بنجاح ');
 
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.employees.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

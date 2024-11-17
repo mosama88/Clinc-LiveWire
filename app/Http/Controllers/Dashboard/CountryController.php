@@ -48,7 +48,7 @@ class CountryController extends Controller
             DB::commit();
             return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة الدولة بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -92,7 +92,7 @@ class CountryController extends Controller
             DB::commit();
             return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل الدولة بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -111,7 +111,7 @@ class CountryController extends Controller
             DB::commit();
             return redirect()->route('dashboard.countries.index')->with('success', 'تم حذف الدولة بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

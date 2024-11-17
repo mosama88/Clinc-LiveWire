@@ -47,7 +47,7 @@ class DepartmentController extends Controller
             DB::commit();
             return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الأداراه  بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -93,7 +93,7 @@ class DepartmentController extends Controller
             DB::commit();
             return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الأداراه بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -112,7 +112,7 @@ class DepartmentController extends Controller
             DB::commit();
             return redirect()->route('dashboard.departments.index')->with('success', 'تم حذف الأداراه بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

@@ -51,7 +51,7 @@ class CityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينه بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -98,7 +98,7 @@ class CityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينه بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -117,7 +117,7 @@ class CityController extends Controller
             DB::commit();
             return redirect()->route('dashboard.cities.index')->with('success', 'تم حذف المدينه بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

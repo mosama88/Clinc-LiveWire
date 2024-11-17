@@ -51,7 +51,7 @@ class BloodTypesController extends Controller
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -95,7 +95,7 @@ class BloodTypesController extends Controller
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -114,7 +114,7 @@ class BloodTypesController extends Controller
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم حذف فصيلة الدم بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }

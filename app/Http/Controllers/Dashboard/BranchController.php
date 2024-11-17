@@ -68,7 +68,7 @@ class BranchController extends Controller
             DB::commit();
             return redirect()->route('dashboard.branches.index')->with('success', 'تم أضافة الفرع بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -130,7 +130,7 @@ class BranchController extends Controller
             DB::commit();
             return redirect()->route('dashboard.branches.index')->with('success', 'تم تعديل الفرع بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
@@ -149,7 +149,7 @@ class BranchController extends Controller
             DB::commit();
             return redirect()->route('dashboard.branches.index')->with('success', 'تم حذف الفرع بنجاح');            
             
-        }catch(\Exeption $ex){
+        }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
         }
