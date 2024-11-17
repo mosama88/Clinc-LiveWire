@@ -1149,10 +1149,7 @@
 
                                 </div>{{-- End Seconed Row of From --}}
                             </div>
-                            <div class="card-footer">
-                                <button type="submit" style="float: left" class="btn btn-primary">تأكيد البيانات
-                                </button>
-                            </div>
+
                         </div>
                     </form>
                 </div>

@@ -86,6 +86,7 @@
             <thead>
                 <tr>
                     <th style="width: 10px">#</th>
+                    <th>صورة الموظف</th>
                     <th>كود الموظف</th>
                     <th>أسم الموظف</th>
                     <th> الفئات الوظيفية</th>
@@ -104,6 +105,19 @@
                     <?php $i++; ?>
                     <tr>
                         <td>{{ $i }}</td>
+                        <td>
+                            @if ($info->image)
+                                <img class="img-thumbnail rounded me-2 " alt="200x200" style="width: 50px; height:50px"
+                                    src="{{ asset('dashboard/assets/uploads/Employee/photo/' . $info->image->filename) }}"
+                                    data-holder-rendered="true">
+                            @elseif(empty($info->image) && $info['gender'] == 1)
+                                <img alt="Responsive image" style="width: 50px; height:50px"
+                                    src="{{ asset('dashboard/assets/uploads/male-employee-default.png') }}">
+                            @else
+                                <img alt="Responsive image" style="width: 50px; height:50px"
+                                    src="{{ asset('dashboard/assets/uploads/female-employee-default.png') }}">
+                            @endif
+                        </td>
                         <td>{{ $info['employee_code'] }}</td>
                         <td>{{ $info['name'] }}</td>
                         <td>{{ $info->jobCategory->name }}</td>
