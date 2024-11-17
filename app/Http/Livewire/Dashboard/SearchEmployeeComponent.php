@@ -21,14 +21,35 @@ use App\Models\Qualification;
     {
         use WithPagination;
 
-        public $search_name = '';
+        // protected $paginationTheme = 'bootstrap';
+
+public $search_name = '';
 public $search_employee_code = '';
 public $search_gender = '';
 public $search_nationality_id = '';
 public $search_department_id = '';
 public $search_branch_id = '';
 
-protected $paginationTheme = 'bootstrap';
+protected $queryString = [
+    'search_name'=>['as'=>'اسم الموظف'],
+    'search_employee_code'=>['as'=>'كود_الموظف'],
+    'search_gender'=>['as'=>'نوع الجنس '],
+    'search_nationality_id'=>['as'=>'جنسية_الموظف'],
+    'search_department_id'=>['as'=>'ادارة الموظف'],
+    'search_branch_id'=>['as'=>'الفرع'],
+];
+
+
+public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+
+    public function paginationView()
+    {
+        return 'vendor.livewire.bootstrap';
+    }
 
 public function render()
 {
@@ -62,6 +83,8 @@ public function render()
     // Pagination for filtered employees
     $data = $query->paginate(10);
 
+
+ 
     // Fetch other data for filters
     $other = [
         'nationalities' => Nationality::all(),
