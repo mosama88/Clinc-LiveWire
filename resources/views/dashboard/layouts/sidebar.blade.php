@@ -168,6 +168,10 @@
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الأطباء</p>
                             </a>
+                            <a href="{{ route('dashboard.doctors.index') }}" class="nav-link @yield('active_Appointment_doctors')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>مواعيد الطبيب</p>
+                            </a>
                         </li>
                     </ul>
                 </li>

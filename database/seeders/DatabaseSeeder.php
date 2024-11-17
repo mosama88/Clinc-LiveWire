@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             EmployeeSeeder::class,
+            DoctorSeeder::class,
         ]);
     }
 }

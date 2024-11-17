@@ -12,7 +12,13 @@
 
     {{-- ./row --}}
     <div class="row">
-
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">
+                    {{ $error }}
+                </div>
+            @endforeach
+        @endif
         {{-- Content --}}
         <div class="col-md-12">
             <!-- general form elements -->
@@ -40,10 +46,10 @@
 
                             <div class="form-group col-6">
                                 <label for="exampleInputName">الرقم القومى</label>
-                                <input type="text" class="form-control" name="id_number" value="{{ old('id_number') }}"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="id_number"
-                                    placeholder="أدخل الرقم القومى">
-                                @error('id_number')
+                                <input type="text" class="form-control" name="national_id"
+                                    value="{{ old('national_id') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                    id="national_id" placeholder="أدخل الرقم القومى">
+                                @error('national_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
@@ -104,114 +110,100 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-6">
-                                <label for="exampleInputName">الحالة</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option selected>-- أختر الحالة --</option>
-                                    <option value="1">مفعل</option>
-                                    <option value="0">غير مفعل</option>
-                                </select>
-                                @error('status')
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="exampleInputName">القسم</label>
+                                    <select name="section_id" id="section_id" class="custom-select">
+                                        <option selected>-- أختر القسم --</option>
+                                        @if (!empty($other['sections']) && isset($other['sections']))
+                                            @foreach ($other['sections'] as $section)
+                                                <option @if (old('section_id') == $section->id) selected="selected" @endif
+                                                    value="{{ $section->id }}">{{ $section->name }}</option>
+                                            @endforeach
+                                        @else
+                                            لا توجد بيانات
+                                        @endif
+                                    </select>
+                                    @error('section_id')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="exampleInputName">التخصص</label>
+                                    <select name="specialization_id" id="specialization_id" class="custom-select">
+                                        <option selected>-- أختر التخصص --</option>
+                                        @if (!empty($other['specializations']) && isset($other['specializations']))
+                                            @foreach ($other['specializations'] as $specialization)
+                                                <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
+                                                    value="{{ $specialization->id }}">{{ $specialization->name }}</option>
+                                            @endforeach
+                                        @else
+                                            لا توجد بيانات
+                                        @endif
+                                    </select>
+                                    @error('section_id')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="exampleInputName">الجنسية</label>
+                                    <select name="nationality_id" id="nationality_id" class="custom-select">
+                                        <option selected>-- أختر الجنسية --</option>
+                                        @if (!empty($other['nationalities']) && isset($other['nationalities']))
+                                            @foreach ($other['nationalities'] as $nationality)
+                                                <option @if (old('nationality_id') == $nationality->id) selected="selected" @endif
+                                                    value="{{ $nationality->id }}">{{ $nationality->name }}</option>
+                                            @endforeach
+                                        @else
+                                            لا توجد بيانات
+                                        @endif
+                                    </select>
+                                    @error('section_id')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="form-group col-6">
+                                    <label for="exampleInputName">درجة الدكتور الوظيفية</label>
+                                    <input type="text" class="form-control" name="title"
+                                        value="{{ old('title') }}" id="title" placeholder="أدخل .....">
+                                    @error('title')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputFile">صورة الطبيب</label>
+                                <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
+                                    name="photo" type="file" id="example-text-input" onchange="loadFile(event)">
+                                <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
+                                    id="output" />
+                                @error('photo')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-                        </div>
+                            <!-- /.card-body -->
 
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="exampleInputName">القسم</label>
-                                <select name="section_id" id="section_id" class="custom-select">
-                                    <option selected>-- أختر القسم --</option>
-                                    @if (!empty($other['sections']) && isset($other['sections']))
-                                        @foreach ($other['sections'] as $section)
-                                            <option @if (old('section_id') == $section->id) selected="selected" @endif
-                                                value="{{ $section->id }}">{{ $section->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">تأكيد البيانات</button>
                             </div>
-
-                            <div class="form-group col-6">
-                                <label for="exampleInputName">التخصص</label>
-                                <select name="specialization_id" id="specialization_id" class="custom-select">
-                                    <option selected>-- أختر التخصص --</option>
-                                    @if (!empty($other['specializations']) && isset($other['specializations']))
-                                        @foreach ($other['specializations'] as $specialization)
-                                            <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
-                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="exampleInputName">الجنسية</label>
-                                <select name="nationality_id" id="nationality_id" class="custom-select">
-                                    <option selected>-- أختر الجنسية --</option>
-                                    @if (!empty($other['nationalities']) && isset($other['nationalities']))
-                                        @foreach ($other['nationalities'] as $nationality)
-                                            <option @if (old('nationality_id') == $nationality->id) selected="selected" @endif
-                                                value="{{ $nationality->id }}">{{ $nationality->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-
-                            <div class="form-group col-6">
-                                <label for="exampleInputName">درجة الدكتور الوظيفية</label>
-                                <input type="text" class="form-control" name="title" value="{{ old('title') }}"
-                                    id="title" placeholder="أدخل .....">
-                                @error('title')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputFile">صورة الطبيب</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
-
-                        </div>
-                        @error('photo')
-                            <div class="alert alert-danger" role="alert">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">تأكيد البيانات</button>
-                    </div>
                 </form>
             </div>
             <!-- /.card -->
@@ -219,10 +211,20 @@
 
         </div>
     </div>
+    </div>
     <!-- /.row -->
 
 
 
 @endsection
 @section('scripts')
+    <script>
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
 @endsection

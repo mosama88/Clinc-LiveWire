@@ -42,13 +42,14 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
+                                <th>كود الطبيب</th>
                                 <th>أسم الطبيب</th>
-                                <th> عنوان</th>
-                                <th> تليفون</th>
+                                <th>تليفون</th>
                                 <th>البريد الالكترونى</th>
-                                <th>المحافظة</th>
-                                <th>المدينة</th>
-                                <th>الحالة</th>
+                                <th>التخصص</th>
+                                <th>القسم</th>
+                                <th>المواعيد</th>
+                                <th>الحاله</th>
                                 <th>أضافة بواسطة</th>
                                 <th>تعديل بواسطة</th>
                                 <th>العمليات</th>
@@ -60,12 +61,13 @@
                                 <?php $i++; ?>
                                 <tr>
                                     <td>{{ $i }}</td>
+                                    <td>{{ $info['doctor_code'] }}</td>
                                     <td>{{ $info['name'] }}</td>
-                                    <td>{{ Str::limit($info['address'], 20) }}</td>
-                                    <td>{{ $info['phone'] }}</td>
+                                    <td>{{ $info['mobile'] }}</td>
                                     <td>{{ $info['email'] }}</td>
-                                    <td>{{ $info->governorate->name }}</td>
-                                    <td>{{ $info->city->name }}</td>
+                                    <td>{{ $info->specialization->name }}</td>
+                                    <td>{{ $info->section->name }}</td>
+                                    <td>السبت</td>
                                     <td>
                                         @if ($info->status == 1)
                                             مفعل

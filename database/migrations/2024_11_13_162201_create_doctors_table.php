@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->integer('doctor_code')->unique();
-            $table->string('id_number',14);
+            $table->string('national_id',14);
             $table->string('name',50);
             $table->string('mobile',20);
             $table->string('address',300);
             $table->string('title',300);
-            $table->string('email',300)->unique();
+            $table->string('email',300);
             $table->tinyInteger('gender')->comment('1:Male,2:Female');
             $table->integer('status')->default(1)->nullable();
             $table->foreignId('nationality_id')->references('id')->on('nationalities')->onUpdate('cascade');
