@@ -1,6 +1,9 @@
 @extends('dashboard.layouts.master')
 @section('admin_title', 'أضافة طبيب')
 @section('css')
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endsection
 @section('active-doctors', 'active')
 @section('page-header', ' أضافة طبيب')
@@ -103,7 +106,7 @@
                                 <select name="gender" id="gender" class="form-control">
                                     <option selected>-- أختر الجنس --</option>
                                     <option value="1">ذكر</option>
-                                    <option value="0">انثى</option>
+                                    <option value="2">انثى</option>
                                 </select> @error('gender')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -114,7 +117,7 @@
                             {{-- القسم --}}
                             <div class="form-group col-md-4">
                                 <label for="exampleInputName">القسم</label>
-                                <select name="section_id" id="section_id" class="custom-select">
+                                <select name="section_id" id="section_id" class="form-control select2 font-w" style="width: 100%;">
                                     <option selected>-- أختر القسم --</option>
                                     @if (!empty($other['sections']) && isset($other['sections']))
                                         @foreach ($other['sections'] as $section)
@@ -135,7 +138,7 @@
                             {{-- التخصص --}}
                             <div class="form-group col-md-4">
                                 <label for="exampleInputName">التخصص</label>
-                                <select name="specialization_id" id="specialization_id" class="custom-select">
+                                <select name="specialization_id" id="specialization_id" class="form-control select2 font-w" style="width: 100%;">
                                     <option selected>-- أختر التخصص --</option>
                                     @if (!empty($other['specializations']) && isset($other['specializations']))
                                         @foreach ($other['specializations'] as $specialization)
@@ -158,7 +161,7 @@
                             {{-- الجنسية --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الجنسية</label>
-                                <select name="nationality_id" id="nationality_id" class="custom-select">
+                                <select name="nationality_id" id="nationality_id" class="form-control select2 font-w" style="width: 100%;">
                                     <option selected>-- أختر الجنسية --</option>
                                     @if (!empty($other['nationalities']) && isset($other['nationalities']))
                                         @foreach ($other['nationalities'] as $nationality)
@@ -234,6 +237,18 @@
 
 @endsection
 @section('scripts')
+
+    <!-- Select2 -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+
+    <script>
+        $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+        });
+    </script>
+
     <script>
         var loadFile = function(event) {
             var output = document.getElementById('output');

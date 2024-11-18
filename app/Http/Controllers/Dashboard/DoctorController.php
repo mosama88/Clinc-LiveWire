@@ -93,7 +93,11 @@ class DoctorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Doctor::findOrFail($id);
+        $other['nationalities'] = Nationality::get();
+        $other['sections'] = Section::get();
+        $other['specializations'] = Specialization::get();
+        return view('dashboard.doctors.show', compact('data', 'other'));
     }
 
     /**

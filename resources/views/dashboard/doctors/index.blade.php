@@ -27,15 +27,99 @@
             @endif
             {{-- Content --}}
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">جدول الأطباء</h3>
-                </div>
+
                 <div class="card-header">
                     <a href="{{ route('dashboard.doctors.create') }}" type="button"
                         class="btn btn-md btn-primary btn-flat">
                         <i class="fas fa-plus ml-2"></i> أضافة طبيب جديد
                     </a>
                 </div>
+
+                <div class="card-header">
+
+                <div class="row">
+                    {{-- أسم الموظف --}}
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control font-w" wire:model.live="search_name"
+                            id="exampleInputName" placeholder="أبحث باسم الموظف">
+                    </div>
+
+
+
+                    {{-- كود الموظف --}}
+                    <div class="form-group col-4">
+                        <input type="text" class="form-control font-w" wire:model.live="search_employee_code"
+                            oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="employee_code"
+                            placeholder="أبحث بكود الموظف">
+                    </div>
+
+
+                    <div class="form-group col-4">
+                        <select wire:model.live="search_gender" id="gender" class="form-control font-w">
+                            <option value="">-- بحث بنوع الجنس --</option>
+                            <option value="1">ذكر</option>
+                            <option value="2">أنثى</option>
+                        </select>
+                    </div>
+
+
+
+                    {{-- الجنسية --}}
+                    <div class="form-group col-4">
+                        <select wire:model.live="search_nationality_id" id="nationality_id"
+                            class="form-control select2 font-w">
+                            <option value="">-- بحث بالجنسيات --</option>
+                            @if (!empty($other['nationalities']) && isset($other['nationalities']))
+                                @foreach ($other['nationalities'] as $nationality)
+                                    <option @if ($nationality['nationality_id'] == $nationality->id) ) selected @endif
+                                        value="{{ $nationality->id }}">
+                                        {{ $nationality->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                لا توجد بيانات
+                            @endif
+                        </select>
+                    </div>
+
+
+                    {{-- الأدارة --}}
+                    <div class="form-group col-4">
+                        <select wire:model.live="search_department_id" id="department_id"
+                            class="form-control select2 font-w">
+                            <option value="">-- بحث بالاداره --</option>
+                            @if (!empty($other['departments']) && isset($other['departments']))
+                                @foreach ($other['departments'] as $department)
+                                    <option @if (old('department_id', $department['department_id'] == $department->id)) selected @endif value="{{ $department->id }}">
+                                        {{ $department->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                لا توجد بيانات
+                            @endif
+                        </select>
+                    </div>
+
+                    {{-- الفرع --}}
+                    <div class="form-group col-4">
+                        <select wire:model.live="search_branch_id" id="branch_id" class="form-control select2 font-w">
+                            <option value="">-- بحث بالفرع --</option>
+                            @if (!empty($other['branches']) && isset($other['branches']))
+                                @foreach ($other['branches'] as $branch)
+                                    <option @if ($branch['branch_id'] == $branch->id) ) selected @endif value="{{ $branch->id }}">
+                                        {{ $branch->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                لا توجد بيانات
+                            @endif
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
                     <table class="table table-striped">
@@ -95,12 +179,21 @@
                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, -165px, 0px);">
 
 
-                                                <button class="dropdown-item" type="button"
+
+                                                <a class="dropdown-item" type="button"
+                                                    class="btn btn-md btn-primary btn-flat"
+                                                    href="{{ route('dashboard.doctors.show', $info->id) }}">
+                                                    <i class="fas fa-eye ml-2"></i>
+                                                    عرض بيانات
+                                                </a>
+
+
+                                                <a class="dropdown-item" type="button"
                                                     class="btn btn-md btn-primary btn-flat"
                                                     href="{{ route('dashboard.doctors.edit', $info->id) }}">
                                                     <i class="fas fa-edit ml-2"></i>
                                                     تعديل
-                                                </button>
+                                                </a>
 
 
                                                 <button class="dropdown-item" type="button"
