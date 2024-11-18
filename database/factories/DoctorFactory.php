@@ -24,7 +24,7 @@ class DoctorFactory extends Factory
 
 
 
-    
+
     public function definition(): array
     {
 
@@ -46,7 +46,7 @@ class DoctorFactory extends Factory
             'فريدة',
             'هبه'
         ];
-        
+
         // تعريف أسماء الأولاد
         $maleNames = [
             'عبدالرحمن',
@@ -68,7 +68,7 @@ class DoctorFactory extends Factory
         // خلط الأسماء
         shuffle($maleNames);
         shuffle($femaleNames);
-        
+
         return [
             'doctor_code' => fake()->unique()->numberBetween(1000, 9999),
 'gender' => $gender = fake()->randomElement([1, 2]),
@@ -81,6 +81,7 @@ class DoctorFactory extends Factory
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'address' => fake()->address(),
             'title' => fake()->title(),
+            'details' => fake()->paragraph(),
             'status' => fake()->randomElement([1, 2]),
             'nationality_id' => Nationality::all()->random()->id,
             'specialization_id' => Specialization::all()->random()->id,

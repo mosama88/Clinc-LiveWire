@@ -52,7 +52,7 @@ class EmployeeRequest extends FormRequest
             'military_postponement_reason' => 'nullable|string',
             'driving_license' => 'required',
             'driving_license_type' => 'nullable|in:special,first,second,third,fourth,pro,motorcycle',
-            'driving_License_id' => 'nullable|numeric|max:14',
+            'driving_License_id' => 'nullable|string|max:14',
             'has_relatives' => 'required',
             'work_start_date' => 'nullable|date',
             'functional_status' => 'required',
@@ -167,7 +167,6 @@ class EmployeeRequest extends FormRequest
             'driving_license.required' => 'رخصة القيادة مطلوبة.',
             'driving_license_type.in' => 'نوع رخصة القيادة يجب أن يكون إحدى القيم: خاصة، أولى، ثانية، ثالثة، رابعة، محترفة، دراجة نارية.',
 
-            'driving_License_id.numeric' => 'يجب أن يكون رقم رخصة القيادة أرقاماً فقط.',
             'driving_License_id.max' => 'يجب ألا يزيد رقم رخصة القيادة عن 14 رقماً.',
 
             'has_relatives.required' => 'يرجى تحديد ما إذا كان الموظف لديه أقارب.',

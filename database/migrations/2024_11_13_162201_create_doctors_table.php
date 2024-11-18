@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('mobile',20);
             $table->string('address',300);
             $table->string('title',300);
+            $table->string('details',300);
             $table->string('email',300);
             $table->tinyInteger('gender')->comment('1:Male,2:Female');
             $table->integer('status')->default(1)->nullable();
