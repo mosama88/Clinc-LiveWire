@@ -150,7 +150,8 @@
                                             <option value="" disabled selected>-- برجاء تحديد الديانه --</option>
                                             <option @if (old('religion') == 'muslim') selected @endif value="muslim">مسلم
                                             </option>
-                                            <option @if (old('religion') == 'christian') selected @endif value="christian">مسيحى
+                                            <option @if (old('religion') == 'christian') selected @endif value="christian">
+                                                مسيحى
                                             </option>
                                         </select>
                                         @error('religion')
@@ -452,7 +453,7 @@
                                             </option>
                                             <option @if (old('military') == 'exemption_temporary') selected @endif
                                                 value="exemption_temporary">
-                                               تأجيل
+                                                تأجيل
                                             </option>
                                             <option @if (old('military') == 'complete') selected @endif value="complete">
                                                 أدى الخدمه العسكرية
@@ -469,7 +470,7 @@
                                     </div>
 
                                     {{-- تاريخ بداية الخدمه العسكرية --}}
-                                    <div class="form-group col-6 d-none"  id="military_date_from_Div">
+                                    <div class="form-group col-6 d-none" id="military_date_from_Div">
                                         <label for="exampleInput">تاريخ بداية الخدمه العسكرية</label>
                                         <input type="date" class="form-control font-w" name="military_date_from"
                                             value="{{ old('military_date_from') }}" id="military_date_from">
@@ -535,12 +536,14 @@
                                     {{-- تاريخ التأجيل من الخدمه العسكرية --}}
                                     <div class="form-group col-6 d-none" id="military_postponement_date_Div">
                                         <label for="exampleInput">تاريخ التأجيل من الخدمه العسكرية</label>
-                                        <input type="date" class="form-control font-w" name="military_postponement_date"
-                                               value="{{ old('military_postponement_date') }}" id="military_postponement_date">
+                                        <input type="date" class="form-control font-w"
+                                            name="military_postponement_date"
+                                            value="{{ old('military_postponement_date') }}"
+                                            id="military_postponement_date">
                                         @error('military_postponement_date')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
 
@@ -651,13 +654,12 @@
                                     {{-- الفرع --}}
                                     <div class="form-group col-6">
                                         <label for="exampleInput">الفرع</label>
-                                        <select name="branch_id" id="branch_id"
-                                                class="form-control select2 font-w">
+                                        <select name="branch_id" id="branch_id" class="form-control select2 font-w">
                                             <option value="" disabled selected>-- برجاء تحديد الفرع --</option>
                                             @if (!empty($other['branches']) && isset($other['branches']))
                                                 @foreach ($other['branches'] as $branch)
                                                     <option @if (old('branch_id', $branch['branch_id'] == $branch->id)) selected @endif
-                                                    value="{{ $branch->id }}">{{ $branch->name }}
+                                                        value="{{ $branch->id }}">{{ $branch->name }}
                                                     </option>
                                                 @endforeach
                                             @else
@@ -665,9 +667,9 @@
                                             @endif
                                         </select>
                                         @error('branch_id')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
 
@@ -791,7 +793,7 @@
                                     </div>
 
                                     {{-- سعر اليومى للمرتب --}}
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-6 d-none">
                                         <label for="exampleInputName">سعر اليومى للمرتب</label>
                                         <input type="text" class="form-control font-w" name="day_price"
                                             value="{{ old('day_price') }}"
@@ -902,8 +904,7 @@
                                     {{-- رقم التأمين الاجتماعى --}}
                                     <div class="form-group col-6 d-none" id="social_insurance_number_Div">
                                         <label for="exampleInputName">الرقم التأمينى الاجتماعى</label>
-                                        <input type="text" class="form-control font-w"
-                                            name="social_insurance_number"
+                                        <input type="text" class="form-control font-w" name="social_insurance_number"
                                             value="{{ old('social_insurance_number') }}"
                                             oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                             id="social_insurance_number" placeholder="أدخل رقم التأمين الاجتماعى">
@@ -1143,9 +1144,11 @@
                                     <div class="form-group col-12">
                                         <label for="exampleInput">صورة الموظف</label>
 
-                                        <input class="form-control @error('photo') is-invalid @enderror" accept="image/*" name="photo" type="file"
-                                               id="example-text-input" onchange="loadFile(event)">
-                                        <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px" id="output" />
+                                        <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
+                                            name="photo" type="file" id="example-text-input"
+                                            onchange="loadFile(event)">
+                                        <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
+                                            id="output" />
                                         @error('photo')
                                             <div class="alert alert-danger" role="alert">
                                                 {{ $message }}
@@ -1183,27 +1186,27 @@
     </script>
 
     <script>
-        $(document).on('change','#governorate_id',function (){
-let governorate_id = $(this).val();
-if(governorate_id){
-    getCities(governorate_id);
-}
+        $(document).on('change', '#governorate_id', function() {
+            let governorate_id = $(this).val();
+            if (governorate_id) {
+                getCities(governorate_id);
+            }
         });
 
-        function getCities(governorate_id){
+        function getCities(governorate_id) {
             $.ajax({
                 url: '{{ route('dashboard.employees.getCities') }}',
-                type:'POST',
-                dataType:'html',
-                cache:false,
-                data:{
-                    "_token":'{{csrf_token()}}',
-                    governorate_id:governorate_id,
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    governorate_id: governorate_id,
                 },
-                success:function (data){
+                success: function(data) {
                     $("#city_Div").html(data);
                 },
-                error:function (){
+                error: function() {
                     alert("عفوا لقد حدث خطأ ");
                 }
 
@@ -1213,37 +1216,36 @@ if(governorate_id){
 
 
     <script>
-$('select[name="social_status"]').change(function (){
-    let social_status = $("#social_status").val();
-    let children_number = $("#children_number_hideandshow").val();
+        $('select[name="social_status"]').change(function() {
+            let social_status = $("#social_status").val();
+            let children_number = $("#children_number_hideandshow").val();
 
-    if(social_status != "single"){
-        $("#children_number_hideandshow").removeClass('d-none');
+            if (social_status != "single") {
+                $("#children_number_hideandshow").removeClass('d-none');
 
-    }else{
-        $("#children_number_hideandshow").addClass('d-none');
-    }
-});
+            } else {
+                $("#children_number_hideandshow").addClass('d-none');
+            }
+        });
     </script>
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            $('select[name="military"]').change(function(){
+            $('select[name="military"]').change(function() {
 
-                    let military =  $("#military").val();
+                let military = $("#military").val();
 
-            if(military === 'exemption'){
-                $("#military_exemption_date_Div").removeClass('d-none');
-                $("#military_exemption_reason_Div").removeClass('d-none');
-                $("#military_date_from_Div").addClass('d-none');
-                $("#military_date_to_Div").addClass('d-none');
-                $("#military_wepon_Div").addClass('d-none');
-                $("#military_postponement_reason_Div").addClass('d-none');
-                $("#military_postponement_date_Div").addClass('d-none');
-            }else if(military === 'exemption_temporary')
-                {
+                if (military === 'exemption') {
+                    $("#military_exemption_date_Div").removeClass('d-none');
+                    $("#military_exemption_reason_Div").removeClass('d-none');
+                    $("#military_date_from_Div").addClass('d-none');
+                    $("#military_date_to_Div").addClass('d-none');
+                    $("#military_wepon_Div").addClass('d-none');
+                    $("#military_postponement_reason_Div").addClass('d-none');
+                    $("#military_postponement_date_Div").addClass('d-none');
+                } else if (military === 'exemption_temporary') {
                     $("#military_postponement_reason_Div").removeClass('d-none');
                     $("#military_postponement_date_Div").removeClass('d-none');
                     $("#military_exemption_date_Div").addClass('d-none');
@@ -1252,69 +1254,67 @@ $('select[name="social_status"]').change(function (){
                     $("#military_date_to_Div").addClass('d-none');
                     $("#military_wepon_Div").addClass('d-none');
 
-                }else if(military === 'complete')
-            {
-                $("#military_date_from_Div").removeClass('d-none');
-                $("#military_date_to_Div").removeClass('d-none');
-                $("#military_wepon_Div").removeClass('d-none');
-                $("#military_exemption_date_Div").addClass('d-none');
-                $("#military_exemption_reason_Div").addClass('d-none');
-                $("#military_postponement_reason_Div").addClass('d-none');
-                $("#military_postponement_date_Div").addClass('d-none');
-            }else if(military === 'have_not')
-            {
-                $("#military_exemption_date_Div").addClass('d-none');
-                $("#military_exemption_reason_Div").addClass('d-none');
-                $("#military_date_from_Div").addClass('d-none');
-                $("#military_date_to_Div").addClass('d-none');
-                $("#military_wepon_Div").addClass('d-none');
-                $("#military_postponement_reason_Div").addClass('d-none');
-                $("#military_postponement_date_Div").addClass('d-none');
-            }
-        });
+                } else if (military === 'complete') {
+                    $("#military_date_from_Div").removeClass('d-none');
+                    $("#military_date_to_Div").removeClass('d-none');
+                    $("#military_wepon_Div").removeClass('d-none');
+                    $("#military_exemption_date_Div").addClass('d-none');
+                    $("#military_exemption_reason_Div").addClass('d-none');
+                    $("#military_postponement_reason_Div").addClass('d-none');
+                    $("#military_postponement_date_Div").addClass('d-none');
+                } else if (military === 'have_not') {
+                    $("#military_exemption_date_Div").addClass('d-none');
+                    $("#military_exemption_reason_Div").addClass('d-none');
+                    $("#military_date_from_Div").addClass('d-none');
+                    $("#military_date_to_Div").addClass('d-none');
+                    $("#military_wepon_Div").addClass('d-none');
+                    $("#military_postponement_reason_Div").addClass('d-none');
+                    $("#military_postponement_date_Div").addClass('d-none');
+                }
+            });
         });
     </script>
 
     <script>
-        $(document).ready(function(){
-           $('select[name="has_fixed_shift"]').change(function (){
+        $(document).ready(function() {
+            $('select[name="has_fixed_shift"]').change(function() {
                 let has_fixed_shift = $("#has_fixed_shift").val();
-                if(has_fixed_shift == 1){
+                if (has_fixed_shift == 1) {
                     $("#shift_type_id_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#shift_type_id_Div").addClass('d-none');
 
                 }
-           });
+            });
 
 
-            $('select[name="motivation_type"]').change(function (){
+            $('select[name="motivation_type"]').change(function() {
                 let motivation_type = $("#motivation_type").val();
-                if(motivation_type == 'fixed'){
+                if (motivation_type == 'fixed') {
                     $("#motivation_value_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#motivation_value_Div").addClass('d-none');
                 }
             });
 
 
-            $('select[name="social_insurance"]').change(function (){
+            $('select[name="social_insurance"]').change(function() {
                 let social_insurance = $("#social_insurance").val();
-                if(social_insurance == 1){
+                if (social_insurance == 1) {
                     $("#social_insurance_cut_monthely_Div").removeClass('d-none');
                     $("#social_insurance_number_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#social_insurance_cut_monthely_Div").addClass('d-none');
                     $("#social_insurance_number_Div").addClass('d-none');
                 }
             });
 
-            $('select[name="medical_insurance"]').change(function (){
+            $('select[name="medical_insurance"]').change(function() {
                 let medical_insurance = $("#medical_insurance").val();
-                if(medical_insurance == 1){
+                if (medical_insurance == 1) {
                     $("#medical_insurance_cut_monthely_Div").removeClass('d-none');
                     $("#medical_insurance_number_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#medical_insurance_cut_monthely_Div").addClass('d-none');
                     $("#medical_insurance_number_Div").addClass('d-none');
                 }
@@ -1322,23 +1322,23 @@ $('select[name="social_status"]').change(function (){
 
 
 
-            $('select[name="driving_license"]').change(function (){
+            $('select[name="driving_license"]').change(function() {
                 let driving_license = $("#driving_license").val();
-                if(driving_license == 1){
+                if (driving_license == 1) {
                     $("#driving_license_type_Div").removeClass('d-none');
                     $("#driving_License_id_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#driving_license_type_Div").addClass('d-none');
                     $("#driving_License_id_Div").addClass('d-none');
                 }
             });
 
 
-            $('select[name="has_relatives"]').change(function (){
+            $('select[name="has_relatives"]').change(function() {
                 let has_relatives = $("#has_relatives").val();
-                if(has_relatives == 1){
+                if (has_relatives == 1) {
                     $("#relatives_details_Div").removeClass('d-none');
-                }else{
+                } else {
                     $("#relatives_details_Div").addClass('d-none');
                 }
             });

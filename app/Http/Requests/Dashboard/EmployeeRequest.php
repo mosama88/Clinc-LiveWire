@@ -63,7 +63,6 @@ class EmployeeRequest extends FormRequest
 //            'shift_type_id' => 'required|exists:shift_types,id',
             'daily_work_hour' => 'required',
             'salary' => 'required',
-            'day_price' => 'required',
             'motivation_type' => 'required|in:changeable,none,fixed',
             'fixed_allowances' => 'required',
             'social_insurance' => 'required',
@@ -193,7 +192,6 @@ class EmployeeRequest extends FormRequest
 
             'salary.required' => 'الراتب مطلوب.',
 
-            'day_price.required' => 'سعر اليوم مطلوب.',
 
             'motivation_type.required' => 'نوع الحافز مطلوب.',
             'motivation_type.in' => 'نوع الحافز يجب أن يكون إحدى القيم: متغير، بدون، ثابت.',

@@ -112,7 +112,11 @@ class EmployeeController extends Controller
             $insertEmployee['shift_type_id'] = $request->shift_type_id;
             $insertEmployee['daily_work_hour'] = $request->daily_work_hour;
             $insertEmployee['salary'] = $request->salary;
-            $insertEmployee['day_price'] = $request->day_price;
+            $insertEmployee['day_price'] = abs($request->salary / 30);
+
+
+
+            
             $insertEmployee['motivation_type'] = $request->motivation_type;
             $insertEmployee['motivation_value'] = $request->motivation_value;
             $insertEmployee['fixed_allowances'] = $request->fixed_allowances;
