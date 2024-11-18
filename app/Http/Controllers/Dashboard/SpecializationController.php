@@ -19,7 +19,7 @@ class SpecializationController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $other['sections'] = Section::get();
-        $data = Specialization::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Specialization::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.specializations.index',compact('data','other'));
     }
 
@@ -51,8 +51,8 @@ class SpecializationController extends Controller
            $specialization['com_code'] = $com_code;
            $specialization->save();
             DB::commit();
-            return redirect()->route('dashboard.specializations.index')->with('success', 'تم أضافة التخصص بنجاح');            
-            
+            return redirect()->route('dashboard.specializations.index')->with('success', 'تم أضافة التخصص بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.specializations.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -97,8 +97,8 @@ class SpecializationController extends Controller
            $UpdateSpecialization['com_code'] = $com_code;
            $UpdateSpecialization->save();
             DB::commit();
-            return redirect()->route('dashboard.specializations.index')->with('success', 'تم تعديل التخصص بنجاح');            
-            
+            return redirect()->route('dashboard.specializations.index')->with('success', 'تم تعديل التخصص بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.specializations.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -116,8 +116,8 @@ class SpecializationController extends Controller
            $DeleteSpecialization = Specialization::findOrFail($id);
            $DeleteSpecialization->delete();
             DB::commit();
-            return redirect()->route('dashboard.specializations.index')->with('success', 'تم حذف التخصص بنجاح');            
-            
+            return redirect()->route('dashboard.specializations.index')->with('success', 'تم حذف التخصص بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.specializations.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
