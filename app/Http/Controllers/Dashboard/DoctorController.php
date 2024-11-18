@@ -179,12 +179,13 @@ class DoctorController extends Controller
         }
     }
 
-    public function getCities(Request $request)
+    public function getSections(Request $request)
     {
         if ($request->ajax()) {
-            $governorate_id = $request->governorate_id;
-            $other['cities'] = City::where('governorate_id', $governorate_id)->get();
-            return view('dashboard.doctors.getCitites', compact('other'));
+            $specialization_id = $request->specialization_id; // استلام التخصص المحدد
+            $other['sections'] = Section::where('id', $specialization_id)->get(); // استعلام عن الأقسام
+
+            return view('dashboard.doctors.getSections', compact('other'));
         }
     }
 }

@@ -61,8 +61,8 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     // التخصصات
     Route::resource('specializations', SpecializationController::class);
 
-     // المؤهلات
-     Route::resource('qualifications', QualificationController::class);
+    // المؤهلات
+    Route::resource('qualifications', QualificationController::class);
 
     // الجنسيات
     Route::resource('nationalities', NationalityController::class);
@@ -70,14 +70,14 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     // الاقسام
     Route::resource('sections', SectionController::class);
 
-     // الأدارات
-     Route::resource('departments', DepartmentController::class);
+    // الأدارات
+    Route::resource('departments', DepartmentController::class);
 
     // الفئات الوظيفية
     Route::resource('jobCategories', JobCategoryController::class);
 
-        // الدرجه الوظيفية
-        Route::resource('jobGrades', JobGradeController::class);
+    // الدرجه الوظيفية
+    Route::resource('jobGrades', JobGradeController::class);
 
     // الفروع
     Route::resource('branches',  BranchController::class);
@@ -92,10 +92,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
 
     // الأطباء
     Route::resource('doctors',  DoctorController::class);
+    Route::post('doctors/getSections', [DoctorController::class, 'getSections'])->name('doctors.getSections');
 
     // المرضى
     Route::resource('patients',  PatientController::class);
-
 });
 
 

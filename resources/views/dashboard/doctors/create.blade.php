@@ -114,10 +114,32 @@
                                 @enderror
                             </div>
 
-                            {{-- القسم --}}
+                            {{-- التخصص --}}
                             <div class="form-group col-md-4">
+                                <label for="exampleInputName">التخصص</label>
+                                <select name="specialization_id" id="specialization_id" class="form-control select2 font-w"
+                                    style="width: 100%;">
+                                    <option selected>-- أختر التخصص --</option>
+                                    @if (!empty($other['specializations']) && isset($other['specializations']))
+                                        @foreach ($other['specializations'] as $specialization)
+                                            <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
+                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+                                @error('section_id')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            {{-- القسم --}}
+                            <div class="form-group col-md-4" id="section_Div">
                                 <label for="exampleInputName">القسم</label>
-                                <select name="section_id" id="section_id" class="form-control select2 font-w" style="width: 100%;">
+                                <select name="section_id" id="section_id" class="form-control select2 font-w"
+                                    style="width: 100%;">
                                     <option selected>-- أختر القسم --</option>
                                     @if (!empty($other['sections']) && isset($other['sections']))
                                         @foreach ($other['sections'] as $section)
@@ -135,33 +157,14 @@
                                 @enderror
                             </div>
 
-                            {{-- التخصص --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">التخصص</label>
-                                <select name="specialization_id" id="specialization_id" class="form-control select2 font-w" style="width: 100%;">
-                                    <option selected>-- أختر التخصص --</option>
-                                    @if (!empty($other['specializations']) && isset($other['specializations']))
-                                        @foreach ($other['specializations'] as $specialization)
-                                            <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
-                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
 
 
                             {{-- الجنسية --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الجنسية</label>
-                                <select name="nationality_id" id="nationality_id" class="form-control select2 font-w" style="width: 100%;">
+                                <select name="nationality_id" id="nationality_id" class="form-control select2 font-w"
+                                    style="width: 100%;">
                                     <option selected>-- أختر الجنسية --</option>
                                     @if (!empty($other['nationalities']) && isset($other['nationalities']))
                                         @foreach ($other['nationalities'] as $nationality)
@@ -237,6 +240,34 @@
 
 @endsection
 @section('scripts')
+    <script>
+        $(document).on('change', '#specialization_id', function() {
+            let specialization_id = $(this).val();
+            if (specialization_id) {
+                getSections(specialization_id);
+            }
+        });
+
+        function getSections(specialization_id) {
+            $.ajax({
+                url: '{{ route('dashboard.doctors.getSections') }}',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    specialization_id: specialization_id,
+                },
+                success: function(data) {
+                    $("#section_Div").html(data);
+                },
+                error: function() {
+                    alert("عفوا لقد حدث خطأ ");
+                }
+
+            });
+        }
+    </script>
 
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
