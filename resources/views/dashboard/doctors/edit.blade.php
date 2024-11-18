@@ -173,7 +173,7 @@
                             </div>
 
                             {{-- التخصص --}}
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" id="specialization_Div">
                                 <label for="exampleInputName">التخصص</label>
                                 <select name="specialization_id" id="specialization_id"
                                     class="form-control font-w  select2 font-w" style="width: 100%;">
@@ -288,7 +288,34 @@
             });
         });
     </script>
+    <script>
+        // Get Cities When Governorate Changes
+        $(document).on('change', '#section_id', function() {
+            const section_id = $(this).val();
+            if (section_id) {
+                getSpecializations(section_id);
+            }
+        });
 
+        function getSpecializations(section_id) {
+            $.ajax({
+                url: '{{ route('dashboard.doctors.getSpecializations') }}',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    section_id: section_id
+                },
+                success: function(data) {
+                    $("#specialization_Div").html(data);
+                },
+                error: function() {
+                    alert("عفوا لقد حدث خطأ ");
+                }
+            });
+        }
+    </script>
     <script>
         var loadFile = function(event) {
             var output = document.getElementById('output');
