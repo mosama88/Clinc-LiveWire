@@ -244,13 +244,13 @@
         $(document).on('change', '#specialization_id', function() {
             let specialization_id = $(this).val();
             if (specialization_id) {
-                getSections(specialization_id);
+                getSpecializations(specialization_id);
             }
         });
 
-        function getSections(specialization_id) {
+        function getSpecializations(specialization_id) {
             $.ajax({
-                url: '{{ route('dashboard.doctors.getSections') }}',
+                url: '{{ route('dashboard.doctors.getSpecializations') }}',
                 type: 'POST',
                 dataType: 'html',
                 cache: false,

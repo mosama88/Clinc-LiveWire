@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Specialization;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Section extends Model
 {
@@ -24,4 +25,10 @@ class Section extends Model
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+
+
+    public function specializations()
+{
+    return $this->hasMany(Specialization::class, 'section_id');
+}
 }
