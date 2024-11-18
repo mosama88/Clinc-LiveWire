@@ -25,8 +25,8 @@ class Specialization extends Model
         return $this->belongsTo(Admin::class, 'updated_by');
     }
 
-    public function sections()
+    public function section()
     {
-        return $this->hasToMany(Section::class, 'section_id');
+        return $this->belongsTo(Section::class, 'section_id');
     }
 }

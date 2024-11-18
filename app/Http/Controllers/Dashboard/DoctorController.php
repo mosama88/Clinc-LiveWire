@@ -182,10 +182,12 @@ class DoctorController extends Controller
     public function getSpecializations(Request $request)
     {
         if ($request->ajax()) {
-            $specialization_id = $request->specialization_id; // استلام التخصص المحدد
-            $other['sections'] = Section::where('id', $specialization_id)->get(); // استعلام عن الأقسام
+            $section_id = $request->section_id; // استلام التخصص المحدد
+            $other['specializations'] = Specialization::where('section_id', $section_id)->get(); // استعلام عن الأقسام
 
             return view('dashboard.doctors.getSpecializations', compact('other'));
         }
     }
+
+
 }

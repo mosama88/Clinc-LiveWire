@@ -114,29 +114,8 @@
                                 @enderror
                             </div>
 
-                            {{-- التخصص --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">التخصص</label>
-                                <select name="specialization_id" id="specialization_id" class="form-control select2 font-w"
-                                    style="width: 100%;">
-                                    <option selected>-- أختر التخصص --</option>
-                                    @if (!empty($other['specializations']) && isset($other['specializations']))
-                                        @foreach ($other['specializations'] as $specialization)
-                                            <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
-                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
                             {{-- القسم --}}
-                            <div class="form-group col-md-4" id="section_Div">
+                            <div class="form-group col-md-4">
                                 <label for="exampleInputName">القسم</label>
                                 <select name="section_id" id="section_id" class="form-control select2 font-w"
                                     style="width: 100%;">
@@ -156,6 +135,30 @@
                                     </div>
                                 @enderror
                             </div>
+
+
+                            {{-- التخصص --}}
+                            <div class="form-group col-md-4" id="specialization_Div">
+                                <label for="exampleInputName">التخصص</label>
+                                <select name="specialization_id" id="specialization_id" class="form-control select2 font-w"
+                                    style="width: 100%;">
+                                    <option selected>-- أختر التخصص --</option>
+                                    @if (!empty($other['specializations']) && isset($other['specializations']))
+                                        @foreach ($other['specializations'] as $specialization)
+                                            <option @if (old('specialization_id') == $specialization->id) selected="selected" @endif
+                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+                                @error('section_id')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
 
 
 
@@ -240,15 +243,18 @@
 
 @endsection
 @section('scripts')
+
+
     <script>
-        $(document).on('change', '#specialization_id', function() {
-            let specialization_id = $(this).val();
-            if (specialization_id) {
-                getSpecializations(specialization_id);
+        // Get Cities When Governorate Changes
+        $(document).on('change', '#section_id', function() {
+            const section_id = $(this).val();
+            if (section_id) {
+                getSpecializations(section_id);
             }
         });
 
-        function getSpecializations(specialization_id) {
+        function getSpecializations(section_id) {
             $.ajax({
                 url: '{{ route('dashboard.doctors.getSpecializations') }}',
                 type: 'POST',
@@ -256,15 +262,14 @@
                 cache: false,
                 data: {
                     "_token": '{{ csrf_token() }}',
-                    specialization_id: specialization_id,
+                    section_id: section_id
                 },
                 success: function(data) {
-                    $("#section_Div").html(data);
+                    $("#specialization_Div").html(data);
                 },
                 error: function() {
                     alert("عفوا لقد حدث خطأ ");
                 }
-
             });
         }
     </script>
