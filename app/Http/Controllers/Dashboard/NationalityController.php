@@ -17,7 +17,7 @@ class NationalityController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = Nationality::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Nationality::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.nationalities.index',compact('data'));
     }
 
@@ -47,8 +47,8 @@ class NationalityController extends Controller
            $nationality['com_code'] = $com_code;
            $nationality->save();
             DB::commit();
-            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم أضافة الجنسية بنجاح');            
-            
+            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم أضافة الجنسية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -91,8 +91,8 @@ class NationalityController extends Controller
            $UpdateNationality['com_code'] = $com_code;
            $UpdateNationality->save();
             DB::commit();
-            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم تعديل الجنسية بنجاح');            
-            
+            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم تعديل الجنسية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -110,8 +110,8 @@ class NationalityController extends Controller
            $DeleteNationality = Nationality::findOrFail($id);
            $DeleteNationality->delete();
             DB::commit();
-            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم حذف الجنسية بنجاح');            
-            
+            return redirect()->route('dashboard.nationalities.index')->with('success', 'تم حذف الجنسية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.nationalities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

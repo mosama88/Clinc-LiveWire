@@ -16,7 +16,7 @@ class BloodTypesController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = BloodTypes::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = BloodTypes::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.BloodTypes.index',compact('data'));
     }
 
@@ -41,7 +41,7 @@ class BloodTypesController extends Controller
     if(!empty($checkExistsName)){
         return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ أسم فصيلة الدم مسجلة من قبل !!'])->withInput();
     }
-            
+
             DB::beginTransaction();
            $blood = new BloodTypes();
            $blood['name'] = $request->name;
@@ -49,8 +49,8 @@ class BloodTypesController extends Controller
            $blood['com_code'] = $com_code;
            $blood->save();
             DB::commit();
-            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');            
-            
+            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -93,8 +93,8 @@ class BloodTypesController extends Controller
            $Updateblood['com_code'] = $com_code;
            $Updateblood->save();
             DB::commit();
-            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');            
-            
+            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -112,8 +112,8 @@ class BloodTypesController extends Controller
            $Deleteblood = BloodTypes::findOrFail($id);
            $Deleteblood->delete();
             DB::commit();
-            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم حذف فصيلة الدم بنجاح');            
-            
+            return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم حذف فصيلة الدم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.BloodTypes.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

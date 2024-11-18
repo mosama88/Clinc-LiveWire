@@ -16,7 +16,7 @@ class JobGradeController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = JobGrade::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = JobGrade::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.jobGrades.index',compact('data'));
     }
 
@@ -46,8 +46,8 @@ class JobGradeController extends Controller
            $nationality['com_code'] = $com_code;
            $nationality->save();
             DB::commit();
-            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم أضافة الدرجه الوظيفية بنجاح');            
-            
+            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم أضافة الدرجه الوظيفية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -90,8 +90,8 @@ class JobGradeController extends Controller
            $UpdateNationality['com_code'] = $com_code;
            $UpdateNationality->save();
             DB::commit();
-            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم تعديل الدرجه الوظيفية بنجاح');            
-            
+            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم تعديل الدرجه الوظيفية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -109,8 +109,8 @@ class JobGradeController extends Controller
            $DeleteNationality = JobGrade::findOrFail($id);
            $DeleteNationality->delete();
             DB::commit();
-            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم حذف الدرجه الوظيفية بنجاح');            
-            
+            return redirect()->route('dashboard.jobGrades.index')->with('success', 'تم حذف الدرجه الوظيفية بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.jobGrades.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

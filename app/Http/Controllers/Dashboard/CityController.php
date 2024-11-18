@@ -16,7 +16,7 @@ class CityController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $other['governorates'] = Governorate::get();
-        $data = City::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = City::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.cities.index',compact('data','other'));
     }
 
@@ -49,8 +49,8 @@ class CityController extends Controller
            $city['com_code'] = $com_code;
            $city->save();
             DB::commit();
-            return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينه بنجاح');            
-            
+            return redirect()->route('dashboard.cities.index')->with('success', 'تم أضافة المدينه بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -90,14 +90,14 @@ class CityController extends Controller
             }
             DB::beginTransaction();
            $Updatecity = City::findOrFail($id);
-           $Updatecity['name'] = $request->name;           
+           $Updatecity['name'] = $request->name;
            $Updatecity['governorate_id'] = $request->governorate_id;
            $Updatecity['updated_by'] = 1;
            $Updatecity['com_code'] = $com_code;
            $Updatecity->save();
             DB::commit();
-            return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينه بنجاح');            
-            
+            return redirect()->route('dashboard.cities.index')->with('success', 'تم تعديل المدينه بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -115,8 +115,8 @@ class CityController extends Controller
            $Deletecity = City::findOrFail($id);
            $Deletecity->delete();
             DB::commit();
-            return redirect()->route('dashboard.cities.index')->with('success', 'تم حذف المدينه بنجاح');            
-            
+            return redirect()->route('dashboard.cities.index')->with('success', 'تم حذف المدينه بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.cities.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

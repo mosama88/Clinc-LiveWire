@@ -1,6 +1,8 @@
 @extends('dashboard.layouts.master')
 @section('admin_title', 'المؤهلات العلمية')
 @section('css')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 @endsection
 @section('active-qualifications', 'active')
 @section('page-header', 'جدول المؤهلات العلمية')
@@ -41,8 +43,8 @@
                     @include('dashboard.settings.qualifications.create')
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
-                    <table class="table table-striped">
+                <div class="card-body p-2">
+                    <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
@@ -103,10 +105,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <hr>
-                    <div class="col-12">
-                        {{ $data->render('pagination::bootstrap-5') }}
-                    </div>
+
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -120,6 +119,24 @@
 
 @endsection
 @section('scripts')
+    <!-- DataTables -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script>
+        $(function() {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+
 
     <script>
         $('#modal-default').modal({

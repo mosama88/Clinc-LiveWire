@@ -13,10 +13,10 @@ class DepartmentController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = Department::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Department::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.departments.index',compact('data'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -45,8 +45,8 @@ class DepartmentController extends Controller
            $Department['com_code'] = $com_code;
            $Department->save();
             DB::commit();
-            return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الأداراه  بنجاح');            
-            
+            return redirect()->route('dashboard.departments.index')->with('success', 'تم أضافة الأداراه  بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -91,8 +91,8 @@ class DepartmentController extends Controller
            $UpdateDepartment['com_code'] = $com_code;
            $UpdateDepartment->save();
             DB::commit();
-            return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الأداراه بنجاح');            
-            
+            return redirect()->route('dashboard.departments.index')->with('success', 'تم تعديل الأداراه بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -110,8 +110,8 @@ class DepartmentController extends Controller
            $DeleteDepartment = Department::findOrFail($id);
            $DeleteDepartment->delete();
             DB::commit();
-            return redirect()->route('dashboard.departments.index')->with('success', 'تم حذف الأداراه بنجاح');            
-            
+            return redirect()->route('dashboard.departments.index')->with('success', 'تم حذف الأداراه بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

@@ -21,7 +21,7 @@ class BranchController extends Controller
         $com_code = auth()->user()->com_code;
         $other['governorates'] = Governorate::get();
         $other['cities'] = City::get();
-        $data = Branch::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Branch::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.branches.index',compact('data','other'));
     }
 
@@ -47,12 +47,12 @@ class BranchController extends Controller
     if(!empty($checkExistsbeforeName)){
         return redirect()->route('dashboard.branches.index')->withErrors(['error' => 'عفوآ أسم الفرع مسجل من قبل !!'])->withInput();
     }
-  
+
     $checkExistsbeforeEmail = Branch::select('id')->where('com_code' ,'=', $com_code)->where('email',$request->email)->first();
     if(!empty($checkExistsbeforeEmail)){
         return redirect()->route('dashboard.branches.index')->withErrors(['error' => 'عفوآ البريد الالكترونى للفرع مسجل من قبل !!'])->withInput();
     }
-            
+
             DB::beginTransaction();
            $Branch = new Branch();
            $Branch['name'] = $request->name;
@@ -66,8 +66,8 @@ class BranchController extends Controller
            $Branch['com_code'] = $com_code;
            $Branch->save();
             DB::commit();
-            return redirect()->route('dashboard.branches.index')->with('success', 'تم أضافة الفرع بنجاح');            
-            
+            return redirect()->route('dashboard.branches.index')->with('success', 'تم أضافة الفرع بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -100,21 +100,21 @@ class BranchController extends Controller
     public function update(UpdateBranchRequest $request, string $id)
     {
         try{
-            
+
             $com_code = auth()->user()->com_code;
 
             $checkExistsbeforeName = Branch::select('id')->where('com_code' ,'=', $com_code)->where('name',$request->name)->where('id','!=',$id)->first();
             if(!empty($checkExistsbeforeName)){
                 return redirect()->route('dashboard.branches.index')->withErrors(['error' => 'عفوآ أسم الفرع مسجل من قبل !!'])->withInput();
             }
-          
+
             $checkExistsbeforeEmail = Branch::select('id')->where('com_code' ,'=', $com_code)->where('email',$request->email)->where('id','!=',$id)->first();
             if(!empty($checkExistsbeforeEmail)){
                 return redirect()->route('dashboard.branches.index')->withErrors(['error' => 'عفوآ البريد الالكترونى للفرع مسجل من قبل !!'])->withInput();
             }
-        
 
-            
+
+
             DB::beginTransaction();
            $UpdateBranch = Branch::findOrFail($id);
            $UpdateBranch['name'] = $request->name;
@@ -128,8 +128,8 @@ class BranchController extends Controller
            $UpdateBranch['com_code'] = $com_code;
            $UpdateBranch->save();
             DB::commit();
-            return redirect()->route('dashboard.branches.index')->with('success', 'تم تعديل الفرع بنجاح');            
-            
+            return redirect()->route('dashboard.branches.index')->with('success', 'تم تعديل الفرع بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -147,8 +147,8 @@ class BranchController extends Controller
            $DeleteBranch = Branch::findOrFail($id);
            $DeleteBranch->delete();
             DB::commit();
-            return redirect()->route('dashboard.branches.index')->with('success', 'تم حذف الفرع بنجاح');            
-            
+            return redirect()->route('dashboard.branches.index')->with('success', 'تم حذف الفرع بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -169,5 +169,5 @@ class BranchController extends Controller
 
 
 
-    
+
 }

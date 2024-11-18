@@ -16,7 +16,7 @@ class CountryController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = Country::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Country::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.countries.index',compact('data'));
     }
 
@@ -46,8 +46,8 @@ class CountryController extends Controller
            $country['com_code'] = $com_code;
            $country->save();
             DB::commit();
-            return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة الدولة بنجاح');            
-            
+            return redirect()->route('dashboard.countries.index')->with('success', 'تم أضافة الدولة بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -90,8 +90,8 @@ class CountryController extends Controller
            $UpdateCountry['com_code'] = $com_code;
            $UpdateCountry->save();
             DB::commit();
-            return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل الدولة بنجاح');            
-            
+            return redirect()->route('dashboard.countries.index')->with('success', 'تم تعديل الدولة بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -109,8 +109,8 @@ class CountryController extends Controller
            $DeleteCountry = Country::findOrFail($id);
            $DeleteCountry->delete();
             DB::commit();
-            return redirect()->route('dashboard.countries.index')->with('success', 'تم حذف الدولة بنجاح');            
-            
+            return redirect()->route('dashboard.countries.index')->with('success', 'تم حذف الدولة بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.countries.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());

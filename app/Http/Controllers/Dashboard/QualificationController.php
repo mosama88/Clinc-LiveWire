@@ -16,7 +16,7 @@ class QualificationController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = Qualification::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Qualification::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
         return view('dashboard.settings.qualifications.index',compact('data'));
     }
 
@@ -46,8 +46,8 @@ class QualificationController extends Controller
            $qualification['com_code'] = $com_code;
            $qualification->save();
             DB::commit();
-            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم أضافة المؤهل بنجاح');            
-            
+            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم أضافة المؤهل بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -90,8 +90,8 @@ class QualificationController extends Controller
            $UpdateQualification['com_code'] = $com_code;
            $UpdateQualification->save();
             DB::commit();
-            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم تعديل المؤهل بنجاح');            
-            
+            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم تعديل المؤهل بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
@@ -109,8 +109,8 @@ class QualificationController extends Controller
            $DeleteQualification = Qualification::findOrFail($id);
            $DeleteQualification->delete();
             DB::commit();
-            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم حذف المؤهل بنجاح');            
-            
+            return redirect()->route('dashboard.qualifications.index')->with('success', 'تم حذف المؤهل بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.qualifications.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
