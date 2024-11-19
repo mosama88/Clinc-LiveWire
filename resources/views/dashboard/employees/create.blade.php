@@ -750,7 +750,7 @@
                                             @if (!empty($other['shift_types']) && isset($other['shift_types']))
                                                 @foreach ($other['shift_types'] as $shift)
                                                     <option @if (old('shift_type_id', $shift['shift_type_id'] == $shift->id)) selected @endif
-                                                        value="{{ $shift->id }}">{{ $shift->name }}
+                                                        value="{{ $shift->id }}">{{ $shift->name }}  من ( {{$shift->from_time}} ) إلى ( {{$shift->to_time}} )  
                                                     </option>
                                                 @endforeach
                                             @else
