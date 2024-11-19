@@ -68,6 +68,9 @@
                                 @enderror
                             </div>
 
+
+
+
                             {{-- أسم الطبيب --}}
                             <div class="form-group col-md-4">
                                 <label for="exampleInputName">أسم الطبيب</label>
@@ -107,6 +110,17 @@
                                 <!-- /.form-group -->
                             </div>
 
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">سعر كشف الطبيب</label>
+                                <input type="text" class="form-control font-w " name="viseta_price"
+                                       value="{{ old('viseta_price', $appintmentEdit['viseta_price']) }}" id="exampleInputName"
+                                       placeholder="أدخل سعر كشف الطبيب">
+                                @error('viseta_price')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
 
 
                             {{-- القسم --}}

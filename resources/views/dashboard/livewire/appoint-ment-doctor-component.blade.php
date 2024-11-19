@@ -80,13 +80,13 @@
             <thead>
             <tr>
                 <th style="width: 10px">#</th>
+                <th>صورة الطبيب</th>
                 <th>كود الطبيب</th>
                 <th>أسم الطبيب</th>
                 <th>التخصص</th>
                 <th>القسم</th>
                 <th>المواعيد</th>
-                <th>الحاله</th>
-                <th>أضافة بواسطة</th>
+                <th>سعر الكشف</th>
                 <th>تعديل بواسطة</th>
                 <th>العمليات</th>
             </tr>
@@ -97,6 +97,19 @@
                     <?php $i++; ?>
                 <tr>
                     <td>{{ $i }}</td>
+                    <td>
+                        @if ($info->image)
+                            <img class="img-thumbnail rounded me-2 my-3" alt="200x200" style="width: 50px; height:50px"
+                                 src="{{ asset('dashboard/assets/uploads/Doctor/photo/' . $info->image->filename) }}"
+                                 data-holder-rendered="true">
+                        @elseif(empty($info->image) && $info['gender'] == 1)
+                            <img alt="Responsive image" class="my-3" style="width: 50px; height:50px"
+                                 src="{{ asset('dashboard/assets/uploads/male-doctor-default.jpg') }}">
+                        @else
+                            <img alt="Responsive image" class="my-3" style="width: 50px; height:50px"
+                                 src="{{ asset('dashboard/assets/uploads/female-doctor-default.jpg') }}">
+                        @endif
+                    </td>
                     <td>{{ $info['doctor_code'] }}</td>
                     <td>{{ $info['name'] }}</td>
                     <td>{{ $info->specialization->name }}</td>
@@ -111,14 +124,7 @@
                             @endif
                         @endforeach
                     </td>
-                    <td>
-                        @if ($info->status == 1)
-                            مفعل
-                        @else
-                            غير مفعل
-                        @endif
-                    </td>
-                    <td>{{ $info->createdBy->name }}</td>
+                    <td>{{ $info->viseta_price }}</td>
                     <td>
                         @if ($info->updated_by > 0)
                             {{ $info->updatedBy->name }}

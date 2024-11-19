@@ -205,14 +205,10 @@ class DoctorController extends Controller
 
     public function appintmentsEdit(Request $request, $id)
     {
-
-        $com_code = auth()->user()->com_code;
         $other['sections'] = Section::all();
         $other['specializations'] = Specialization::all();
         $other['appointments'] = Appointment::all();
         $appintmentEdit = Doctor::findOrFail($id);
-        // $appintmentEdit->doctorappointments->sync($request->id);
-        $appintmentEdit->save();
         return view('dashboard.doctors.appointments.appintmentEdit', compact('appintmentEdit', 'other'));
     }
 
@@ -224,8 +220,8 @@ class DoctorController extends Controller
             DB::beginTransaction();
             $UpdateDoctor = Doctor::findOrFail($id);
             $UpdateDoctor['updated_by'] = 1;
+            $UpdateDoctor['viseta_price'] = $request->viseta_price;
             $UpdateDoctor->doctorappointments()->sync($request->appointments);
-
             $UpdateDoctor->save();
             DB::commit();
             return redirect()->route('dashboard.doctors.appointmentIndex')->with('success', 'تم تعديل الطبيب بنجاح');

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Admin;
+use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Models\Section;
 use App\Models\Nationality;
 use App\Models\Specialization;
@@ -80,6 +82,7 @@ class DoctorFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'address' => fake()->address(),
+            'viseta_price' => fake()->randomFloat(2, 200, 1000),
             'title' => fake()->title(),
             'details' => fake()->paragraph(),
             'status' => fake()->randomElement([1, 2]),
@@ -90,4 +93,7 @@ class DoctorFactory extends Factory
             'com_code' => 1,
         ];
     }
+
+
 }
+

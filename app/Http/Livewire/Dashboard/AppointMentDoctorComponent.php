@@ -11,7 +11,6 @@ use Livewire\WithPagination;
 
 class AppointMentDoctorComponent extends Component
 {
-
     use WithPagination;
 
 
@@ -44,8 +43,12 @@ class AppointMentDoctorComponent extends Component
 
 
 
+
+
     public function render()
     {
+
+
 
         $query = Doctor::query();
 
@@ -64,6 +67,8 @@ class AppointMentDoctorComponent extends Component
         }
 
 
+
+
         if ($this->search_section_id) {
             $query->where('section_id', 'like', '%' . $this->search_section_id . '%');
         }
@@ -76,12 +81,15 @@ class AppointMentDoctorComponent extends Component
         $data = $query->paginate(10);
 
 
+        // Fetch other data for filters
+        $other = [
+            'sections' => Section::all(),
+            'specializations' => Specialization::all(),
+           'appointments' => Appointment::all(),
+        ];
 
-        $com_code = auth()->user()->com_code;
-        $other['sections'] = Section::all();
-        $other['specializations'] = Specialization::all();
-        $other['appointments'] = Appointment::all();
-        $data = Doctor::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->paginate(10);
-        return view('dashboard.livewire.appoint-ment-doctor-component',compact('data','other'));
+
+
+        return view('dashboard.livewire.appoint-ment-doctor-component', compact('data','other'));
     }
 }

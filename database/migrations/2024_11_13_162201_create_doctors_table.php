@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('title',300);
             $table->string('details',300);
             $table->string('email',300);
+            $table->string('viseta_price',300)->nullable();
             $table->tinyInteger('gender')->comment('1:Male,2:Female');
             $table->integer('status')->default(1)->nullable();
             $table->foreignId('nationality_id')->references('id')->on('nationalities')->onUpdate('cascade');

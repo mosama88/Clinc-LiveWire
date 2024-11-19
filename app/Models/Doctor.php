@@ -22,10 +22,9 @@ class Doctor extends Model
     }
 
     public function doctorappointments()
-    {                                    //Pivot Table
-        return $this->belongsToMany(Appointment::class, 'appointments_doctors');
+    {
+        return $this->belongsToMany(Appointment::class, 'appointments_doctors', 'doctor_id', 'appointment_id');
     }
-
 
 
     public function createdBy()
