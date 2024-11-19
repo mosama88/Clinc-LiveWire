@@ -43,7 +43,7 @@ class NationalityController extends Controller
             DB::beginTransaction();
            $nationality = new Nationality();
            $nationality['name'] = $request->name;
-           $nationality['created_by'] = 1;
+           $nationality['created_by'] = auth()->user()->id;
            $nationality['com_code'] = $com_code;
            $nationality->save();
             DB::commit();
@@ -87,7 +87,7 @@ class NationalityController extends Controller
             DB::beginTransaction();
            $UpdateNationality = Nationality::findOrFail($id);
            $UpdateNationality['name'] = $request->name;
-           $UpdateNationality['updated_by'] = 1;
+           $UpdateNationality['updated_by'] = auth()->user()->id;
            $UpdateNationality['com_code'] = $com_code;
            $UpdateNationality->save();
             DB::commit();

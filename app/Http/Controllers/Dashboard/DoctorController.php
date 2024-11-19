@@ -74,7 +74,7 @@ class DoctorController extends Controller
             $insertDoctor['specialization_id'] = $request->specialization_id;
             $insertDoctor['section_id'] = $request->section_id;
             $insertDoctor['status'] = 1;
-            $insertDoctor['created_by'] = 1;
+            $insertDoctor['created_by'] =auth()->user()->id;
             $insertDoctor['com_code'] = $com_code;
             $insertDoctor->save();
 
@@ -138,7 +138,7 @@ class DoctorController extends Controller
             $UpdateDoctor['specialization_id'] = $request->specialization_id;
             $UpdateDoctor['section_id'] = $request->section_id;
             $UpdateDoctor['status'] = $request->status;
-            $UpdateDoctor['updated_by'] = 1;
+            $UpdateDoctor['updated_by'] = auth()->user()->id;
             $UpdateDoctor['com_code'] = $com_code;
             $UpdateDoctor->save();
 

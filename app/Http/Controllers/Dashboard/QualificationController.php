@@ -42,7 +42,7 @@ class QualificationController extends Controller
             DB::beginTransaction();
            $qualification = new Qualification();
            $qualification['name'] = $request->name;
-           $qualification['created_by'] = 1;
+           $qualification['created_by'] = auth()->user()->id;
            $qualification['com_code'] = $com_code;
            $qualification->save();
             DB::commit();
@@ -86,7 +86,7 @@ class QualificationController extends Controller
             DB::beginTransaction();
            $UpdateQualification = Qualification::findOrFail($id);
            $UpdateQualification['name'] = $request->name;
-           $UpdateQualification['updated_by'] = 1;
+           $UpdateQualification['updated_by'] = auth()->user()->id;
            $UpdateQualification['com_code'] = $com_code;
            $UpdateQualification->save();
             DB::commit();

@@ -62,7 +62,7 @@ class BranchController extends Controller
            $Branch['governorate_id'] = $request->governorate_id;
            $Branch['city_id'] = $request->city_id;
            $Branch['status'] = 1;
-           $Branch['created_by'] = 1;
+           $Branch['created_by'] = auth()->user()->id;
            $Branch['com_code'] = $com_code;
            $Branch->save();
             DB::commit();
@@ -124,7 +124,7 @@ class BranchController extends Controller
            $UpdateBranch['governorate_id'] = $request->governorate_id;
            $UpdateBranch['city_id'] = $request->city_id;
            $UpdateBranch['status'] = $request->status;
-           $UpdateBranch['updated_by'] = 1;
+           $UpdateBranch['updated_by'] = auth()->user()->id;
            $UpdateBranch['com_code'] = $com_code;
            $UpdateBranch->save();
             DB::commit();

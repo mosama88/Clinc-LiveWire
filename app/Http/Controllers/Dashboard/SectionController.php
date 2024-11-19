@@ -43,7 +43,7 @@ class SectionController extends Controller
             DB::beginTransaction();
            $section = new Section();
            $section['name'] = $request->name;
-           $section['created_by'] = 1;
+           $section['created_by'] = auth()->user()->id;
            $section['com_code'] = $com_code;
            $section->save();
             DB::commit();
@@ -87,7 +87,7 @@ class SectionController extends Controller
             DB::beginTransaction();
            $UpdateSection = Section::findOrFail($id);
            $UpdateSection['name'] = $request->name;
-           $UpdateSection['updated_by'] = 1;
+           $UpdateSection['updated_by'] = auth()->user()->id;
            $UpdateSection['com_code'] = $com_code;
            $UpdateSection->save();
             DB::commit();

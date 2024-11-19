@@ -45,7 +45,7 @@ class CityController extends Controller
            $city = new City();
            $city['name'] = $request->name;
            $city['governorate_id'] = $request->governorate_id;
-           $city['created_by'] = 1;
+           $city['created_by'] = auth()->user()->id;
            $city['com_code'] = $com_code;
            $city->save();
             DB::commit();
@@ -92,7 +92,7 @@ class CityController extends Controller
            $Updatecity = City::findOrFail($id);
            $Updatecity['name'] = $request->name;
            $Updatecity['governorate_id'] = $request->governorate_id;
-           $Updatecity['updated_by'] = 1;
+           $Updatecity['updated_by'] = auth()->user()->id;
            $Updatecity['com_code'] = $com_code;
            $Updatecity->save();
             DB::commit();

@@ -39,7 +39,7 @@ class JobCategoryController extends Controller
             DB::beginTransaction();
            $jobCategory = new JobCategory();
            $jobCategory['name'] = $request->name;
-           $jobCategory['created_by'] = 1;
+           $jobCategory['created_by'] = auth()->user()->id;
            $jobCategory['com_code'] = $com_code;
            $jobCategory->save();
             DB::commit();
@@ -83,7 +83,7 @@ class JobCategoryController extends Controller
             DB::beginTransaction();
            $UpdateJobCategory = JobCategory::findOrFail($id);
            $UpdateJobCategory['name'] = $request->name;
-           $UpdateJobCategory['updated_by'] = 1;
+           $UpdateJobCategory['updated_by'] = auth()->user()->id;
            $UpdateJobCategory['com_code'] = $com_code;
            $UpdateJobCategory->save();
             DB::commit();

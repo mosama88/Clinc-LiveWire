@@ -42,7 +42,7 @@ class CountryController extends Controller
             DB::beginTransaction();
            $country = new Country();
            $country['name'] = $request->name;
-           $country['created_by'] = 1;
+           $country['created_by'] = auth()->user()->id;
            $country['com_code'] = $com_code;
            $country->save();
             DB::commit();
@@ -86,7 +86,7 @@ class CountryController extends Controller
             DB::beginTransaction();
            $UpdateCountry = Country::findOrFail($id);
            $UpdateCountry['name'] = $request->name;
-           $UpdateCountry['updated_by'] = 1;
+           $UpdateCountry['updated_by'] =auth()->user()->id;
            $UpdateCountry['com_code'] = $com_code;
            $UpdateCountry->save();
             DB::commit();

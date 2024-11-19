@@ -13,9 +13,9 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="">أسم الفرع</label>
-                            <input class="form-control" name="name" value="{{ $info['name'] }}" type="text"
-                                placeholder="أكتب أسم الفرع">
+                            <label for="">أسم الشفت</label>
+                            <input class="form-control" name="name" value="{{ old('name', $info['name']) }}"
+                                type="text" placeholder="أكتب أسم الشفت">
                             @error('name')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
@@ -24,10 +24,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">عنوان الفرع</label>
-                            <input class="form-control" name="address" value="{{ $info['address'] }}" type="text"
-                                placeholder="أكتب عنوان الفرع">
-                            @error('address')
+                            <label for="">من</label>
+                            <input type="time" name="from_time" id="from_time" class="form-control"
+                                value="{{ old('from_time', $info['from_time']) }}" />
+                            @error('from_time')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
                                 </div>
@@ -35,86 +35,28 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">تليفون الفرع</label>
-                            <input class="form-control" name="phone" type="text" value="{{ $info['phone'] }}"
-                                placeholder="أكتب تليفون الفرع">
-                            @error('phone')
+                            <label for="">الى</label>
+                            <input type="time" name="to_time" id="to_time" class="form-control"
+                                value="{{ old('to_time', $info['to_time']) }}" />
+                            @error('to_time')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
 
-
-                        <div class="form-group">
-                            <label for="">البريد الالكترونى</label>
-                            <input class="form-control" value="{{ $info['email'] }}" name="email" type="text"
-                                placeholder="أكتب البريد الالكترونى للفرع">
-                            @error('email')
+                        <div class="form-group d-none">
+                            <label for="exampleInputName">عدد الساعات</label>
+                            <input type="text" class="form-control font-w" name="total_hours"
+                                value="{{ old('total_hours', $info['total_hours']) }}"
+                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="total_hours"
+                                placeholder="أدخل عدد الساعات">
+                            @error('total_hours')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label>محافظة</label>
-                            <select name="governorate_id" class="custom-select">
-                                <option selected>-- أختر المحافظة --</option>
-
-                                @if (!empty($other['governorates']) && isset($other['governorates']))
-                                    @foreach ($other['governorates'] as $governrate)
-                                        <option @if (old('governorate_id', $info['governorate_id']) == $governrate->id) selected="selected" @endif
-                                            value="{{ $governrate->id }}">{{ $governrate->name }}</option>
-                                    @endforeach
-                                @else
-                                    لا توجد بيانات
-                                @endif
-                            </select>
-                            @error('governorate_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>المدينة</label>
-                            <select name="city_id" class="custom-select">
-                                <option selected>-- أختر المدينة --</option>
-                                @if (!empty($other['cities']) && isset($other['cities']))
-                                    @foreach ($other['cities'] as $city)
-                                        <option @if (old('city_id', $info['city_id']) == $city->id) selected="selected" @endif
-                                            value="{{ $city->id }}">{{ $city->name }}</option>
-                                    @endforeach
-                                @else
-                                    لا توجد بيانات
-                                @endif
-                            </select>
-                            @error('city_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>حالة الفرع</label>
-                            <select name="status" class="custom-select">
-                                <option selected>-- أختر الحالة --</option>
-                                <option @if ($info['status'] == 1) selected @endif value="1">مفعل</option>
-                                <option @if ($info['status'] == 0) selected @endif value="0">غير مفعل
-                                </option>
-                            </select>
-                            @error('status')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
 
 
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use DateTime;
 use App\Models\ShiftType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,13 +44,18 @@ class ShiftTypeController extends Controller
     }
 
 
+            $fromTime =new DateTime($request->from_time);
+            $toTime =new DateTime($request->to_time);
+            $totalSeconds = abs(strtotime($fromTime->format('H:i')) - strtotime($toTime->format('H:i')));
+            $totalHours = $totalSeconds / 3600;
+            
             DB::beginTransaction();
            $insertsShift = new ShiftType();
            $insertsShift['name'] = $request->name;
-           $insertsShift['from_time'] = $request->from_time;
-           $insertsShift['to_time'] = $request->to_time;
-           $insertsShift['total_hours'] = $request->total_hours;
-           $insertsShift['created_by'] = 1;
+           $insertsShift['from_time'] = $fromTime->format('H:i');
+           $insertsShift['to_time'] = $toTime->format('H:i');
+           $insertsShift['total_hours'] = $totalHours;
+           $insertsShift['created_by'] = auth()->user()->id;
            $insertsShift['com_code'] = $com_code;
            $insertsShift->save();
             DB::commit();

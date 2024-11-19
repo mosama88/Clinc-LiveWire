@@ -41,7 +41,7 @@ class DepartmentController extends Controller
            $Department['name'] = $request->name;
            $Department['phones'] = $request->phones;
            $Department['notes'] = $request->notes;
-           $Department['created_by'] = 1;
+           $Department['created_by'] = auth()->user()->id;
            $Department['com_code'] = $com_code;
            $Department->save();
             DB::commit();
@@ -87,7 +87,7 @@ class DepartmentController extends Controller
            $UpdateDepartment['name'] = $request->name;
            $UpdateDepartment['phones'] = $request->phones;
            $UpdateDepartment['notes'] = $request->notes;
-           $UpdateDepartment['updated_by'] = 1;
+           $UpdateDepartment['updated_by'] = auth()->user()->id;
            $UpdateDepartment['com_code'] = $com_code;
            $UpdateDepartment->save();
             DB::commit();

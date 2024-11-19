@@ -45,7 +45,7 @@ class BloodTypesController extends Controller
             DB::beginTransaction();
            $blood = new BloodTypes();
            $blood['name'] = $request->name;
-           $blood['created_by'] = 1;
+           $blood['created_by'] = auth()->user()->id;
            $blood['com_code'] = $com_code;
            $blood->save();
             DB::commit();
@@ -89,7 +89,7 @@ class BloodTypesController extends Controller
             DB::beginTransaction();
            $Updateblood = BloodTypes::findOrFail($id);
            $Updateblood['name'] = $request->name;
-           $Updateblood['updated_by'] = 1;
+           $Updateblood['updated_by'] = auth()->user()->id;
            $Updateblood['com_code'] = $com_code;
            $Updateblood->save();
             DB::commit();

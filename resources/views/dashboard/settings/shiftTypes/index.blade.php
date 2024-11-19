@@ -61,9 +61,29 @@
                                 <tr>
                                     <td>{{ $i }}</td>
                                     <td>{{ $info['name'] }}</td>
-                                    <td>{{ Str::limit($info['address'], 20) }}</td>
-                                    <td>{{ $info['phone'] }}</td>
-                                    <td>{{ $info['email'] }}</td>
+                                    <td>
+                                        @php
+                                            $fromTime = new DateTime($info['from_time']);
+                                            $FinalFromtime = $fromTime->format('h:i');
+                                            $newDateFromTime = date('a', strtotime($info->from_time)); // 'a' returns 'am' or 'pm' in lowercase
+                                            $newFromTimeType = $newDateFromTime == 'am' ? 'صباحاً' : 'مساءاً'; // Correct comparison with lowercase 'am' and 'pm'
+                                        @endphp
+                                        {{ $FinalFromtime }}
+                                        {{ $newFromTimeType }}
+                                    </td>
+                                    <td>
+                                        @php
+                                            $totime = new DateTime($info['to_time']);
+                                            $FinalTotime = $totime->format('h:i');
+                                            $newDateToTime = date('a', strtotime($info->to_time)); // 'a' returns 'am' or 'pm' in lowercase
+                                            $newToTimeType = $newDateToTime == 'am' ? 'صباحاً' : 'مساءاً'; // Correct comparison with lowercase 'am' and 'pm'
+                                        @endphp
+                                        {{ $FinalTotime }}
+                                        {{ $newToTimeType }}
+                                    </td>
+                                    <td>
+                                        {{ $info['total_hours'] }}
+                                    </td>
                                     <td>{{ $info->createdBy->name }}</td>
                                     <td>
                                         @if ($info->updated_by > 0)

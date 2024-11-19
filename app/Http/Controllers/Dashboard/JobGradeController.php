@@ -42,7 +42,7 @@ class JobGradeController extends Controller
             DB::beginTransaction();
            $nationality = new JobGrade();
            $nationality['name'] = $request->name;
-           $nationality['created_by'] = 1;
+           $nationality['created_by'] = auth()->user()->id;
            $nationality['com_code'] = $com_code;
            $nationality->save();
             DB::commit();
@@ -86,7 +86,7 @@ class JobGradeController extends Controller
             DB::beginTransaction();
            $UpdateNationality = JobGrade::findOrFail($id);
            $UpdateNationality['name'] = $request->name;
-           $UpdateNationality['updated_by'] = 1;
+           $UpdateNationality['updated_by'] = auth()->user()->id;
            $UpdateNationality['com_code'] = $com_code;
            $UpdateNationality->save();
             DB::commit();
