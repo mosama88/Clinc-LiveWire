@@ -32,8 +32,8 @@ return new class extends Migration
             $table->text('previous_surgeries_details');
             $table->tinyInteger('Do_you_take_therapy')->nullable()->comment('  1 نعم | 0 لا::: هل تاخذ علاج مزمن');
             $table->text('take_therapy_details');
-            $table->tinyInteger('Do_you_chronic diseases')->nullable()->comment('  1 نعم | 0 لا::: هل يوجد امراض مزمنه');
-            $table->text('chronic diseases_details');
+            $table->tinyInteger('Do_you_chronic_diseases')->nullable()->comment('  1 نعم | 0 لا::: هل يوجد امراض مزمنه');
+            $table->text('chronic_diseases_details');
             $table->text('notes');
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');

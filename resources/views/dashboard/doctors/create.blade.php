@@ -178,7 +178,7 @@
                                         لا توجد بيانات
                                     @endif
                                 </select>
-                                @error('section_id')
+                                @error('nationality_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
