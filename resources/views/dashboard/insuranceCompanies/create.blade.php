@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endsection
-@section('active-patients', 'active')
+@section('active-insuranceCompanies', 'active')
 @section('page-header', ' أضافة مريض')
 @section('page-header_desc', 'أضافة مريض')
 @section('page-header_link')

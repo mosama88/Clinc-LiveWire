@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\JobCategoryController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\QualificationController;
 use App\Http\Controllers\Dashboard\SpecializationController;
+use App\Http\Controllers\Dashboard\InsuranceCompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +98,9 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     Route::get('/doctor/appintmentsEdit/{id}', [DoctorController::class, 'appintmentsEdit'])->name('doctors.appintmentsEdit');
     Route::put('/doctor/updateAppintment/{id}', [DoctorController::class, 'updateAppintment'])->name('doctors.updateAppintment');
 
-
+    // شركات التأمين
+    Route::resource('insuranceCompanies',  InsuranceCompanyController::class);
+    
     // المرضى
     Route::resource('patients',  PatientController::class);
 });

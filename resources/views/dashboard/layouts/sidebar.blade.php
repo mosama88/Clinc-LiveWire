@@ -134,7 +134,6 @@
 
                         <i class="fas fa-user-friends"></i>
 
-
                         <p>
                             قائمة شئون الموظفين
                             <i class="right fas fa-angle-left"></i>
@@ -153,8 +152,10 @@
 
 
 
-                <li class="nav-item has-treeview    {{ request()->is('admin/doctors*')|request()->is('admin/doctor/appointmentIndex*') ? 'menu-open' : '' }} ">
-                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('doctors*')|request()->is('appointmentIndex*') ? 'active' : '' }} ">
+                <li
+                    class="nav-item has-treeview    {{ request()->is('admin/doctors*') | request()->is('admin/doctor/appointmentIndex*') ? 'menu-open' : '' }} ">
+                    <a href="{{ url('/') }}"
+                        class="nav-link {{ request()->is('doctors*') | request()->is('appointmentIndex*') ? 'active' : '' }} ">
 
                         <i class="fas fa-user-md"></i>
                         <p>
@@ -172,6 +173,30 @@
                                 class="nav-link @yield('active_appointmentIndex_doctors')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>مواعيد الطبيب</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li
+                    class="nav-item has-treeview    {{ request()->is('admin/insuranceCompanies*') ? 'menu-open' : '' }} ">
+                    <a href="{{ url('/') }}"
+                        class="nav-link {{ request()->is('insuranceCompanies*') ? 'active' : '' }} ">
+
+                        <i class="fas fa-car-crash"></i>
+                        <p>
+                            قائمة شركات التأمين
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.insuranceCompanies.index') }}"
+                                class="nav-link @yield('active-insuranceCompanies')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>شركات التأمين</p>
                             </a>
                         </li>
                     </ul>
@@ -199,16 +224,6 @@
                         </li>
                     </ul>
                 </li>
-
-
-
-
-
-
-
-
-
-
 
 
                 <li class="nav-item">
