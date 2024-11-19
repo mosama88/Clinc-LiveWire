@@ -62,7 +62,7 @@ class AppointMentDoctorComponent extends Component
 
         if ($this->search_appointments) {
             $query->whereHas('doctorappointments', function ($subQuery) {
-                $subQuery->where('name', 'like', '%' . $this->search_appointments . '%');
+                $subQuery->where('appointment_id', 'like', '%' . $this->search_appointments . '%');
             });
         }
 
@@ -85,11 +85,11 @@ class AppointMentDoctorComponent extends Component
         $other = [
             'sections' => Section::all(),
             'specializations' => Specialization::all(),
-           'appointments' => Appointment::all(),
+            'appointments' => Appointment::all(),
         ];
 
 
 
-        return view('dashboard.livewire.appoint-ment-doctor-component', compact('data','other'));
+        return view('dashboard.livewire.appoint-ment-doctor-component', compact('data', 'other'));
     }
 }
