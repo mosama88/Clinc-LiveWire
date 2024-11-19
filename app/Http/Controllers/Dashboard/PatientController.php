@@ -12,7 +12,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.patients.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.patients.create');
     }
 
     /**
