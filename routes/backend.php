@@ -93,11 +93,11 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     // الأطباء
     Route::resource('doctors',  DoctorController::class);
     Route::post('doctors/getSpecializations', [DoctorController::class, 'getSpecializations'])->name('doctors.getSpecializations');
+    Route::get('/doctor/appointmentIndex', [DoctorController::class, 'appointmentIndex'])->name('doctors.appointmentIndex');
 
     // المرضى
     Route::resource('patients',  PatientController::class);
 });
-
 
 
 

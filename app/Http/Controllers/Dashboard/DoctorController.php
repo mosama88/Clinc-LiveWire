@@ -190,4 +190,13 @@ class DoctorController extends Controller
     }
 
 
+    public function appointmentIndex()
+    {
+
+        $com_code = auth()->user()->com_code;
+        $other['sections'] = Section::all();
+        $other['specializations'] = Specialization::all();
+        $data = Doctor::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->paginate(10);
+        return view('dashboard.doctors.appointments.appintmentIndex', compact('data', 'other'));
+    }
 }

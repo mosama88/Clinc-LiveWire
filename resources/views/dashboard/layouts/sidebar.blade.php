@@ -153,8 +153,8 @@
 
 
 
-                <li class="nav-item has-treeview    {{ request()->is('admin/doctors*') ? 'menu-open' : '' }} ">
-                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('doctors*') ? 'active' : '' }} ">
+                <li class="nav-item has-treeview    {{ request()->is('admin/doctors*')|request()->is('admin/doctor/appointmentIndex*') ? 'menu-open' : '' }} ">
+                    <a href="{{ url('/') }}" class="nav-link {{ request()->is('doctors*')|request()->is('appointmentIndex*') ? 'active' : '' }} ">
 
                         <i class="fas fa-user-md"></i>
                         <p>
@@ -168,7 +168,8 @@
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الأطباء</p>
                             </a>
-                            <a href="{{ route('dashboard.doctors.index') }}" class="nav-link @yield('active_Appointment_doctors')">
+                            <a href="{{ route('dashboard.doctors.appointmentIndex') }}"
+                                class="nav-link @yield('active_appointmentIndex_doctors')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>مواعيد الطبيب</p>
                             </a>
