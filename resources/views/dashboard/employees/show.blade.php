@@ -800,7 +800,7 @@
                                             <option value="" disabled selected>-- برجاء تحديد نوع الشفت --
                                             </option>
                                             @if (!empty($other['shift_types']) && isset($other['shift_types']))
-                                                @foreach ($other['shift_types'] as $job)
+                                                @foreach ($other['shift_types'] as $shift)
                                                     <option @if (old('shift_type_id', $data['shift_type_id'] == $shift->id)) selected @endif
                                                         value="{{ $shift->id }}">{{ $shift->name }}
                                                     </option>

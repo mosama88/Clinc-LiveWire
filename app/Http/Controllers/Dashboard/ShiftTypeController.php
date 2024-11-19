@@ -98,13 +98,18 @@ class ShiftTypeController extends Controller
             if(!empty($checkExistsbeforeName)){
                 return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error' => 'عفوآ أسم الشفت مسجل من قبل !!'])->withInput();
             }
+
+            $UpdateFromTime = new DateTime($request->from_time);
+            $UpdateToTime = new DateTime($request->to_time);
+            $updateSecondeTime = abs(strtotime($UpdateFromTime->format('H:i')) - strtotime($UpdateToTime->format('H:i')));
+            $convertHourseUpdate = $updateSecondeTime / 3600;
             
             DB::beginTransaction();
            $UpdateShift = ShiftType::findOrFail($id);
            $UpdateShift['name'] = $request->name;
            $UpdateShift['from_time'] = $request->from_time;
            $UpdateShift['to_time'] = $request->to_time;
-           $UpdateShift['total_hours'] = $request->total_hours;
+           $UpdateShift['total_hours'] = $convertHourseUpdate;
            $UpdateShift['updated_by'] = 1;
            $UpdateShift['com_code'] = $com_code;
            $UpdateShift->save();
@@ -125,7 +130,7 @@ class ShiftTypeController extends Controller
         try{
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-           $DeleteShift = ShiftType::findOrFail($id);
+           $DeleteShift = ShiftType::where('com_code',$com_code)->findOrFail($id);
            $DeleteShift->delete();
             DB::commit();
             return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم حذف الشفت بنجاح');

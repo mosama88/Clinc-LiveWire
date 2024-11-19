@@ -95,6 +95,9 @@ $maleNames = [
             'blood_types_id' => BloodTypes::all()->random()->id,
             'branch_id' => Branch::inRandomOrder()->first()->id,
             'qualification_id' => Qualification::all()->random()->id,
+
+            'shift_type_id' => ShiftType::all()->random()->id,
+
             'qualification_year' => fake()->year('-10 years'),
             'major' => fake()->randomElement(['علوم الحاسوب', 'الرياضيات', 'الفيزياء', 'الهندسة', 'إدارة الأعمال', 'علم الأحياء']),
             'graduation_estimate' => fake()->randomElement(['fair', 'good', 'very_good', 'excellent']),
