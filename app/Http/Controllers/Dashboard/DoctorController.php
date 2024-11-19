@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Appointment;
 use App\Models\City;
 use App\Models\Doctor;
 use App\Models\Section;
@@ -137,6 +138,7 @@ class DoctorController extends Controller
             $UpdateDoctor['status'] = $request->status;
             $UpdateDoctor['updated_by'] = 1;
             $UpdateDoctor['com_code'] = $com_code;
+            $UpdateDoctor->doctorappointments->sync($request->id);
             $UpdateDoctor->save();
 
             // Check if there's a new photo to upload
@@ -199,4 +201,39 @@ class DoctorController extends Controller
         $data = Doctor::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->paginate(10);
         return view('dashboard.doctors.appointments.appintmentIndex', compact('data', 'other'));
     }
+
+
+    public function appintmentsEdit(Request $request, $id)
+    {
+
+        $com_code = auth()->user()->com_code;
+        $other['sections'] = Section::all();
+        $other['specializations'] = Specialization::all();
+        $other['appointments'] = Appointment::all();
+        $appintmentEdit = Doctor::findOrFail($id);
+        // $appintmentEdit->doctorappointments->sync($request->id);
+        $appintmentEdit->save();
+        return view('dashboard.doctors.appointments.appintmentEdit', compact('appintmentEdit', 'other'));
+    }
+
+
+
+    public function updateAppintment(Request $request, string $id)
+    {
+        try {
+            DB::beginTransaction();
+            $UpdateDoctor = Doctor::findOrFail($id);
+            $UpdateDoctor['updated_by'] = 1;
+            $UpdateDoctor->doctorappointments()->sync($request->appointments);
+
+            $UpdateDoctor->save();
+            DB::commit();
+            return redirect()->route('dashboard.doctors.appointmentIndex')->with('success', 'تم تعديل الطبيب بنجاح');
+        } catch (\Exception  $ex) {
+            DB::rollback();
+            return redirect()->route('dashboard.doctors.appointmentIndex')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+        }
+    }
+
+
 }

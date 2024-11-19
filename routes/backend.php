@@ -94,6 +94,9 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     Route::resource('doctors',  DoctorController::class);
     Route::post('doctors/getSpecializations', [DoctorController::class, 'getSpecializations'])->name('doctors.getSpecializations');
     Route::get('/doctor/appointmentIndex', [DoctorController::class, 'appointmentIndex'])->name('doctors.appointmentIndex');
+    Route::get('/doctor/appintmentsEdit/{id}', [DoctorController::class, 'appintmentsEdit'])->name('doctors.appintmentsEdit');
+    Route::put('/doctor/updateAppintment/{id}', [DoctorController::class, 'updateAppintment'])->name('doctors.updateAppintment');
+
 
     // المرضى
     Route::resource('patients',  PatientController::class);

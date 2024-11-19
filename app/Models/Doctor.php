@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Image;
+use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Doctor extends Model
@@ -14,11 +15,18 @@ class Doctor extends Model
 
     protected $guarded = [];
 
-    
+
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function doctorappointments()
+    {                                    //Pivot Table
+        return $this->belongsToMany(Appointment::class, 'appointments_doctors');
+    }
+
+
 
     public function createdBy()
     {

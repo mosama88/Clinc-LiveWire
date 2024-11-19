@@ -106,7 +106,15 @@
                         <td>{{ $info['email'] }}</td>
                         <td>{{ $info->specialization->name }}</td>
                         <td>{{ $info->section->name }}</td>
-                        <td>السبت</td>
+                        <td>
+                            @foreach ($info->doctorappointments as $appointment)
+                                {{ $appointment->name }}
+                                @if(($loop->last) > 0)
+                                    {{''}}
+                                @else
+                                    {{' , '}}
+                                @endif
+                            @endforeach</td>
                         <td>
                             @if ($info->status == 1)
                                 مفعل
