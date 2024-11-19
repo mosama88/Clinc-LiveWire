@@ -50,14 +50,12 @@ class DoctorController extends Controller
     public function store(DoctorRequest $request)
     {
         try {
-
-
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
 
-            $checkExistsEmail = Doctor::select('id')->where('com_code', $com_code)->where('email', $request->email)->first();
-            if (!empty($checkExistsEmail)) {
-                return redirect()->route('dashboard.doctors.index')->withErrors(['error' => 'عفوآ البريد الالكترونى مسجل  من قبل !!'])->withInput();
+            $checkExistsNationalID = Doctor::select('id')->where('com_code', $com_code)->where('national_id', $request->national_id)->first();
+            if (!empty($checkExistsNationalID)) {
+                return redirect()->route('dashboard.doctors.index')->withErrors(['error' => 'عفوآ الدكتور مسجل  من قبل !!'])->withInput();
             }
             $insertDoctor = new Doctor();
             $last_doctor = Doctor::where('com_code', $com_code)->orderBy('id', 'DESC')->value('doctor_code');
@@ -122,6 +120,10 @@ class DoctorController extends Controller
     {
         try {
             $com_code = auth()->user()->com_code;
+            $checkExistsNationalID = Doctor::select('id')->where('com_code', $com_code)->where('national_id', $request->national_id)->where('id',"!=",$id)->first();
+            if (!empty($checkExistsNationalID)) {
+                return redirect()->route('dashboard.doctors.index')->withErrors(['error' => 'عفوآ الدكتور مسجل  من قبل !!'])->withInput();
+            }
             DB::beginTransaction();
             $UpdateDoctor = Doctor::findOrFail($id);
             $UpdateDoctor['name'] = $request->name;
@@ -138,7 +140,6 @@ class DoctorController extends Controller
             $UpdateDoctor['status'] = $request->status;
             $UpdateDoctor['updated_by'] = 1;
             $UpdateDoctor['com_code'] = $com_code;
-            $UpdateDoctor->doctorappointments->sync($request->id);
             $UpdateDoctor->save();
 
             // Check if there's a new photo to upload
@@ -153,8 +154,6 @@ class DoctorController extends Controller
                 // Upload the new image and save it in the database
                 $this->verifyAndStoreFile($request, 'photo', 'Doctor/photo/', 'upload_image', $UpdateDoctor->id, 'App\Models\Doctor');
             }
-
-
             DB::commit();
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم تعديل الطبيب بنجاح');
         } catch (\Exception  $ex) {
@@ -171,10 +170,15 @@ class DoctorController extends Controller
     public function destroy(Request $request,$id)
     {
         try {
-            $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-        $DeleteDoctor = Doctor::where('com_code',$com_code)->findOrFail($id);
-        $DeleteDoctor->delete();
+            $com_code = auth()->user()->com_code;
+            $DeleteDoctor = Doctor::where('com_code',$com_code)->findOrFail($id);
+            $DoctorAppointment = $DeleteDoctor->doctorappointments()->where('doctor_id',$id)->first();
+            if (!empty($DoctorAppointment)) {
+                return redirect()->route('dashboard.doctors.index')->withErrors(['error' => 'لا يمكن حذف الطبيب لأنه مرتبط بمواعيد. برجاء حذف المواعيد أولاً. !!'])->withInput();
+            }
+
+            $DeleteDoctor->delete();
 
         if ($request->page_id == 1) {
             // التحقق من وجود صورة

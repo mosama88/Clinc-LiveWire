@@ -308,8 +308,9 @@ class EmployeeController extends Controller
         try {
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-        $deleteEmployee = Employee::findOrFail($id);
-        $deleteEmployee->delete()->where('com_code',$com_code);
+        $deleteEmployee = Employee::where('com_code',$com_code)->findOrFail($id);
+
+        $deleteEmployee->delete();
 
         if ($request->page_id == 1) {
             // التحقق من وجود صورة
