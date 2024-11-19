@@ -32,7 +32,8 @@ class EmployeeController extends Controller
     {
         $com_code = auth()->user()->com_code;
      
-        $data = Employee::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        $data = Employee::select("id","employee_code","name","job_category_id","governorate_id","department_id","created_by","updated_by","branch_id","email")
+        ->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
         return view('dashboard.employees.index',compact('data'));
     }
 
@@ -63,6 +64,13 @@ class EmployeeController extends Controller
         try{
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
+
+            $checkExistsnational_id = Employee::select("id")->where('com_code',$com_code)->where('national_id',$request->national_id)->first();
+            if($checkExistsnational_id){
+                return redirect()->route('dashboard.employees.index')->withErrors(['error' => 'عفوآ الموظف  مسجل من قبل !!'])->withInput();
+            }
+
+            
             $insertEmployee = new Employee();
 
             $lastEmployeeCode = Employee::where('com_code', $com_code)->orderBy('employee_code','DESC')->value('employee_code');
@@ -113,10 +121,6 @@ class EmployeeController extends Controller
             $insertEmployee['daily_work_hour'] = $request->daily_work_hour;
             $insertEmployee['salary'] = $request->salary;
             $insertEmployee['day_price'] = abs($request->salary / 30);
-
-
-
-            
             $insertEmployee['motivation_type'] = $request->motivation_type;
             $insertEmployee['motivation_value'] = $request->motivation_value;
             $insertEmployee['fixed_allowances'] = $request->fixed_allowances;
@@ -145,7 +149,7 @@ class EmployeeController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.employees.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.employees.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -199,6 +203,14 @@ class EmployeeController extends Controller
         try{
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
+
+            $checkExistsnational_id = Employee::select("id")->where('com_code',$com_code)->where('national_id',$request->national_id)->where('id','!=',$id)->first();
+            if($checkExistsnational_id){
+                return redirect()->route('dashboard.employees.index')->withErrors(['error' => 'عفوآ الموظف  مسجل من قبل  !!'])->withInput();
+            }
+
+
+            
             $updateEmployee = Employee::findOrFail($id);
 
             $updateEmployee['name'] = $request->name;
@@ -283,19 +295,40 @@ class EmployeeController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.employees.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.employees.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+    public function destroy(Request $request,$id)
     {
-        //
+        try {
+            $com_code = auth()->user()->com_code;
+            DB::beginTransaction();
+        $deleteEmployee = Employee::findOrFail($id);
+        $deleteEmployee->delete()->where('com_code',$com_code);
+
+        if ($request->page_id == 1) {
+            // التحقق من وجود صورة
+            if ($deleteEmployee->image) {
+                $filename = $deleteEmployee->image->filename;
+                $path = 'Employee/photo/' . $filename;
+
+                // حذف الصورة
+                $this->Delete_attachment('upload_image', $path, $deleteEmployee->image->id);
+            }
+        }
+        DB::commit();
+        return redirect()->route('dashboard.employees.index')->with('success', 'تم حذف البيانات بنجاح ' );
+  
+    } catch (\Exception  $ex) {
+        DB::rollback();
+        return redirect()->route('dashboard.employees.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
     }
-
-
+}
 
 
 public function getCities(Request $request){

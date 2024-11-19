@@ -95,7 +95,7 @@ class AdminPanelController extends Controller
             
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.admin_panels.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.admin_panels.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
 
     }

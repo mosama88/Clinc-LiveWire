@@ -49,7 +49,7 @@ class DepartmentController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.departments.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -95,7 +95,7 @@ class DepartmentController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.departments.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -114,7 +114,7 @@ class DepartmentController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.departments.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.departments.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
 
     }

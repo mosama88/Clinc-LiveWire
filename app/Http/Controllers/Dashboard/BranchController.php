@@ -70,7 +70,7 @@ class BranchController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.branches.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -132,7 +132,7 @@ class BranchController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.branches.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -151,7 +151,7 @@ class BranchController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.branches.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.branches.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 

@@ -47,7 +47,7 @@ class JobCategoryController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.jobCategories.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.jobCategories.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -91,7 +91,7 @@ class JobCategoryController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.jobCategories.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.jobCategories.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -110,7 +110,7 @@ class JobCategoryController extends Controller
 
         }catch(\Exception  $ex){
             DB::rollback();
-            return redirect()->route('dashboard.jobCategories.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.jobCategories.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
 
     }

@@ -81,7 +81,7 @@ public function render()
     }
 
     // Pagination for filtered employees
-    $data = $query->paginate(10);
+    $data = $query->orderBy('id','DESC')->paginate(10);
 
 
  

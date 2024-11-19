@@ -78,7 +78,7 @@ class AppointMentDoctorComponent extends Component
         }
 
 
-        $data = $query->paginate(10);
+        $data = $query->orderBy('id','DESC')->paginate(10);
 
 
         // Fetch other data for filters

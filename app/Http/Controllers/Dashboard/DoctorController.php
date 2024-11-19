@@ -87,7 +87,7 @@ class DoctorController extends Controller
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم أضافة الطبيب بنجاح');
         } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.doctors.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -159,27 +159,42 @@ class DoctorController extends Controller
             return redirect()->route('dashboard.doctors.index')->with('success', 'تم تعديل الطبيب بنجاح');
         } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.doctors.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+
+    public function destroy(Request $request,$id)
     {
         try {
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-            $DeleteDoctor = Doctor::findOrFail($id);
-            $DeleteDoctor->delete();
-            DB::commit();
-            return redirect()->route('dashboard.doctors.index')->with('success', 'تم حذف الطبيب بنجاح');
-        } catch (\Exception  $ex) {
-            DB::rollback();
-            return redirect()->route('dashboard.doctors.index')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+        $DeleteDoctor = Doctor::where('com_code',$com_code)->findOrFail($id);
+        $DeleteDoctor->delete();
+
+        if ($request->page_id == 1) {
+            // التحقق من وجود صورة
+            if ($DeleteDoctor->image) {
+                $filename = $DeleteDoctor->image->filename;
+                $path = 'Doctor/photo/' . $filename;
+
+                // حذف الصورة
+                $this->Delete_attachment('upload_image', $path, $DeleteDoctor->image->id);
+            }
         }
+        DB::commit();
+        return redirect()->route('dashboard.doctors.index')->with('success', 'تم حذف البيانات بنجاح ' );
+  
+    } catch (\Exception  $ex) {
+        DB::rollback();
+        return redirect()->route('dashboard.doctors.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
     }
+}
+
 
     public function getSpecializations(Request $request)
     {
@@ -227,7 +242,7 @@ class DoctorController extends Controller
             return redirect()->route('dashboard.doctors.appointmentIndex')->with('success', 'تم تعديل الطبيب بنجاح');
         } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.doctors.appointmentIndex')->withErrors('error', 'عفوآ لقد حدث خطأ !!' . $ex->getMessage());
+            return redirect()->route('dashboard.doctors.appointmentIndex')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
