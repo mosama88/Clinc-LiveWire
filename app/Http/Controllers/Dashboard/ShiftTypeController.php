@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\ShiftType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\ShiftTypeRequest;
 
 class ShiftTypeController extends Controller
 {
@@ -12,7 +15,9 @@ class ShiftTypeController extends Controller
      */
     public function index()
     {
-        //
+        $com_code = auth()->user()->com_code;
+        $data = ShiftType::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        return view('dashboard.settings.shiftTypes.index',compact('data'));
     }
 
     /**
@@ -20,15 +25,40 @@ class ShiftTypeController extends Controller
      */
     public function create()
     {
-        //
-    }
+
+        return view('dashboard.settings.shiftTypes.create');
+        }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ShiftTypeRequest $request)
     {
-        //
+        try{
+            $com_code = auth()->user()->com_code;
+
+    $checkExistsbeforeName = ShiftType::select('id')->where('com_code' ,'=', $com_code)->where('name',$request->name)->first();
+    if(!empty($checkExistsbeforeName)){
+        return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error' => 'عفوآ أسم الشفت مسجل من قبل !!'])->withInput();
+    }
+
+
+            DB::beginTransaction();
+           $insertsShift = new ShiftType();
+           $insertsShift['name'] = $request->name;
+           $insertsShift['from_time'] = $request->from_time;
+           $insertsShift['to_time'] = $request->to_time;
+           $insertsShift['total_hours'] = $request->total_hours;
+           $insertsShift['created_by'] = 1;
+           $insertsShift['com_code'] = $com_code;
+           $insertsShift->save();
+            DB::commit();
+            return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم أضافة الشفت بنجاح');
+
+        }catch(\Exception  $ex){
+            DB::rollback();
+            return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+        }
     }
 
     /**
@@ -44,15 +74,41 @@ class ShiftTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $info = ShiftType::findOrFail($id);
+        return view('dashboard.settings.shiftTypes.edit',compact('info'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ShiftTypeRequest $request, string $id)
     {
-        //
+        try{
+
+            $com_code = auth()->user()->com_code;
+
+            $checkExistsbeforeName = ShiftType::select('id')->where('com_code' ,'=', $com_code)->where('name',$request->name)->where('id','!=',$id)->first();
+            if(!empty($checkExistsbeforeName)){
+                return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error' => 'عفوآ أسم الشفت مسجل من قبل !!'])->withInput();
+            }
+            
+            DB::beginTransaction();
+           $UpdateShift = ShiftType::findOrFail($id);
+           $UpdateShift['name'] = $request->name;
+           $UpdateShift['from_time'] = $request->from_time;
+           $UpdateShift['to_time'] = $request->to_time;
+           $UpdateShift['total_hours'] = $request->total_hours;
+           $UpdateShift['updated_by'] = 1;
+           $UpdateShift['com_code'] = $com_code;
+           $UpdateShift->save();
+            DB::commit();
+            return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم تعديل الشفت بنجاح');
+
+        }catch(\Exception  $ex){
+            DB::rollback();
+            return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+        }
     }
 
     /**
@@ -60,6 +116,19 @@ class ShiftTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $com_code = auth()->user()->com_code;
+            DB::beginTransaction();
+           $DeleteShift = ShiftType::findOrFail($id);
+           $DeleteShift->delete();
+            DB::commit();
+            return redirect()->route('dashboard.shiftTypes.index')->with('success', 'تم حذف الشفت بنجاح');
+
+        }catch(\Exception  $ex){
+            DB::rollback();
+            return redirect()->route('dashboard.shiftTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+        }
     }
+
+
 }

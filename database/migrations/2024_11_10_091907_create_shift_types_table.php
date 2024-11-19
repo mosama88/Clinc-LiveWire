@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('shift_types', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('shift_type')->comment('نوع الشيفت: واحد صباحى و أثنين مسائى');
+            $table->tinyInteger('name')->comment('نوع الشيفت: واحد صباحى و أثنين مسائى');
             $table->time('from_time');
             $table->time('to_time');
             $table->decimal('total_hours', 10, 2);
-            $table->tinyInteger('active')->default(1);
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->integer('com_code');

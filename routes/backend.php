@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\EmployeeController;
 use App\Http\Controllers\Dashboard\JobGradeController;
+use App\Http\Controllers\Dashboard\ShiftTypeController;
 use App\Http\Controllers\Dashboard\AdminPanelController;
 use App\Http\Controllers\Dashboard\BloodTypesController;
 use App\Http\Controllers\Dashboard\DepartmentController;
@@ -79,6 +80,9 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
 
     // الدرجه الوظيفية
     Route::resource('jobGrades', JobGradeController::class);
+
+        // الشفتات
+    Route::resource('shiftTypes', ShiftTypeController::class);
 
     // الفروع
     Route::resource('branches',  BranchController::class);

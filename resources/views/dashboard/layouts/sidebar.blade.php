@@ -34,9 +34,9 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item has-treeview    {{ request()->is('admin/BloodTypes*') || request()->is('admin/admin_panels*') || request()->is('admin/countries*') || request()->is('admin/cities*') || request()->is('admin/departments*') || request()->is('admin/branches*') || request()->is('admin/nationalities*') || request()->is('admin/sections*') || request()->is('admin/specializations*') || request()->is('admin/qualifications*') || request()->is('admin/jobCategories*') || request()->is('admin/jobGrades*') ? 'menu-open' : '' }} ">
+                    class="nav-item has-treeview    {{ request()->is('admin/BloodTypes*') || request()->is('admin/shiftTypes*') || request()->is('admin/admin_panels*') || request()->is('admin/countries*') || request()->is('admin/cities*') || request()->is('admin/departments*') || request()->is('admin/branches*') || request()->is('admin/nationalities*') || request()->is('admin/sections*') || request()->is('admin/specializations*') || request()->is('admin/qualifications*') || request()->is('admin/jobCategories*') || request()->is('admin/jobGrades*') ? 'menu-open' : '' }} ">
                     <a href="{{ url('/') }}"
-                        class="nav-link {{ request()->is('BloodTypes*') || request()->is('admin_panels*') || request()->is('countries*') || request()->is('cities*') || request()->is('branches*') || request()->is('nationalities*') || request()->is('departments*') || request()->is('specializations*') || request()->is('sections*') || request()->is('qualifications*') || request()->is('jobCategories*') || request()->is('jobGrades*') ? 'active' : '' }} ">
+                        class="nav-link {{ request()->is('BloodTypes*') || request()->is('admin_panels*') || request()->is('shiftTypes*') || request()->is('countries*') || request()->is('cities*') || request()->is('branches*') || request()->is('nationalities*') || request()->is('departments*') || request()->is('specializations*') || request()->is('sections*') || request()->is('qualifications*') || request()->is('jobCategories*') || request()->is('jobGrades*') ? 'active' : '' }} ">
 
                         <i class="fas fa-cog"></i>
                         <p>
@@ -47,56 +47,56 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.admin_panels.index') }}" class="nav-link @yield('active-admin_panels')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الضبط العام</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.BloodTypes.index') }}" class="nav-link @yield('active-BloodTypes')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>فصيلة الدم</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.nationalities.index') }}" class="nav-link @yield('active-nationalities')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الجنسيات</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.countries.index') }}" class="nav-link @yield('active-countries')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الدول</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.cities.index') }}" class="nav-link @yield('active-cities')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>المدن</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.branches.index') }}" class="nav-link @yield('active-branches')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الفروع</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.departments.index') }}" class="nav-link @yield('active-departments')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الأدارات</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.sections.index') }}" class="nav-link @yield('active-sections')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الأقسام</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard.specializations.index') }}"
                                 class="nav-link @yield('active-specializations')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>التخصصات</p>
                             </a>
                         </li>
@@ -104,22 +104,28 @@
                         <li class="nav-item">
                             <a href="{{ route('dashboard.qualifications.index') }}"
                                 class="nav-link @yield('active-qualifications')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>المؤهلات</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('dashboard.jobCategories.index') }}" class="nav-link @yield('active-jobCategories')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الفئات الوظيفية</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('dashboard.jobGrades.index') }}" class="nav-link @yield('active-jobGrades')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الدرجات الوظيفية</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.shiftTypes.index') }}" class="nav-link @yield('active-shiftTypes')">
+                                <i class="fas fa-dot-circle"></i>
+                                <p>الشفتات</p>
                             </a>
                         </li>
                     </ul>
@@ -142,7 +148,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.employees.index') }}" class="nav-link @yield('active-employees')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>شئون الموظفين</p>
                             </a>
                         </li>
@@ -166,12 +172,12 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.doctors.index') }}" class="nav-link @yield('active-doctors')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>الأطباء</p>
                             </a>
                             <a href="{{ route('dashboard.doctors.appointmentIndex') }}"
                                 class="nav-link @yield('active_appointmentIndex_doctors')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>مواعيد الطبيب</p>
                             </a>
                         </li>
@@ -195,7 +201,7 @@
                         <li class="nav-item">
                             <a href="{{ route('dashboard.insuranceCompanies.index') }}"
                                 class="nav-link @yield('active-insuranceCompanies')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>شركات التأمين</p>
                             </a>
                         </li>
@@ -218,7 +224,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.patients.index') }}" class="nav-link @yield('active-patients')">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-dot-circle"></i>
                                 <p>المرضى</p>
                             </a>
                         </li>

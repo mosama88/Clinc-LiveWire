@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\BloodTypes;
+use App\Models\Governorate;
+use App\Models\Nationality;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PatientController extends Controller
 {
@@ -20,7 +24,11 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('dashboard.patients.create');
+        $other['nationalities'] = Nationality::get();
+        $other['blood_types'] = BloodTypes::get();
+        $other['governorates'] = Governorate::get();
+        $other['cities'] = City::get();
+        return view('dashboard.patients.create',compact('other'));
     }
 
     /**

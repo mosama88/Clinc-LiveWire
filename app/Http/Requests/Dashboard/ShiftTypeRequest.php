@@ -11,7 +11,7 @@ class ShiftTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class ShiftTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:50',    
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => "يرجى كتابة أسم الشفت ",
+            'name.max' => "أسم الشفت  يجب ألا يزيد عن الحد 50 المسموح",
+
         ];
     }
 }
