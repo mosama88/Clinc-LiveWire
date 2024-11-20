@@ -1,15 +1,20 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'أضافة مريض')
+@section('admin_title', 'أضافة شركة تامين')
 @section('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <style>
+        .font-w {
+            font-weight: 600;
+        }
+    </style>
 @endsection
 @section('active-insuranceCompanies', 'active')
-@section('page-header', ' أضافة مريض')
-@section('page-header_desc', 'أضافة مريض')
+@section('page-header', ' أضافة شركة تامين')
+@section('page-header_desc', 'أضافة شركة تامين')
 @section('page-header_link')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard.patients.index') }}">جدول المرضى</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard.insuranceCompanies.index') }}">جدول شركة التأمين</a></li>
 @endsection
 @section('content')
 
@@ -27,34 +32,21 @@
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">أضف مريض</h3>
+                    <h3 class="card-title">أضف شركة تامين</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ route('dashboard.patients.store') }}" method="POST" role="form"
+                <form action="{{ route('dashboard.insuranceCompanies.store') }}" method="POST" role="form"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row col-md-12">
-                            {{-- أسم المريض --}}
+                            {{-- أسم الشركة تامين --}}
                             <div class="form-group col-md-6">
-                                <label for="exampleInputName">أسم المريض</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                    id="exampleInputName" placeholder="أدخل اسم المريض">
+                                <label for="exampleInputName">أسم الشركة تامين</label>
+                                <input type="text" class="font-w form-control" name="name" value="{{ old('name') }}"
+                                    id="exampleInputName" placeholder="أدخل اسم الشركة تامين">
                                 @error('name')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- الرقم القومى --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الرقم القومى</label>
-                                <input type="text" class="form-control" name="national_id"
-                                    value="{{ old('national_id') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                    id="national_id" placeholder="أدخل الرقم القومى">
-                                @error('national_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
@@ -64,7 +56,7 @@
                             {{-- البريد الالكترونى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">البريد الالكترونى</label>
-                                <input type="text" class="form-control" name="email" value="{{ old('email') }}"
+                                <input type="text" class="font-w form-control" name="email" value="{{ old('email') }}"
                                     id="exampleInputemail" placeholder="أدخل البريد الالكترونى">
                                 @error('email')
                                     <div class="alert alert-danger" role="alert">
@@ -73,38 +65,27 @@
                                 @enderror
                             </div>
 
-                            {{-- تاريخ الميلاد --}}
+                            {{-- رقم مندوب الشركه --}}
                             <div class="form-group col-md-6">
-                                <label for="exampleInputName">تاريخ الميلاد</label>
-                                <input type="date" class="form-control" name="date_of_birth"
-                                    value="{{ old('date_of_birth') }}" id="date_of_birth">
-                                @error('date_of_birth')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- الموبايل --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الموبايل</label>
-                                <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile"
+                                <label for="exampleInputName">رقم مندوب الشركه</label>
+                                <input type="text" class="font-w form-control" name="mobile_person"
+                                    value="{{ old('mobile_person') }}"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile_person"
                                     placeholder="أدخل المويايل">
-                                @error('mobile')
+                                @error('mobile_person')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            {{-- موبايل آخر --}}
+                            {{-- هاتف العمل للشركه --}}
                             <div class="form-group col-md-6">
-                                <label for="exampleInputName">موبايل آخر</label>
-                                <input type="text" class="form-control" name="alt_mobile"
-                                    value="{{ old('alt_mobile') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                    id="alt_mobile" placeholder="أدخل المويايل">
-                                @error('alt_mobile')
+                                <label for="exampleInputName">هاتف العمل للشركه</label>
+                                <input type="text" class="font-w form-control" name="work_phone"
+                                    value="{{ old('work_phone') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
+                                    id="work_phone" placeholder="أدخل المويايل">
+                                @error('work_phone')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
@@ -114,8 +95,8 @@
                             {{-- العنوان --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">العنوان</label>
-                                <input type="text" class="form-control" name="address" value="{{ old('address') }}"
-                                    id="address" placeholder="أدخل .....">
+                                <input type="text" class="font-w form-control" name="address"
+                                    value="{{ old('address') }}" id="address" placeholder="أدخل .....">
                                 @error('address')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -123,22 +104,25 @@
                                 @enderror
                             </div>
 
-                            {{-- جهة اتصال الطوارئ --}}
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">جهة اتصال الطوارئ</label>
-                                <input type="text" class="form-control" name="emergency_contact"
-                                    value="{{ old('emergency_contact') }}" id="emergency_contact" placeholder="أدخل .....">
-                                @error('emergency_contact')
+                            {{-- نسبة الخصم الممنوحه --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">نسبة الخصم الممنوحه</label>
+                                <input type="text" class="font-w form-control" name="discount_rate"
+                                    value="{{ old('discount_rate') }}"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="discount_rate"
+                                    placeholder="نسبة الخصم">
+                                @error('discount_rate')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
+
                             {{-- المحافظة --}}
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6 mb-3">
                                 <label for="exampleInputName">المحافظة</label>
-                                <select name="governorate_id" id="governorate_id" class="form-control select2 font-w"
+                                <select name="governorate_id" id="governorate_id" class="font-w form-control select2 font-w"
                                     style="width: 100%;">
                                     <option selected>-- أختر المحافظة --</option>
                                     @if (!empty($other['governorates']) && isset($other['governorates']))
@@ -157,178 +141,59 @@
                                 @enderror
                             </div>
 
-                            {{-- المدينه --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">المدينه</label>
-                                <select name="city_id" id="city_id" class="form-control select2 font-w"
-                                    style="width: 100%;">
-                                    <option selected>-- أختر المدينه --</option>
-                                    @if (!empty($other['cities']) && isset($other['cities']))
-                                        @foreach ($other['cities'] as $city)
-                                            <option @if (old('city_id') == $city->id) selected="selected" @endif
-                                                value="{{ $city->id }}">{{ $city->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('city_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- الجنسية --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">الجنسية</label>
-                                <select name="nationality_id" id="nationality_id" class="form-control select2 font-w"
-                                    style="width: 100%;">
-                                    <option selected>-- أختر الجنسية --</option>
-                                    @if (!empty($other['nationalities']) && isset($other['nationalities']))
-                                        @foreach ($other['nationalities'] as $nationality)
-                                            <option @if (old('nationality_id') == $nationality->id) selected="selected" @endif
-                                                value="{{ $nationality->id }}">{{ $nationality->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('nationality_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- نوع فصيلة الدم --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">نوع فصيلة الدم</label>
-                                <select name="blood_type_id" id="blood_type_id" class="form-control select2 font-w"
-                                    style="width: 100%;">
-                                    <option selected>-- أختر نوع فصيلة الدم --</option>
-                                    @if (!empty($other['blood_types']) && isset($other['blood_types']))
-                                        @foreach ($other['blood_types'] as $blood_type)
-                                            <option @if (old('blood_type_id') == $blood_type->id) selected="selected" @endif
-                                                value="{{ $blood_type->id }}">{{ $blood_type->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('blood_type_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- الجنس --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الجنس</label>
-                                <select name="gender" id="gender" class="form-control">
-                                    <option selected>-- أختر الجنس --</option>
-                                    <option value="1">ذكر</option>
-                                    <option value="2">انثى</option>
-                                </select> @error('gender')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- التاريخ المرضى --}}
+                            {{-- تفاصيل الاتفاقية --}}
                             <div class="form-group col-md-12">
-                                <label for="exampleInputName">التاريخ المرضى</label>
-                                <textarea class="form-control" rows="3" name="medical_history" placeholder="أدخل ...">{{ old('medical_history') }}</textarea>
-                                @error('medical_history')
+                                <label for="exampleInputName">تفاصيل الاتفاقية</label>
+                                <textarea class="font-w form-control" rows="3" name="agreement_details" placeholder="أدخل ...">{{ old('agreement_details') }}</textarea>
+                                @error('agreement_details')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            {{-- هل هناك جراحات سابقة --}}
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">هل هناك جراحات سابقة</label>
-                                <select class="form-control" name="are_previous_surgeries" id="are_previous_surgeries">
-                                    <option value="" selected>-- أختر --</option>
-                                    <option @if (old('are_previous_surgeries' == 1)) selected @endif value="1">نعم</option>
-                                    <option @if (old('are_previous_surgeries' == 0)) selected @endif value="0">لا</option>
-                                </select>
-                                @error('are_previous_surgeries')
+                            {{-- لوجو الشركه --}}
+                            <div class="form-group col-12">
+                                <label for="exampleInput">لوجو الشركه</label>
+
+                                <input class="form-control @error('logo') is-invalid @enderror" accept="image/*"
+                                    name="logo" type="file" id="example-text-input"
+                                    onchange="loadFileLogo(event)">
+                                <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
+                                    id="output" />
+                                @error('logo')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">اذكر تفاصيل جراحات سابقة</label>
-                                <textarea class="form-control" rows="3" name="previous_surgeries_details" placeholder="أدخل ...">{{ old('previous_surgeries_details') }}</textarea>
-                                @error('previous_surgeries_details')
+                            {{-- مرفقات آخرى --}}
+                            <div class="form-group col-12">
+                                <label for="exampleInput">مرفقات آخرى</label>
+                                <input multiple class="form-control @error('files') is-invalid @enderror" accept="image/*"
+                                    name="files[]" type="file" id="example-text-input" onchange="loadFiles(event)">
+                                <div id="outputFilesContainer" class="d-flex flex-wrap my-4"></div>
+                                @error('files')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-
-                            {{-- هل تاخذ علاج مزمن --}}
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">هل تاخذ علاج مزمن</label>
-                                <select class="form-control" name="Do_you_take_therapy" id="Do_you_take_therapy">
-                                    <option value="" selected>-- أختر --</option>
-                                    <option @if (old('Do_you_take_therapy' == 1)) selected @endif value="1">نعم</option>
-                                    <option @if (old('Do_you_take_therapy' == 0)) selected @endif value="0">لا</option>
-                                </select>
-                                @error('Do_you_take_therapy')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">اذكر تفاصيل علاج مزمن</label>
-                                <textarea class="form-control" rows="3" name="take_therapy_details" placeholder="أدخل ...">{{ old('take_therapy_details') }}</textarea>
-                                @error('take_therapy_details')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- هل يوجد امراض مزمنه --}}
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">هل يوجد امراض مزمنه</label>
-                                <select class="form-control" name="Do_you_chronic_diseases" id="Do_you_chronic_diseases">
-                                    <option value="" selected>-- أختر --</option>
-                                    <option @if (old('Do_you_chronic_diseases' == 1)) selected @endif value="1">نعم</option>
-                                    <option @if (old('Do_you_chronic_diseases' == 0)) selected @endif value="0">لا</option>
-                                </select>
-                                @error('Do_you_chronic_diseases')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputName">اذكر تفاصيل الامراض مزمنه</label>
-                                <textarea class="form-control" rows="3" name="hronic_diseases_details" placeholder="أدخل ...">{{ old('hronic_diseases_details') }}</textarea>
-                                @error('hronic_diseases_details')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <!-- /.card-body -->
-                            <div class="card-footer col-md-12">
-                                <button type="submit" style="float: left" class="btn  btn-primary">تأكيد
-                                    البيانات</button>
-                            </div>
+                            @error('files')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
+
+
+                        <!-- /.card-body -->
+                        <div class="card-footer col-md-12">
+                            <button type="submit" style="float: left" class="btn  btn-primary">تأكيد
+                                البيانات</button>
+                        </div>
+                    </div>
 
                 </form>
             </div>
@@ -387,7 +252,7 @@
     </script>
 
     <script>
-        var loadFile = function(event) {
+        var loadFileLogo = function(event) {
             var output = document.getElementById('output');
             output.src = URL.createObjectURL(event.target.files[0]);
             output.onload = function() {
@@ -395,4 +260,32 @@
             }
         };
     </script>
+    <script>
+        var loadFiles = function(event) {
+            var files = event.target.files;
+            var container = document.getElementById('outputFilesContainer');
+            container.innerHTML = ''; // تفريغ الصور السابقة
+
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    let img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // لضمان تناسب الصورة مع الإطار
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img);
+                }
+            }
+        };
+    </script>
+
+
 @endsection

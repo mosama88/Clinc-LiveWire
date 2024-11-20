@@ -749,8 +749,25 @@
                                             </option>
                                             @if (!empty($other['shift_types']) && isset($other['shift_types']))
                                                 @foreach ($other['shift_types'] as $shift)
+                                                    @php
+                                                        $totime = new DateTime($shift['to_time']);
+                                                        $FinalTotime = $totime->format('h:i');
+                                                        $newDateToTime = date('a', strtotime($shift->to_time)); // 'a' returns 'am' or 'pm' in lowercase
+                                                        $newToTimeType = $newDateToTime == 'am' ? 'صباحاً' : 'مساءاً'; // Correct comparison with lowercase 'am' and 'pm'
+                                                    @endphp
+                                                    @php
+                                                        $fromTime = new DateTime($shift['from_time']);
+                                                        $FinalFromtime = $fromTime->format('h:i');
+                                                        $newDateFromTime = date('a', strtotime($shift->from_time)); // 'a' returns 'am' or 'pm' in lowercase
+                                                        $newFromTimeType =
+                                                            $newDateFromTime == 'am' ? 'صباحاً' : 'مساءاً'; // Correct comparison with lowercase 'am' and 'pm'
+                                                    @endphp
+
                                                     <option @if (old('shift_type_id', $shift['shift_type_id'] == $shift->id)) selected @endif
-                                                        value="{{ $shift->id }}">{{ $shift->name }}  من ( {{$shift->from_time}} ) إلى ( {{$shift->to_time}} )  
+                                                        value="{{ $shift->id }}">{{ $shift->name }} من (
+                                                        {{ $FinalFromtime . ' ' . $newFromTimeType }} ) إلى (
+                                                        {{ $FinalTotime . ' ' . $newToTimeType }})
+
                                                     </option>
                                                 @endforeach
                                             @else

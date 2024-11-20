@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Governorate;
 use Illuminate\Http\Request;
+use App\Models\InsuranceCompany;
+use App\Http\Controllers\Controller;
 
 class InsuranceCompanyController extends Controller
 {
@@ -12,7 +14,11 @@ class InsuranceCompanyController extends Controller
      */
     public function index()
     {
-        //
+        $com_code = auth()->user()->com_code;
+
+        $data = InsuranceCompany::select("*")
+        ->where('com_code',$com_code)->orderBy('id','DESC')->paginate(10);
+        return view('dashboard.insuranceCompanies.index',compact('data'));
     }
 
     /**
@@ -20,7 +26,8 @@ class InsuranceCompanyController extends Controller
      */
     public function create()
     {
-        //
+        $other['governorates'] = Governorate::get();
+        return view('dashboard.insuranceCompanies.create',compact('other'));
     }
 
     /**
