@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'تعديل طبيب')
+@section('admin_title', 'تعديل شركة تامين')
 @section('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
@@ -11,10 +11,10 @@
     </style>
 @endsection
 @section('active-insuranceCompanies', 'active')
-@section('page-header', ' تعديل طبيب')
-@section('page-header_desc', 'تعديل طبيب')
+@section('page-header', ' تعديل شركة تامين')
+@section('page-header_desc', 'تعديل شركة تامين')
 @section('page-header_link')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard.patients.index') }}">جدول المرضى</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard.insuranceCompanies.index') }}">جدول شركة التأمين</a></li>
 @endsection
 @section('content')
 
@@ -30,65 +30,25 @@
         {{-- Content --}}
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="card card-info">
+            <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">تعديل بيانات الطبيب</h3>
+                    <h3 class="card-title">تعديل شركة التامين</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ route('dashboard.patients.update', $info['id']) }}" method="POST" role="form"
+                <form action="{{ route('dashboard.insuranceCompanies.update', $data['id']) }}" method="POST" role="form"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
-                        @if ($info->image)
-                            <img class="img-thumbnail rounded me-2 my-3" alt="200x200" style="width: 150px; height:150px"
-                                src="{{ asset('dashboard/assets/uploads/Doctor/photo/' . $info->image->filename) }}"
-                                data-holder-rendered="true">
-                        @elseif(empty($info->image) && $info['gender'] == 1)
-                            <img alt="Responsive image" class="my-3" style="width: 150px; height:150px"
-                                src="{{ asset('dashboard/assets/uploads/male-doctor-default.jpg') }}">
-                        @else
-                            <img alt="Responsive image" class="my-3" style="width: 150px; height:150px"
-                                src="{{ asset('dashboard/assets/uploads/female-doctor-default.jpg') }}">
-                        @endif
-
-
                         <div class="row col-md-12">
-                            {{-- كود الطبيب --}}
+                            {{-- أسم الشركة تامين --}}
                             <div class="form-group col-md-6">
-                                <label for="exampleInputName">كود الطبيب</label>
-                                <input disabled type="text" class="form-control font-w " name="doctor_code"
-                                    value="{{ old('doctor_code', $info['doctor_code']) }}" id="exampleInputName"
-                                    placeholder="أدخل اسم الطبيب">
-                                @error('doctor_code')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- أسم الطبيب --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">أسم الطبيب</label>
-                                <input type="text" class="form-control font-w " name="name"
-                                    value="{{ old('name', $info['name']) }}" id="exampleInputName"
-                                    placeholder="أدخل اسم الطبيب">
+                                <label for="exampleInputName">أسم الشركة تامين</label>
+                                <input type="text" class="font-w form-control" name="name"
+                                    value="{{ old('name', $data['name']) }}" id="exampleInputName"
+                                    placeholder="أدخل اسم الشركة تامين">
                                 @error('name')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- الرقم القومى --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الرقم القومى</label>
-                                <input type="text" class="form-control font-w " name="national_id"
-                                    value="{{ old('national_id', $info['national_id']) }}"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="national_id"
-                                    placeholder="أدخل الرقم القومى">
-                                @error('national_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
@@ -98,8 +58,8 @@
                             {{-- البريد الالكترونى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">البريد الالكترونى</label>
-                                <input type="text" class="form-control font-w " name="email"
-                                    value="{{ old('email', $info['email']) }}" id="exampleInputemail"
+                                <input type="text" class="font-w form-control" name="email"
+                                    value="{{ old('email', $data['email']) }}" id="exampleInputemail"
                                     placeholder="أدخل البريد الالكترونى">
                                 @error('email')
                                     <div class="alert alert-danger" role="alert">
@@ -108,26 +68,52 @@
                                 @enderror
                             </div>
 
-                            {{-- الموبايل --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الموبايل</label>
-                                <input type="text" class="form-control font-w " name="mobile"
-                                    value="{{ old('mobile', $info['mobile']) }}"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile"
-                                    placeholder="أدخل المويايل">
-                                @error('mobile')
+                            {{-- أسم مندوب الشركه --}}
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">أسم مندوب الشركه</label>
+                                <input type="text" class="font-w form-control" name="contact_person"
+                                    value="{{ old('contact_person', $data['contact_person']) }}" id="contact_person"
+                                    placeholder="أدخل أسم مندوب الشركه">
+                                @error('contact_person')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
+                            {{-- رقم مندوب الشركه --}}
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">رقم مندوب الشركه</label>
+                                <input type="text" class="font-w form-control" name="mobile_person"
+                                    value="{{ old('mobile_person', $data['mobile_person']) }}"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile_person"
+                                    placeholder="أدخل المويايل">
+                                @error('mobile_person')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- هاتف العمل للشركه --}}
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">هاتف العمل للشركه</label>
+                                <input type="text" class="font-w form-control" name="work_phone"
+                                    value="{{ old('work_phone', $data['work_phone']) }}"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="work_phone"
+                                    placeholder="أدخل المويايل">
+                                @error('work_phone')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
                             {{-- العنوان --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">العنوان</label>
-                                <input type="text" class="form-control font-w " name="address"
-                                    value="{{ old('address', $info['address']) }}" id="address" placeholder="أدخل .....">
+                                <input type="text" class="font-w form-control" name="address"
+                                    value="{{ old('address', $data['address']) }}" id="address" placeholder="أدخل .....">
                                 @error('address')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -135,127 +121,84 @@
                                 @enderror
                             </div>
 
-
-                            {{-- الجنس --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">الجنس</label>
-                                <select name="gender" id="gender" class="form-control font-w ">
-                                    <option selected>-- أختر الجنس --</option>
-                                    <option @if (old('gender', $info['gender']) == 1) selected @endif value="1">ذكر</option>
-                                    <option @if (old('gender', $info['gender']) == 2) selected @endif value="2">انثى</option>
-                                </select> @error('gender')
+                            {{-- نسبة الخصم الممنوحه --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">نسبة الخصم الممنوحه</label><i class="fas fa-percent mr-2"></i>
+                                <input type="text" class="font-w form-control" name="discount_rate"
+                                    value="{{ old('discount_rate', $data['discount_rate']) * 1 }}"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="discount_rate"
+                                    placeholder="نسبة الخصم">
+                                @error('discount_rate')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            {{-- القسم --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">القسم</label>
-                                <select name="section_id" id="section_id" class="form-control font-w  select2 font-w"
+
+                            {{-- المحافظة --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">المحافظة</label>
+                                <select name="governorate_id" id="governorate_id" class="font-w form-control select2 font-w"
                                     style="width: 100%;">
-                                    <option selected>-- أختر القسم --</option>
-                                    @if (!empty($other['sections']) && isset($other['sections']))
-                                        @foreach ($other['sections'] as $section)
-                                            <option @if (old('section_id', $info['section_id']) == $section->id) selected="selected" @endif
-                                                value="{{ $section->id }}">{{ $section->name }}</option>
+                                    <option selected>-- أختر المحافظة --</option>
+                                    @if (!empty($other['governorates']) && isset($other['governorates']))
+                                        @foreach ($other['governorates'] as $governorate)
+                                            <option @if (old('governorate_id', $data['governorate_id']) == $governorate->id) selected="selected" @endif
+                                                value="{{ $governorate->id }}">{{ $governorate->name }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
-                                @error('section_id')
+                                @error('governorate_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            {{-- التخصص --}}
-                            <div class="form-group col-md-4" id="specialization_Div">
-                                <label for="exampleInputName">التخصص</label>
-                                <select name="specialization_id" id="specialization_id"
-                                    class="form-control font-w  select2 font-w" style="width: 100%;">
-                                    <option selected>-- أختر التخصص --</option>
-                                    @if (!empty($other['specializations']) && isset($other['specializations']))
-                                        @foreach ($other['specializations'] as $specialization)
-                                            <option @if (old('specialization_id', $info['specialization_id']) == $specialization->id) selected="selected" @endif
-                                                value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-
-
-                            {{-- الجنسية --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">الجنسية</label>
-                                <select name="nationality_id" id="nationality_id"
-                                    class="form-control font-w  select2 font-w" style="width: 100%;">
-                                    <option selected>-- أختر الجنسية --</option>
-                                    @if (!empty($other['nationalities']) && isset($other['nationalities']))
-                                        @foreach ($other['nationalities'] as $nationality)
-                                            <option @if (old('nationality_id', $info['nationality_id']) == $nationality->id) selected="selected" @endif
-                                                value="{{ $nationality->id }}">{{ $nationality->name }}</option>
-                                        @endforeach
-                                    @else
-                                        لا توجد بيانات
-                                    @endif
-                                </select>
-                                @error('section_id')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- درجة الدكتور الوظيفية --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">درجة الدكتور الوظيفية</label>
-                                <input type="text" class="form-control font-w " name="title"
-                                    value="{{ old('title', $info['title']) }}" id="title" placeholder="أدخل .....">
-                                @error('title')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- تفاصيل --}}
+                            {{-- تفاصيل الاتفاقية --}}
                             <div class="form-group col-md-12">
-                                <label for="exampleInputName">تفاصيل</label>
-                                <input type="text" class="form-control font-w " name="details"
-                                    value="{{ old('details', $info['details']) }}" id="details"
-                                    placeholder="أدخل .....">
-                                @error('details')
+                                <label for="exampleInputName">تفاصيل الاتفاقية</label>
+                                <textarea class="font-w form-control" rows="3" name="agreement_details" placeholder="أدخل ...">{{ old('agreement_details', $data['agreement_details']) }}</textarea>
+                                @error('agreement_details')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
 
-                            {{-- صورة الطبيب --}}
-                            <div class="form-group col-md-12">
-                                <label for="exampleInputFile">صورة الطبيب</label>
-                                <input class="form-control font-w  @error('photo') is-invalid @enderror" accept="image/*"
-                                    name="photo" type="file" id="example-text-input" onchange="loadFile(event)">
-                                <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
-                                    id="output" />
-                                @error('photo')
+                            {{-- لوجو الشركه --}}
+                            <div class="form-group col-12">
+                                <label for="exampleInput">لوجو الشركه</label>
+
+                                <input class="form-control @error('logo') is-invalid @enderror" accept="image/*"
+                                    name="logo" type="file" id="example-text-input"
+                                    onchange="loadFileLogo(event)">
+                                <div id="output" class="d-flex flex-wrap my-4"></div>
+                                @error('logo')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
+
+                            {{-- مرفقات آخرى --}}
+                            <div class="form-group col-12">
+                                <label for="exampleInput">مرفقات آخرى</label>
+                                <input multiple class="form-control @error('files') is-invalid @enderror" accept="image/*"
+                                    name="files[]" type="file" id="example-text-input" onchange="loadFiles(event)">
+                                <div id="outputFilesContainer" class="d-flex flex-wrap my-4"></div>
+                                @error('files')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+
                             <!-- /.card-body -->
                             <div class="card-footer col-md-12">
                                 <button type="submit" style="float: left" class="btn  btn-primary">تأكيد
@@ -278,16 +221,7 @@
 @endsection
 @section('scripts')
 
-    <!-- Select2 -->
-    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
 
-    <script>
-        $(function() {
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            });
-        });
-    </script>
     <script>
         // Get Cities When Governorate Changes
         $(document).on('change', '#section_id', function() {
@@ -316,13 +250,68 @@
             });
         }
     </script>
+
+    <!-- Select2 -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+
     <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
+        $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+        });
+    </script>
+
+    <script>
+        var loadFileLogo = function(event) {
+            var container = document.getElementById('output');
+            container.innerHTML = ''; // تفريغ المحتوى السابق
+
+            if (event.target.files[0]) {
+                var file = event.target.files[0];
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    var img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // ضبط تناسب الصورة
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img); // إضافة الصورة إلى العنصر
+                }
             }
         };
     </script>
+    <script>
+        var loadFiles = function(event) {
+            var files = event.target.files;
+            var container = document.getElementById('outputFilesContainer');
+            container.innerHTML = ''; // تفريغ الصور السابقة
+
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    let img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // لضمان تناسب الصورة مع الإطار
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img);
+                }
+            }
+        };
+    </script>
+
+
 @endsection

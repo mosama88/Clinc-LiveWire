@@ -191,8 +191,6 @@ class EmployeeController extends Controller
         $other['cities'] = City::get();
         $other['job_grades'] = JobGrade::get();
         return view('dashboard.employees.edit',compact('data','other'));
-
-
     }
 
     /**

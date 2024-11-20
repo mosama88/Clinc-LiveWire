@@ -65,8 +65,21 @@
                                 @enderror
                             </div>
 
+                            {{-- أسم مندوب الشركه --}}
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">أسم مندوب الشركه</label>
+                                <input type="text" class="font-w form-control" name="contact_person"
+                                    value="{{ old('contact_person') }}" id="contact_person"
+                                    placeholder="أدخل أسم مندوب الشركه">
+                                @error('contact_person')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- رقم مندوب الشركه --}}
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="exampleInputName">رقم مندوب الشركه</label>
                                 <input type="text" class="font-w form-control" name="mobile_person"
                                     value="{{ old('mobile_person') }}"
@@ -80,7 +93,7 @@
                             </div>
 
                             {{-- هاتف العمل للشركه --}}
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="exampleInputName">هاتف العمل للشركه</label>
                                 <input type="text" class="font-w form-control" name="work_phone"
                                     value="{{ old('work_phone') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
@@ -106,7 +119,7 @@
 
                             {{-- نسبة الخصم الممنوحه --}}
                             <div class="form-group col-md-6 mb-3">
-                                <label for="exampleInputName">نسبة الخصم الممنوحه</label>
+                                <label for="exampleInputName">نسبة الخصم الممنوحه</label><i class="fas fa-percent mr-2"></i>
                                 <input type="text" class="font-w form-control" name="discount_rate"
                                     value="{{ old('discount_rate') }}"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="discount_rate"
