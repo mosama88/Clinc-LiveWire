@@ -159,8 +159,7 @@
                                 <input class="form-control @error('logo') is-invalid @enderror" accept="image/*"
                                     name="logo" type="file" id="example-text-input"
                                     onchange="loadFileLogo(event)">
-                                <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
-                                    id="output" />
+                                <div id="output" class="d-flex flex-wrap my-4"></div>
                                 @error('logo')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -180,20 +179,15 @@
                                     </div>
                                 @enderror
                             </div>
-                            @error('files')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
 
 
-                        <!-- /.card-body -->
-                        <div class="card-footer col-md-12">
-                            <button type="submit" style="float: left" class="btn  btn-primary">تأكيد
-                                البيانات</button>
+
+                            <!-- /.card-body -->
+                            <div class="card-footer col-md-12">
+                                <button type="submit" style="float: left" class="btn  btn-primary">تأكيد
+                                    البيانات</button>
+                            </div>
                         </div>
-                    </div>
 
                 </form>
             </div>
@@ -253,10 +247,25 @@
 
     <script>
         var loadFileLogo = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
+            var container = document.getElementById('output');
+            container.innerHTML = ''; // تفريغ المحتوى السابق
+
+            if (event.target.files[0]) {
+                var file = event.target.files[0];
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    var img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // ضبط تناسب الصورة
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img); // إضافة الصورة إلى العنصر
+                }
             }
         };
     </script>
