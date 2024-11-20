@@ -202,7 +202,7 @@
                             </div>
 
                             {{-- نوع فصيلة الدم --}}
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="exampleInputName">نوع فصيلة الدم</label>
                                 <select name="blood_type_id" id="blood_type_id" class="form-control select2 font-w"
                                     style="width: 100%;">
@@ -223,8 +223,30 @@
                                 @enderror
                             </div>
 
+                            {{-- شركة التأمين التابع لها --}}
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputName">شركة التأمين التابع لها</label>
+                                <select name="insurance_id" id="insurance_id" class="form-control select2 font-w"
+                                    style="width: 100%;">
+                                    <option selected>-- أختر شركة التأمين --</option>
+                                    @if (!empty($other['insurance_companies']) && isset($other['insurance_companies']))
+                                        @foreach ($other['insurance_companies'] as $insurance)
+                                            <option @if (old('insurance_id') == $insurance->id) selected="selected" @endif
+                                                value="{{ $insurance->id }}">{{ $insurance->name }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+                                @error('insurance_id')
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- الجنس --}}
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 <label for="exampleInputName">الجنس</label>
                                 <select name="gender" id="gender" class="form-control">
                                     <option selected>-- أختر الجنس --</option>

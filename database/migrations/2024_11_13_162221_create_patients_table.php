@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('email', 50)->unique()->nullable();
             $table->date('date_of_birth');
             $table->tinyInteger('gender')->comment('1:Male,2:Female');
+            $table->foreignId('insurance_id')->references('id')->on('insurance_companies')->onUpdate('cascade');
             $table->foreignId('governorate_id')->references('id')->on('governorates')->onUpdate('cascade');
             $table->foreignId('city_id')->references('id')->on('cities')->onUpdate('cascade');
             $table->foreignId('nationality_id')->references('id')->on('nationalities')->onUpdate('cascade');

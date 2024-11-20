@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('address', 1000);
             $table->string('email', 50)->unique();
             $table->string('work_phone', 20);
-            $table->string('contact_person', 20)->comment('الشخص المسؤول عن التواصل');
+            $table->string('contact_person', 100)->comment('الشخص المسؤول عن التواصل');
             $table->string('mobile_person', 20);
             $table->text('agreement_details')->comment('تفاصيل الاتفاقية');
             $table->decimal('discount_rate',10,2)->comment('نسبة الخصم الممنوحة');

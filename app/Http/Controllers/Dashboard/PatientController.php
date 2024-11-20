@@ -8,6 +8,7 @@ use App\Models\Governorate;
 use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\InsuranceCompany;
 
 class PatientController extends Controller
 {
@@ -28,6 +29,7 @@ class PatientController extends Controller
         $other['blood_types'] = BloodTypes::get();
         $other['governorates'] = Governorate::get();
         $other['cities'] = City::get();
+        $other['insurance_companies'] = InsuranceCompany::get();
         return view('dashboard.patients.create',compact('other'));
     }
 
