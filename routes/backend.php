@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\RadiologyServiceController;
+use App\Http\Controllers\Dashboard\TestsServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
@@ -10,7 +12,6 @@ use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\PatientController;
 use App\Http\Controllers\Dashboard\SectionController;
-use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\EmployeeController;
 use App\Http\Controllers\Dashboard\JobGradeController;
 use App\Http\Controllers\Dashboard\ShiftTypeController;
@@ -108,6 +109,13 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     // المرضى
     Route::resource('patients',  PatientController::class);
     Route::post('patients/getCities', [PatientController::class, 'getCities'])->name('patients.getCities');
+
+    // خدمه الأشعه
+    Route::resource('radiologyServices',RadiologyServiceController::class);
+
+    // خدمه التحاليل
+    Route::resource('testsServices',TestsServiceController::class);
+
 });
 
 

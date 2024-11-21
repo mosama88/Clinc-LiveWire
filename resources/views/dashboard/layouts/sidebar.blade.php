@@ -231,6 +231,36 @@
                     </ul>
                 </li>
 
+                <li class="nav-item has-treeview    {{ request()->is('admin/radiologyServices*') ||request()->is('admin/testsServices*') ? 'menu-open' : '' }} ">
+                    <a href="{{ url('/') }}"
+                       class="nav-link {{ request()->is('radiologyServices*') ||request()->is('testsServices*') ? 'active' : '' }} ">
+
+                        <i class="fas fa-x-ray"></i>
+
+                        <p>
+                            قائمة الخدمات
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.radiologyServices.index') }}" class="nav-link @yield('active-radiologyServices')">
+                                <i class="fas fa-dot-circle"></i>
+                                <p>الاشعه</p>
+                            </a>
+
+                            <a href="{{ route('dashboard.testsServices.index') }}" class="nav-link @yield('active-testsServices')">
+                                <i class="fas fa-dot-circle"></i>
+                                <p>التحاليل</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
 
                 <li class="nav-item">
                     <a href="{{ url('/' . ($page = 'widgets')) }}" class="nav-link @yield('active-widgets')">
