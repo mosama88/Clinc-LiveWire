@@ -4,6 +4,13 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <style>
+        .font-w {
+            font-weight: 600;
+        }
+    </style>
+
 @endsection
 @section('active-patients', 'active')
 @section('page-header', ' أضافة مريض')
@@ -39,7 +46,7 @@
                             {{-- أسم المريض --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">أسم المريض</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                <input type="text" class="form-control font-w" name="name" value="{{ old('name') }}"
                                     id="exampleInputName" placeholder="أدخل اسم المريض">
                                 @error('name')
                                     <div class="alert alert-danger" role="alert">
@@ -51,7 +58,7 @@
                             {{-- الرقم القومى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الرقم القومى</label>
-                                <input type="text" class="form-control" name="national_id"
+                                <input type="text" class="form-control font-w" name="national_id"
                                     value="{{ old('national_id') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                     id="national_id" placeholder="أدخل الرقم القومى">
                                 @error('national_id')
@@ -64,7 +71,7 @@
                             {{-- البريد الالكترونى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">البريد الالكترونى</label>
-                                <input type="text" class="form-control" name="email" value="{{ old('email') }}"
+                                <input type="text" class="form-control font-w" name="email" value="{{ old('email') }}"
                                     id="exampleInputemail" placeholder="أدخل البريد الالكترونى">
                                 @error('email')
                                     <div class="alert alert-danger" role="alert">
@@ -76,7 +83,7 @@
                             {{-- تاريخ الميلاد --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">تاريخ الميلاد</label>
-                                <input type="date" class="form-control" name="date_of_birth"
+                                <input type="date" class="form-control font-w" name="date_of_birth"
                                     value="{{ old('date_of_birth') }}" id="date_of_birth">
                                 @error('date_of_birth')
                                     <div class="alert alert-danger" role="alert">
@@ -88,7 +95,7 @@
                             {{-- الموبايل --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الموبايل</label>
-                                <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}"
+                                <input type="text" class="form-control font-w" name="mobile" value="{{ old('mobile') }}"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile"
                                     placeholder="أدخل المويايل">
                                 @error('mobile')
@@ -101,7 +108,7 @@
                             {{-- موبايل آخر --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">موبايل آخر</label>
-                                <input type="text" class="form-control" name="alt_mobile"
+                                <input type="text" class="form-control font-w" name="alt_mobile"
                                     value="{{ old('alt_mobile') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                     id="alt_mobile" placeholder="أدخل المويايل">
                                 @error('alt_mobile')
@@ -114,7 +121,7 @@
                             {{-- العنوان --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">العنوان</label>
-                                <input type="text" class="form-control" name="address" value="{{ old('address') }}"
+                                <input type="text" class="form-control font-w" name="address" value="{{ old('address') }}"
                                     id="address" placeholder="أدخل .....">
                                 @error('address')
                                     <div class="alert alert-danger" role="alert">
@@ -126,7 +133,7 @@
                             {{-- جهة اتصال الطوارئ --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">جهة اتصال الطوارئ</label>
-                                <input type="text" class="form-control" name="emergency_contact"
+                                <input type="text" class="form-control font-w" name="emergency_contact"
                                     value="{{ old('emergency_contact') }}" id="emergency_contact" placeholder="أدخل .....">
                                 @error('emergency_contact')
                                     <div class="alert alert-danger" role="alert">
@@ -265,7 +272,7 @@
                             {{-- التاريخ المرضى --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">التاريخ المرضى</label>
-                                <textarea class="form-control" rows="3" name="medical_history" placeholder="أدخل ...">{{ old('medical_history') }}</textarea>
+                                <textarea class="form-control font-w" rows="3" name="medical_history" placeholder="أدخل ...">{{ old('medical_history') }}</textarea>
                                 @error('medical_history')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -276,7 +283,7 @@
                             {{-- هل هناك جراحات سابقة --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">هل هناك جراحات سابقة</label>
-                                <select class="form-control" name="are_previous_surgeries" id="are_previous_surgeries">
+                                <select class="form-control font-w" name="are_previous_surgeries" id="are_previous_surgeries">
                                     <option value="" selected>-- أختر --</option>
                                     <option @if (old('are_previous_surgeries' == 1)) selected @endif value="1">نعم</option>
                                     <option @if (old('are_previous_surgeries' == 0)) selected @endif value="0">لا</option>
@@ -290,7 +297,7 @@
 
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">اذكر تفاصيل جراحات سابقة</label>
-                                <textarea class="form-control" rows="3" name="previous_surgeries_details" placeholder="أدخل ...">{{ old('previous_surgeries_details') }}</textarea>
+                                <textarea class="form-control font-w" rows="3" name="previous_surgeries_details" placeholder="أدخل ...">{{ old('previous_surgeries_details') }}</textarea>
                                 @error('previous_surgeries_details')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -301,7 +308,7 @@
                             {{-- هل تاخذ علاج مزمن --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">هل تاخذ علاج مزمن</label>
-                                <select class="form-control" name="Do_you_take_therapy" id="Do_you_take_therapy">
+                                <select class="form-control font-w" name="Do_you_take_therapy" id="Do_you_take_therapy">
                                     <option value="" selected>-- أختر --</option>
                                     <option @if (old('Do_you_take_therapy' == 1)) selected @endif value="1">نعم</option>
                                     <option @if (old('Do_you_take_therapy' == 0)) selected @endif value="0">لا</option>
@@ -315,7 +322,7 @@
 
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">اذكر تفاصيل علاج مزمن</label>
-                                <textarea class="form-control" rows="3" name="take_therapy_details" placeholder="أدخل ...">{{ old('take_therapy_details') }}</textarea>
+                                <textarea class="form-control font-w" rows="3" name="take_therapy_details" placeholder="أدخل ...">{{ old('take_therapy_details') }}</textarea>
                                 @error('take_therapy_details')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -326,7 +333,7 @@
                             {{-- هل يوجد امراض مزمنه --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">هل يوجد امراض مزمنه</label>
-                                <select class="form-control" name="Do_you_chronic_diseases" id="Do_you_chronic_diseases">
+                                <select class="form-control font-w" name="Do_you_chronic_diseases" id="Do_you_chronic_diseases">
                                     <option value="" selected>-- أختر --</option>
                                     <option @if (old('Do_you_chronic_diseases' == 1)) selected @endif value="1">نعم</option>
                                     <option @if (old('Do_you_chronic_diseases' == 0)) selected @endif value="0">لا</option>
@@ -340,7 +347,7 @@
 
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">اذكر تفاصيل الامراض مزمنه</label>
-                                <textarea class="form-control" rows="3" name="hronic_diseases_details" placeholder="أدخل ...">{{ old('hronic_diseases_details') }}</textarea>
+                                <textarea class="form-control font-w" rows="3" name="hronic_diseases_details" placeholder="أدخل ...">{{ old('hronic_diseases_details') }}</textarea>
                                 @error('hronic_diseases_details')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}

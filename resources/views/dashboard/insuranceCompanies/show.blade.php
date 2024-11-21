@@ -1,10 +1,9 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'عرض بيانات طبيب')
+@section('admin_title', 'عرض شركة تامين')
 @section('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
     <style>
         .font-w {
             font-weight: 600;
@@ -12,10 +11,10 @@
     </style>
 @endsection
 @section('active-insuranceCompanies', 'active')
-@section('page-header', ' عرض بيانات طبيب')
-@section('page-header_desc', 'عرض بيانات طبيب')
+@section('page-header', ' عرض شركة تامين')
+@section('page-header_desc', 'عرض شركة تامين')
 @section('page-header_link')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard.doctors.index') }}">جدول الأطباء</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard.insuranceCompanies.index') }}">جدول شركة التأمين</a></li>
 @endsection
 @section('content')
 
@@ -31,231 +30,123 @@
         {{-- Content --}}
         <div class="col-md-12">
             <!-- general form elements -->
-            <div class="card card-info">
+            <div class="card card-primary">
                 <div class="card-header">
-                    <a href="{{ route('dashboard.doctors.edit', $data['id']) }}"
-                        style="float: left;background-color:#0b1a4370;" class="btn btn-secondary">تعديل
-                        البيانات
-                    </a>
+                    <h3 class="card-title">عرض شركة التامين</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
+                    <div class="card-body">
+                        <div class="row col-md-12">
 
-                <div class="card-body">
-
-                    @if ($data->image)
-                        <img class="img-thumbnail rounded me-2 my-3" alt="200x200" style="width: 150px; height:150px"
-                            src="{{ asset('dashboard/assets/uploads/Doctor/photo/' . $data->image->filename) }}"
-                            data-holder-rendered="true">
-                    @elseif(empty($data->image) && $data['gender'] == 1)
-                        <img alt="Responsive image" class="my-3" style="width: 150px; height:150px"
-                            src="{{ asset('dashboard/assets/uploads/male-doctor-default.jpg') }}">
-                    @else
-                        <img alt="Responsive image" class="my-3" style="width: 150px; height:150px"
-                            src="{{ asset('dashboard/assets/uploads/female-doctor-default.jpg') }}">
-                    @endif
+                            {{-- كود الشركة تامين --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">كود شركة تامين</label>
+                                <input disabled type="text" class="font-w form-control" name="company_code"
+                                       value="{{ old('company_code', $data['company_code']) }}" id="exampleInputName"
+                                       placeholder="أدخل اسم الشركة تامين">
+                            </div>
 
 
-                    <div class="row col-md-12">
+                            {{-- أسم الشركة تامين --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">أسم الشركة تامين</label>
+                                <input disabled type="text" class="font-w form-control" name="name"
+                                       value="{{ old('name', $data['name']) }}" id="exampleInputName"
+                                       placeholder="أدخل اسم الشركة تامين">
 
-                        {{-- كود الطبيب --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">كود الطبيب</label>
-                            <input disabled type="text" class="form-control font-w " name="doctor_code"
-                                value="{{ old('doctor_code', $data['doctor_code']) }}" id="exampleInputName"
-                                placeholder="أدخل اسم الطبيب">
-                            @error('doctor_code')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                            </div>
+
+                            {{-- البريد الالكترونى --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">البريد الالكترونى</label>
+                                <input disabled type="text" class="font-w form-control" name="email"
+                                       value="{{ old('email', $data['email']) }}" id="exampleInputemail"
+                                       placeholder="أدخل البريد الالكترونى">
+
+                            </div>
+
+                            {{-- أسم مندوب الشركه --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">أسم مندوب الشركه</label>
+                                <input disabled type="text" class="font-w form-control" name="contact_person"
+                                       value="{{ old('contact_person', $data['contact_person']) }}" id="contact_person"
+                                       placeholder="أدخل أسم مندوب الشركه">
+
+                            </div>
+
+                            {{-- رقم مندوب الشركه --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">رقم مندوب الشركه</label>
+                                <input disabled type="text" class="font-w form-control" name="mobile_person"
+                                       value="{{ old('mobile_person', $data['mobile_person']) }}"
+                                       oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile_person"
+                                       placeholder="أدخل المويايل">
+
+                            </div>
+
+                            {{-- هاتف العمل للشركه --}}
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputName">هاتف العمل للشركه</label>
+                                <input disabled type="text" class="font-w form-control" name="work_phone"
+                                       value="{{ old('work_phone', $data['work_phone']) }}"
+                                       oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="work_phone"
+                                       placeholder="أدخل المويايل">
+
+                            </div>
+
+                            {{-- العنوان --}}
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputName">العنوان</label>
+                                <input disabled type="text" class="font-w form-control" name="address"
+                                       value="{{ old('address', $data['address']) }}" id="address" placeholder="أدخل .....">
+
+                            </div>
+
+                            {{-- نسبة الخصم الممنوحه --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">نسبة الخصم الممنوحه</label><i class="fas fa-percent mr-2"></i>
+                                <input disabled type="text" class="font-w form-control" name="discount_rate"
+                                       value="{{ old('discount_rate', $data['discount_rate']) * 1 }}"
+                                       oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="discount_rate"
+                                       placeholder="نسبة الخصم">
+
+                            </div>
+
+
+                            {{-- المحافظة --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">المحافظة</label>
+                                <select disabled name="governorate_id" id="governorate_id" class="font-w form-control select2 font-w"
+                                        style="width: 100%;">
+                                    <option selected>-- أختر المحافظة --</option>
+                                    @if (!empty($other['governorates']) && isset($other['governorates']))
+                                        @foreach ($other['governorates'] as $governorate)
+                                            <option @if (old('governorate_id', $data['governorate_id']) == $governorate->id) selected="selected" @endif
+                                            value="{{ $governorate->id }}">{{ $governorate->name }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+
+                            </div>
+
+                            {{-- تفاصيل الاتفاقية --}}
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputName">تفاصيل الاتفاقية</label>
+                                <textarea disabled class="font-w form-control" rows="3" name="agreement_details" placeholder="أدخل ...">{{ old('agreement_details', $data['agreement_details']) }}</textarea>
+
+                            </div>
+
                         </div>
-
-
-                        {{-- أسم الطبيب --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">أسم الطبيب</label>
-                            <input disabled type="text" class="form-control font-w " name="name"
-                                value="{{ old('name', $data['name']) }}" id="exampleInputName"
-                                placeholder="أدخل اسم الطبيب">
-                            @error('name')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- الرقم القومى --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">الرقم القومى</label>
-                            <input disabled type="text" class="form-control font-w " name="national_id"
-                                value="{{ old('national_id', $data['national_id']) }}"
-                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="national_id"
-                                placeholder="أدخل الرقم القومى">
-                            @error('national_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- البريد الالكترونى --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">البريد الالكترونى</label>
-                            <input disabled type="text" class="form-control font-w " name="email"
-                                value="{{ old('email', $data['email']) }}" id="exampleInputemail"
-                                placeholder="أدخل البريد الالكترونى">
-                            @error('email')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- الموبايل --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">الموبايل</label>
-                            <input disabled type="text" class="form-control font-w " name="mobile"
-                                value="{{ old('mobile', $data['mobile']) }}"
-                                oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile"
-                                placeholder="أدخل المويايل">
-                            @error('mobile')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-                        {{-- العنوان --}}
-                        <div class="form-group col-md-12">
-                            <label for="exampleInputName">العنوان</label>
-                            <input disabled type="text" class="form-control font-w " name="address"
-                                value="{{ old('address', $data['address']) }}" id="address" placeholder="أدخل .....">
-                            @error('address')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-                        {{-- الجنس --}}
-                        <div class="form-group col-md-4">
-                            <label for="exampleInputName">الجنس</label>
-                            <select disabled name="gender" id="gender" class="form-control font-w ">
-                                <option selected>-- أختر الجنس --</option>
-                                <option @if (old('gender', $data['gender']) == 1) selected @endif value="1">ذكر</option>
-                                <option @if (old('gender', $data['gender']) == 2) selected @endif value="2">انثى</option>
-                            </select> @error('gender')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- القسم --}}
-                        <div class="form-group col-md-4">
-                            <label for="exampleInputName">القسم</label>
-                            <select disabled name="section_id" id="section_id"
-                                class="form-control font-w  select2 font-w" style="width: 100%;">
-                                <option selected>-- أختر القسم --</option>
-                                @if (!empty($other['sections']) && isset($other['sections']))
-                                    @foreach ($other['sections'] as $section)
-                                        <option @if (old('section_id', $data['section_id']) == $section->id) selected="selected" @endif
-                                            value="{{ $section->id }}">{{ $section->name }}</option>
-                                    @endforeach
-                                @else
-                                    لا توجد بيانات
-                                @endif
-                            </select>
-                            @error('section_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- التخصص --}}
-                        <div class="form-group col-md-4">
-                            <label for="exampleInputName">التخصص</label>
-                            <select disabled name="specialization_id" id="specialization_id"
-                                class="form-control font-w  select2 font-w" style="width: 100%;">
-                                <option selected>-- أختر التخصص --</option>
-                                @if (!empty($other['specializations']) && isset($other['specializations']))
-                                    @foreach ($other['specializations'] as $specialization)
-                                        <option @if (old('specialization_id', $data['specialization_id']) == $specialization->id) selected="selected" @endif
-                                            value="{{ $specialization->id }}">{{ $specialization->name }}</option>
-                                    @endforeach
-                                @else
-                                    لا توجد بيانات
-                                @endif
-                            </select>
-                            @error('section_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-
-                        {{-- الجنسية --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">الجنسية</label>
-                            <select disabled name="nationality_id" id="nationality_id"
-                                class="form-control font-w  select2 font-w" style="width: 100%;">
-                                <option selected>-- أختر الجنسية --</option>
-                                @if (!empty($other['nationalities']) && isset($other['nationalities']))
-                                    @foreach ($other['nationalities'] as $nationality)
-                                        <option @if (old('nationality_id', $data['nationality_id']) == $nationality->id) selected="selected" @endif
-                                            value="{{ $nationality->id }}">{{ $nationality->name }}</option>
-                                    @endforeach
-                                @else
-                                    لا توجد بيانات
-                                @endif
-                            </select>
-                            @error('section_id')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- درجة الدكتور الوظيفية --}}
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputName">درجة الدكتور الوظيفية</label>
-                            <input disabled type="text" class="form-control font-w " name="title"
-                                value="{{ old('title', $data['title']) }}" id="title" placeholder="أدخل .....">
-                            @error('title')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-                        {{-- تفاصيل --}}
-                        <div class="form-group col-md-12">
-                            <label for="exampleInputName">تفاصيل</label>
-                            <input disabled type="text" class="form-control font-w " name="details"
-                                value="{{ old('details', $data['details']) }}" id="details" placeholder="أدخل .....">
-                            @error('details')
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-                <!-- /.card -->
-
 
             </div>
+            <!-- /.card -->
+
+
         </div>
+    </div>
     </div>
     <!-- /.row -->
 
@@ -263,6 +154,36 @@
 
 @endsection
 @section('scripts')
+
+
+    <script>
+        // Get Cities When Governorate Changes
+        $(document).on('change', '#section_id', function() {
+            const section_id = $(this).val();
+            if (section_id) {
+                getSpecializations(section_id);
+            }
+        });
+
+        function getSpecializations(section_id) {
+            $.ajax({
+                url: '{{ route('dashboard.doctors.getSpecializations') }}',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    section_id: section_id
+                },
+                success: function(data) {
+                    $("#specialization_Div").html(data);
+                },
+                error: function() {
+                    alert("عفوا لقد حدث خطأ ");
+                }
+            });
+        }
+    </script>
 
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
@@ -276,12 +197,55 @@
     </script>
 
     <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
+        var loadFileLogo = function(event) {
+            var container = document.getElementById('output');
+            container.innerHTML = ''; // تفريغ المحتوى السابق
+
+            if (event.target.files[0]) {
+                var file = event.target.files[0];
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    var img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // ضبط تناسب الصورة
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img); // إضافة الصورة إلى العنصر
+                }
             }
         };
     </script>
+    <script>
+        var loadFiles = function(event) {
+            var files = event.target.files;
+            var container = document.getElementById('outputFilesContainer');
+            container.innerHTML = ''; // تفريغ الصور السابقة
+
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+
+                if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                    let img = document.createElement('img');
+                    img.className = 'rounded-circle avatar-xl mx-2';
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover'; // لضمان تناسب الصورة مع الإطار
+                    img.src = URL.createObjectURL(file);
+
+                    img.onload = function() {
+                        URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                    };
+
+                    container.appendChild(img);
+                }
+            }
+        };
+    </script>
+
+
 @endsection

@@ -4,6 +4,12 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <style>
+        .font-w {
+            font-weight: 600;
+        }
+    </style>
 @endsection
 @section('active-doctors', 'active')
 @section('page-header', ' أضافة طبيب')
@@ -39,7 +45,7 @@
                             {{-- أسم الطبيب --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">أسم الطبيب</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                <input type="text" class="form-control font-w" name="name" value="{{ old('name') }}"
                                     id="exampleInputName" placeholder="أدخل اسم الطبيب">
                                 @error('name')
                                     <div class="alert alert-danger" role="alert">
@@ -51,7 +57,7 @@
                             {{-- الرقم القومى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الرقم القومى</label>
-                                <input type="text" class="form-control" name="national_id"
+                                <input type="text" class="form-control font-w" name="national_id"
                                     value="{{ old('national_id') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                     id="national_id" placeholder="أدخل الرقم القومى">
                                 @error('national_id')
@@ -64,7 +70,7 @@
                             {{-- البريد الالكترونى --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">البريد الالكترونى</label>
-                                <input type="text" class="form-control" name="email" value="{{ old('email') }}"
+                                <input type="text" class="form-control font-w" name="email" value="{{ old('email') }}"
                                     id="exampleInputemail" placeholder="أدخل البريد الالكترونى">
                                 @error('email')
                                     <div class="alert alert-danger" role="alert">
@@ -76,7 +82,7 @@
                             {{-- الموبايل --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">الموبايل</label>
-                                <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}"
+                                <input type="text" class="form-control font-w" name="mobile" value="{{ old('mobile') }}"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="mobile"
                                     placeholder="أدخل المويايل">
                                 @error('mobile')
@@ -90,7 +96,7 @@
                             {{-- العنوان --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">العنوان</label>
-                                <input type="text" class="form-control" name="address" value="{{ old('address') }}"
+                                <input type="text" class="form-control font-w" name="address" value="{{ old('address') }}"
                                     id="address" placeholder="أدخل .....">
                                 @error('address')
                                     <div class="alert alert-danger" role="alert">
@@ -103,7 +109,7 @@
                             {{-- الجنس --}}
                             <div class="form-group col-md-4">
                                 <label for="exampleInputName">الجنس</label>
-                                <select name="gender" id="gender" class="form-control">
+                                <select name="gender" id="gender" class="form-control font-w">
                                     <option selected>-- أختر الجنس --</option>
                                     <option value="1">ذكر</option>
                                     <option value="2">انثى</option>
@@ -188,7 +194,7 @@
                             {{-- درجة الدكتور الوظيفية --}}
                             <div class="form-group col-md-6">
                                 <label for="exampleInputName">درجة الدكتور الوظيفية</label>
-                                <input type="text" class="form-control" name="title" value="{{ old('title') }}"
+                                <input type="text" class="form-control font-w" name="title" value="{{ old('title') }}"
                                     id="title" placeholder="أدخل .....">
                                 @error('title')
                                     <div class="alert alert-danger" role="alert">
@@ -200,7 +206,7 @@
                             {{-- تفاصيل --}}
                             <div class="form-group col-md-12">
                                 <label for="exampleInputName">تفاصيل</label>
-                                <input type="text" class="form-control" name="details" value="{{ old('details') }}"
+                                <input type="text" class="form-control font-w" name="details" value="{{ old('details') }}"
                                     id="details" placeholder="أدخل .....">
                                 @error('details')
                                     <div class="alert alert-danger" role="alert">

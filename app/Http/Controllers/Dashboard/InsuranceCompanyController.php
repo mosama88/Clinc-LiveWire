@@ -17,7 +17,7 @@ class InsuranceCompanyController extends Controller
     use UploadTrait;
 
 
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -53,10 +53,10 @@ class InsuranceCompanyController extends Controller
 
             $last_company_code = InsuranceCompany::where('com_code',$com_code)->orderBy('company_code','DESC')->value('company_code');
             $new_company_code = $last_company_code ? $last_company_code + 1 : 1;
-            
+
             DB::beginTransaction();
            $insertInsuranceCompany = new InsuranceCompany();
-           
+
            $insertInsuranceCompany['company_code'] = $new_company_code;
            $insertInsuranceCompany['name'] = $request->name;
            $insertInsuranceCompany['address'] = $request->address;
@@ -77,7 +77,7 @@ class InsuranceCompanyController extends Controller
 
            $this->verifyAndStoreArrayFiles($request, 'files', 'Insurance/photo/', 'upload_image', $insertInsuranceCompany->id, 'App\Models\InsuranceCompany');
 
-           
+
             DB::commit();
             return redirect()->route('dashboard.insuranceCompanies.index')->with('success', 'تم أضافة شركة التأمين بنجاح');
 
@@ -92,7 +92,10 @@ class InsuranceCompanyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = InsuranceCompany::findOrFail($id);
+        $other['governorates'] = Governorate::get();
+
+        return view('dashboard.insuranceCompanies.show',compact('data','other'));
     }
 
     /**
@@ -102,7 +105,7 @@ class InsuranceCompanyController extends Controller
     {
         $data = InsuranceCompany::findOrFail($id);
         $other['governorates'] = Governorate::get();
-    
+
         return view('dashboard.insuranceCompanies.edit',compact('data','other'));
     }
 
@@ -120,10 +123,10 @@ class InsuranceCompanyController extends Controller
 
             $last_company_code = InsuranceCompany::where('com_code',$com_code)->orderBy('company_code','DESC')->value('company_code');
             $new_company_code = $last_company_code ? $last_company_code + 1 : 1;
-            
+
             DB::beginTransaction();
            $updateInsuranceCompany = InsuranceCompany::findOrFail($id);
-           
+
            $updateInsuranceCompany['company_code'] = $new_company_code;
            $updateInsuranceCompany['name'] = $request->name;
            $updateInsuranceCompany['address'] = $request->address;
@@ -144,7 +147,7 @@ class InsuranceCompanyController extends Controller
 
            $this->verifyAndStoreArrayFiles($request, 'files', 'Insurance/photo/', 'upload_image', $updateInsuranceCompany->id, 'App\Models\InsuranceCompany');
 
-           
+
             DB::commit();
             return redirect()->route('dashboard.insuranceCompanies.index')->with('success', 'تم تعديل شركة التأمين بنجاح');
 
@@ -178,7 +181,7 @@ class InsuranceCompanyController extends Controller
         }
         DB::commit();
         return redirect()->route('dashboard.insuranceCompanies.index')->with('success', 'تم حذف البيانات بنجاح ' );
-  
+
     } catch (\Exception  $ex) {
         DB::rollback();
         return redirect()->route('dashboard.insuranceCompanies.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);

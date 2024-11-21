@@ -126,14 +126,14 @@
 
 
                             <a class="dropdown-item" type="button" class="btn btn-md btn-primary btn-flat"
-                               href="{{ route('dashboard.doctors.show', $info->id) }}">
+                               href="{{ route('dashboard.patients.show', $info->id) }}">
                                 <i class="fas fa-eye ml-2"></i>
                                 عرض بيانات
                             </a>
 
 
                             <a class="dropdown-item" type="button" class="btn btn-md btn-primary btn-flat"
-                               href="{{ route('dashboard.doctors.edit', $info->id) }}">
+                               href="{{ route('dashboard.patients.edit', $info->id) }}">
                                 <i class="fas fa-edit ml-2"></i>
                                 تعديل
                             </a>
@@ -146,7 +146,7 @@
 
                         </div>
                     </div>
-                    @include('dashboard.doctors.delete')
+                    @include('dashboard.patients.delete')
                 </td>
 
             </tr>

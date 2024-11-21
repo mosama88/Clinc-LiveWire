@@ -56,37 +56,37 @@ class PatientController extends Controller
             }
 
             DB::beginTransaction();
-            $patient = new Patient();
+            $insertPatient = new Patient();
 
             $lastPatientCode = Patient::where('com_code',$com_code)->orderBy('id','DESC')->value('patient_code');
             $newPatientCode = $lastPatientCode ? $lastPatientCode +1:1;
 
-            $patient['patient_code'] = $newPatientCode;
-            $patient['name'] = $request->name;
-            $patient['national_id'] = $request->national_id;
-            $patient['mobile'] = $request->mobile;
-            $patient['alt_mobile'] = $request->alt_mobile;
-            $patient['address'] = $request->address;
-            $patient['emergency_contact'] = $request->emergency_contact;
-            $patient['email'] = $request->email;
-            $patient['date_of_birth'] = $request->date_of_birth;
-            $patient['gender'] = $request->gender;
-            $patient['insurance_id'] = $request->insurance_id;
-            $patient['governorate_id'] = $request->governorate_id;
-            $patient['city_id'] = $request->city_id;
-            $patient['nationality_id'] = $request->nationality_id;
-            $patient['blood_type_id'] = $request->blood_type_id;
-            $patient['medical_history'] = $request->medical_history;
-            $patient['are_previous_surgeries'] = $request->are_previous_surgeries;
-            $patient['previous_surgeries_details'] = $request->previous_surgeries_details;
-            $patient['Do_you_take_therapy'] = $request->Do_you_take_therapy;
-            $patient['take_therapy_details'] = $request->take_therapy_details;
-            $patient['Do_you_chronic_diseases'] = $request->Do_you_chronic_diseases;
-            $patient['chronic_diseases_details'] = $request->chronic_diseases_details;
-            $patient['notes'] = $request->notes;
-            $patient['created_by'] = auth()->user()->id;
-            $patient['com_code'] = $com_code;
-            $patient->save();
+            $insertPatient['patient_code'] = $newPatientCode;
+            $insertPatient['name'] = $request->name;
+            $insertPatient['national_id'] = $request->national_id;
+            $insertPatient['mobile'] = $request->mobile;
+            $insertPatient['alt_mobile'] = $request->alt_mobile;
+            $insertPatient['address'] = $request->address;
+            $insertPatient['emergency_contact'] = $request->emergency_contact;
+            $insertPatient['email'] = $request->email;
+            $insertPatient['date_of_birth'] = $request->date_of_birth;
+            $insertPatient['gender'] = $request->gender;
+            $insertPatient['insurance_id'] = $request->insurance_id;
+            $insertPatient['governorate_id'] = $request->governorate_id;
+            $insertPatient['city_id'] = $request->city_id;
+            $insertPatient['nationality_id'] = $request->nationality_id;
+            $insertPatient['blood_type_id'] = $request->blood_type_id;
+            $insertPatient['medical_history'] = $request->medical_history;
+            $insertPatient['are_previous_surgeries'] = $request->are_previous_surgeries;
+            $insertPatient['previous_surgeries_details'] = $request->previous_surgeries_details;
+            $insertPatient['Do_you_take_therapy'] = $request->Do_you_take_therapy;
+            $insertPatient['take_therapy_details'] = $request->take_therapy_details;
+            $insertPatient['Do_you_chronic_diseases'] = $request->Do_you_chronic_diseases;
+            $insertPatient['chronic_diseases_details'] = $request->chronic_diseases_details;
+            $insertPatient['notes'] = $request->notes;
+            $insertPatient['created_by'] = auth()->user()->id;
+            $insertPatient['com_code'] = $com_code;
+            $insertPatient->save();
             DB::commit();
             return redirect()->route('dashboard.patients.index')->with('success', 'تم أضافة المريض بنجاح');
 
@@ -101,7 +101,13 @@ class PatientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $info = Patient::findOrFail($id);
+        $other['nationalities'] = Nationality::get();
+        $other['blood_types'] = BloodTypes::get();
+        $other['governorates'] = Governorate::get();
+        $other['cities'] = City::get();
+        $other['insurance_companies'] = InsuranceCompany::get();
+        return view('dashboard.patients.show',compact('other','info'));
     }
 
     /**
@@ -109,7 +115,13 @@ class PatientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $info = Patient::findOrFail($id);
+        $other['nationalities'] = Nationality::get();
+        $other['blood_types'] = BloodTypes::get();
+        $other['governorates'] = Governorate::get();
+        $other['cities'] = City::get();
+        $other['insurance_companies'] = InsuranceCompany::get();
+        return view('dashboard.patients.edit',compact('other','info'));
     }
 
     /**
@@ -117,7 +129,52 @@ class PatientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            $com_code = auth()->user()->com_code;
+            $checkExistsName = Patient::select('id')->where('com_code',$com_code)->where('national_id',$request->national_id)->where('id','!=',$id,)->first();
+            if(!empty($checkExistsName)){
+                return redirect()->route('dashboard.patients.index')->withErrors(['error' => 'عفوآ المريض  مسجل من قبل !!'])->withInput();
+            }
+
+            DB::beginTransaction();
+            $updatePatient = new Patient();
+
+            $lastPatientCode = Patient::where('com_code',$com_code)->orderBy('id','DESC')->value('patient_code');
+            $newPatientCode = $lastPatientCode ? $lastPatientCode +1:1;
+
+            $updatePatient['patient_code'] = $newPatientCode;
+            $updatePatient['name'] = $request->name;
+            $updatePatient['national_id'] = $request->national_id;
+            $updatePatient['mobile'] = $request->mobile;
+            $updatePatient['alt_mobile'] = $request->alt_mobile;
+            $updatePatient['address'] = $request->address;
+            $updatePatient['emergency_contact'] = $request->emergency_contact;
+            $updatePatient['email'] = $request->email;
+            $updatePatient['date_of_birth'] = $request->date_of_birth;
+            $updatePatient['gender'] = $request->gender;
+            $updatePatient['insurance_id'] = $request->insurance_id;
+            $updatePatient['governorate_id'] = $request->governorate_id;
+            $updatePatient['city_id'] = $request->city_id;
+            $updatePatient['nationality_id'] = $request->nationality_id;
+            $updatePatient['blood_type_id'] = $request->blood_type_id;
+            $updatePatient['medical_history'] = $request->medical_history;
+            $updatePatient['are_previous_surgeries'] = $request->are_previous_surgeries;
+            $updatePatient['previous_surgeries_details'] = $request->previous_surgeries_details;
+            $updatePatient['Do_you_take_therapy'] = $request->Do_you_take_therapy;
+            $updatePatient['take_therapy_details'] = $request->take_therapy_details;
+            $updatePatient['Do_you_chronic_diseases'] = $request->Do_you_chronic_diseases;
+            $updatePatient['chronic_diseases_details'] = $request->chronic_diseases_details;
+            $updatePatient['notes'] = $request->notes;
+            $updatePatient['created_by'] = auth()->user()->id;
+            $updatePatient['com_code'] = $com_code;
+            $updatePatient->save();
+            DB::commit();
+            return redirect()->route('dashboard.patients.index')->with('success', 'تم تعديل المريض بنجاح');
+
+        }catch(\Exception  $ex){
+            DB::rollback();
+            return redirect()->route('dashboard.patients.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+        }
     }
 
     /**
