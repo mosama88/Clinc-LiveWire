@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'الفروع')
+@section('admin_title', 'خدمات الاشعه')
 @section('css')
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 @endsection
 @section('active-radiologyServices', 'active')
-@section('page-header', 'جدول الفروع')
-@section('page-header_desc', 'جدول الفروع')
+@section('page-header', 'جدول خدمات الاشعه')
+@section('page-header_desc', 'جدول خدمات الاشعه')
 @section('page-header_link')
     <li class="breadcrumb-item"><a href="{{ url('/') }}">لوحة التحكم</a></li>
 @endsection
@@ -30,14 +30,14 @@
             {{-- Content --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">جدول الفروع</h3>
+                    <h3 class="card-title">جدول خدمات الاشعه</h3>
                 </div>
                 <div class="card-header">
                     <button type="button" class="btn btn-md btn-primary btn-flat" data-toggle="modal"
                         data-target="#modal-default">
-                        <i class="fas fa-plus ml-2"></i> أضافة فرع جديد
+                        <i class="fas fa-plus ml-2"></i> أضافة أشعه جديدة
                     </button>
-                    @include('dashboard.settings.branches.create')
+                    @include('dashboard.radiologyServices.create')
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-2">
@@ -45,13 +45,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th>أسم الفرع</th>
-                                <th> عنوان</th>
-                                <th> تليفون</th>
-                                <th>البريد الالكترونى</th>
-                                <th>المحافظة</th>
-                                <th>المدينة</th>
-                                <th>الحالة</th>
+                                <th>كود الأشعه</th>
+                                <th>أسم الأشعه</th>
+                                <th> السعر</th>
+                                <th> الحالة</th>
+                                <th>ملاحظات</th>
                                 <th>أضافة بواسطة</th>
                                 <th>تعديل بواسطة</th>
                                 <th>العمليات</th>
@@ -63,12 +61,9 @@
                                 <?php $i++; ?>
                                 <tr>
                                     <td>{{ $i }}</td>
+                                    <td>{{ $info['radiology_code'] }}</td>
                                     <td>{{ $info['name'] }}</td>
-                                    <td>{{ Str::limit($info['address'], 20) }}</td>
-                                    <td>{{ $info['phone'] }}</td>
-                                    <td>{{ $info['email'] }}</td>
-                                    <td>{{ $info->governorate->name }}</td>
-                                    <td>{{ $info->city->name }}</td>
+                                    <td>{{ $info['price']*1 }} </td>
                                     <td>
                                         @if ($info->status == 1)
                                             مفعل
@@ -76,6 +71,7 @@
                                             غير مفعل
                                         @endif
                                     </td>
+                                    <td>{{ Str::limit($info['notes'], 20) }}</td>
                                     <td>{{ $info->createdBy->name }}</td>
                                     <td>
                                         @if ($info->updated_by > 0)
@@ -112,8 +108,8 @@
 
                                             </div>
                                         </div>
-                                        @include('dashboard.settings.branches.delete')
-                                        @include('dashboard.settings.branches.edit')
+                                        @include('dashboard.radiologyServices.delete')
+                                        @include('dashboard.radiologyServices.edit')
                                     </td>
 
                                 </tr>
@@ -160,34 +156,6 @@
         });
     </script>
 
-    <script>
-        // Get Cities When Governorate Changes
-        $(document).on('change', '#governorate_id', function() {
-            const governorate_id = $(this).val();
-            if (governorate_id) {
-                getCities(governorate_id);
-            }
-        });
-
-        function getCities(governorate_id) {
-            $.ajax({
-                url: '{{ route('dashboard.branches.getCities') }}',
-                type: 'POST',
-                dataType: 'html',
-                cache: false,
-                data: {
-                    "_token": '{{ csrf_token() }}',
-                    governorate_id: governorate_id
-                },
-                success: function(data) {
-                    $("#city_Div").html(data);
-                },
-                error: function() {
-                    alert("عفوا لقد حدث خطأ ");
-                }
-            });
-        }
-    </script>
 
 <script>
     $(function() {

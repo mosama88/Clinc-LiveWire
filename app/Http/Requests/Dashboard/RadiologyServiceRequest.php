@@ -11,7 +11,7 @@ class RadiologyServiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class RadiologyServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:100|',
+            'price' => 'required',
+            'notes' => 'required|string|max:1500',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => "يرجى كتابة اسم خدمه الاشعه",
+            'name.max' => "اسم خدمه الاشعه يجب ألا يزيد عن الحد 50 المسموح",
+            'price.required' => 'حقل السعر مطلوب.',
+            'notes.required' => 'حقل الملاحظات مطلوب.',
+            'notes.string' => 'يجب أن تكون الملاحظات نصًا صحيحًا.',
+            'notes.max' => 'يجب ألا تزيد الملاحظات عن 1500 حرف.'
+
         ];
     }
 }
