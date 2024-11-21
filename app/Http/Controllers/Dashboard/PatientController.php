@@ -182,7 +182,19 @@ class PatientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $com_code = auth()->user()->com_code;
+            DB::beginTransaction();
+            $DeletePatient = Patient::findOrFail($id);
+            $DeletePatient->delete();
+            DB::commit();
+            return redirect()->route('dashboard.patients.index')->with('success', 'تم حذف المريض بنجاح');
+
+        }catch(\Exception  $ex){
+            DB::rollback();
+            return redirect()->route('dashboard.patients.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+        }
+
     }
 
     public function getCities(Request $request){
