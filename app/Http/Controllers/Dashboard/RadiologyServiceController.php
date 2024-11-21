@@ -17,7 +17,7 @@ class RadiologyServiceController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = RadiologyService::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
-        return view('dashboard.radiologyServices.index',compact('data'));
+        return view('dashboard.settings.radiologyServices.index',compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class RadiologyServiceController extends Controller
      */
     public function create()
     {
-        return view('dashboard.radiologyServices.create');
+        return view('dashboard.settings.radiologyServices.create');
     }
 
     /**
@@ -74,7 +74,7 @@ class RadiologyServiceController extends Controller
     public function edit(string $id)
     {
         $info = RadiologyService::findOrFail($id);
-        return view('dashboard.radiologyServices.edit',compact('info'));
+        return view('dashboard.settings.radiologyServices.edit',compact('info'));
 
     }
 

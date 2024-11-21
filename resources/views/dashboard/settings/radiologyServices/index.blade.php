@@ -37,7 +37,7 @@
                         data-target="#modal-default">
                         <i class="fas fa-plus ml-2"></i> أضافة أشعه جديدة
                     </button>
-                    @include('dashboard.radiologyServices.create')
+                    @include('dashboard.settings.radiologyServices.create')
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-2">
@@ -108,8 +108,8 @@
 
                                             </div>
                                         </div>
-                                        @include('dashboard.radiologyServices.delete')
-                                        @include('dashboard.radiologyServices.edit')
+                                        @include('dashboard.settings.radiologyServices.delete')
+                                        @include('dashboard.settings.radiologyServices.edit')
                                     </td>
 
                                 </tr>

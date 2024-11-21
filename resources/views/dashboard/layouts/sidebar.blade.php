@@ -34,9 +34,9 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item has-treeview    {{ request()->is('admin/BloodTypes*') || request()->is('admin/shiftTypes*') || request()->is('admin/admin_panels*') || request()->is('admin/countries*') || request()->is('admin/cities*') || request()->is('admin/departments*') || request()->is('admin/branches*') || request()->is('admin/nationalities*') || request()->is('admin/sections*') || request()->is('admin/specializations*') || request()->is('admin/qualifications*') || request()->is('admin/jobCategories*') || request()->is('admin/jobGrades*') ? 'menu-open' : '' }} ">
+                    class="nav-item has-treeview    {{ request()->is('admin/BloodTypes*') || request()->is('admin/testsServices*')|| request()->is('admin/radiologyServices*')|| request()->is('admin/shiftTypes*') || request()->is('admin/admin_panels*') || request()->is('admin/countries*') || request()->is('admin/cities*') || request()->is('admin/departments*') || request()->is('admin/branches*') || request()->is('admin/nationalities*') || request()->is('admin/sections*') || request()->is('admin/specializations*') || request()->is('admin/qualifications*') || request()->is('admin/jobCategories*') || request()->is('admin/jobGrades*') ? 'menu-open' : '' }} ">
                     <a href="{{ url('/') }}"
-                        class="nav-link {{ request()->is('BloodTypes*') || request()->is('admin_panels*') || request()->is('shiftTypes*') || request()->is('countries*') || request()->is('cities*') || request()->is('branches*') || request()->is('nationalities*') || request()->is('departments*') || request()->is('specializations*') || request()->is('sections*') || request()->is('qualifications*') || request()->is('jobCategories*') || request()->is('jobGrades*') ? 'active' : '' }} ">
+                        class="nav-link {{ request()->is('BloodTypes*') || request()->is('admin_panels*')|| request()->is('testsServices*')|| request()->is('radiologyServices*') || request()->is('shiftTypes*') || request()->is('countries*') || request()->is('cities*') || request()->is('branches*') || request()->is('nationalities*') || request()->is('departments*') || request()->is('specializations*') || request()->is('sections*') || request()->is('qualifications*') || request()->is('jobCategories*') || request()->is('jobGrades*') ? 'active' : '' }} ">
 
                         <i class="fas fa-cog"></i>
                         <p>
@@ -126,6 +126,18 @@
                             <a href="{{ route('dashboard.shiftTypes.index') }}" class="nav-link @yield('active-shiftTypes')">
                                 <i class="fas fa-dot-circle"></i>
                                 <p>الشفتات</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.radiologyServices.index') }}" class="nav-link @yield('active-radiologyServices')">
+                                <i class="fas fa-dot-circle"></i>
+                                <p>الاشعه</p>
+                            </a>
+
+                            <a href="{{ route('dashboard.testsServices.index') }}" class="nav-link @yield('active-testsServices')">
+                                <i class="fas fa-dot-circle"></i>
+                                <p>التحاليل</p>
                             </a>
                         </li>
                     </ul>

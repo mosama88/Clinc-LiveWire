@@ -35,9 +35,9 @@
                 <div class="card-header">
                     <button type="button" class="btn btn-md btn-primary btn-flat" data-toggle="modal"
                             data-target="#modal-default">
-                        <i class="fas fa-plus ml-2"></i> أضافة أشعه جديدة
+                        <i class="fas fa-plus ml-2"></i> أضافة تحاليل جديدة
                     </button>
-                    @include('dashboard.testsServices.create')
+                    @include('dashboard.settings.testsServices.create')
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-2">
@@ -108,8 +108,8 @@
 
                                         </div>
                                     </div>
-                                    @include('dashboard.testsServices.delete')
-                                    @include('dashboard.testsServices.edit')
+                                    @include('dashboard.settings.testsServices.delete')
+                                    @include('dashboard.settings.testsServices.edit')
                                 </td>
 
                             </tr>
