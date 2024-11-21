@@ -17,6 +17,12 @@
                 placeholder="أبحث بكود الموظف">
         </div>
 
+        {{-- رقم قومى --}}
+        <div class="form-group col-4">
+            <input type="text" class="form-control font-w" wire:model.live="search_national_id"
+                   oninput="this.value=this.value.replace(/[^0-9.]/g,'');" id="national_id"
+                   placeholder="أبحث برقم قومى">
+        </div>
 
         <div class="form-group col-4">
             <select wire:model.live="search_gender" id="gender" class="form-control font-w">

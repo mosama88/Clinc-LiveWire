@@ -104,9 +104,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
 
     // شركات التأمين
     Route::resource('insuranceCompanies',  InsuranceCompanyController::class);
-    
+
     // المرضى
     Route::resource('patients',  PatientController::class);
+    Route::post('patients/getCities', [PatientController::class, 'getCities'])->name('patients.getCities');
 });
 
 

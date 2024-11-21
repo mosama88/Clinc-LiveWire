@@ -16,7 +16,11 @@ class SearchDoctorComponent extends Component
 
     public $search_name = "";
     public $search_doctor_code = "";
+
+    public $search_national_id = "";
+
     public $search_gender = "";
+
     public $search_title = "";
     public $search_section_id = "";
     public $search_specialization = "";
@@ -25,6 +29,7 @@ class SearchDoctorComponent extends Component
 
     protected $queryString = [
         'search_name' => ['sa' => 'اسم الدكتور'],
+        'search_national_id' => ['sa' => 'رقم قومى'],
         'search_gender' => ['sa' => 'الجنس'],
         'search_doctor_code' => ['sa', 'كود الدكتور'],
         'search_title' => ['sa' => 'درجة الدكتور الوظيفية'],
@@ -64,6 +69,10 @@ class SearchDoctorComponent extends Component
 
         if ($this->search_gender) {
             $query->where('gender', 'like', '%' . $this->search_gender . '%');
+        }
+
+        if ($this->search_national_id) {
+            $query->where('national_id', 'like', '%' . $this->search_national_id . '%');
         }
 
         if ($this->search_title) {

@@ -158,7 +158,7 @@
                             </div>
 
                             {{-- المدينه --}}
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" id="city_Div">
                                 <label for="exampleInputName">المدينه</label>
                                 <select name="city_id" id="city_id" class="form-control select2 font-w"
                                     style="width: 100%;">
@@ -245,17 +245,20 @@
                                 @enderror
                             </div>
 
-                            {{-- الجنس --}}
-                            <div class="form-group col-md-4">
-                                <label for="exampleInputName">الجنس</label>
-                                <select name="gender" id="gender" class="form-control">
-                                    <option selected>-- أختر الجنس --</option>
-                                    <option value="1">ذكر</option>
-                                    <option value="2">انثى</option>
-                                </select> @error('gender')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
+                            {{-- نوع الجنس --}}
+                            <div class="form-group col-4">
+                                <label for="exampleInput">نوع الجنس</label>
+                                <select name="gender" id="gender" class="form-control font-w">
+                                    <option value="" disabled selected>-- برجاء تحديد نوع الجنس --</option>
+                                    <option @if (old('gender') == 1) selected @endif value="1">ذكر
+                                    </option>
+                                    <option @if (old('gender') == 2) selected @endif value="2">أنثى
+                                    </option>
+                                </select>
+                                @error('gender')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
 
@@ -367,36 +370,6 @@
 @endsection
 @section('scripts')
 
-
-    <script>
-        // Get Cities When Governorate Changes
-        $(document).on('change', '#section_id', function() {
-            const section_id = $(this).val();
-            if (section_id) {
-                getSpecializations(section_id);
-            }
-        });
-
-        function getSpecializations(section_id) {
-            $.ajax({
-                url: '{{ route('dashboard.doctors.getSpecializations') }}',
-                type: 'POST',
-                dataType: 'html',
-                cache: false,
-                data: {
-                    "_token": '{{ csrf_token() }}',
-                    section_id: section_id
-                },
-                success: function(data) {
-                    $("#specialization_Div").html(data);
-                },
-                error: function() {
-                    alert("عفوا لقد حدث خطأ ");
-                }
-            });
-        }
-    </script>
-
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
 
@@ -416,5 +389,33 @@
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
+    </script>
+    <script>
+        $(document).on('change', '#governorate_id', function() {
+            let governorate_id = $(this).val();
+            if (governorate_id) {
+                getCities(governorate_id);
+            }
+        });
+
+        function getCities(governorate_id) {
+            $.ajax({
+                url: '{{ route('dashboard.patients.getCities') }}',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                data: {
+                    "_token": '{{ csrf_token() }}',
+                    governorate_id: governorate_id,
+                },
+                success: function(data) {
+                    $("#city_Div").html(data);
+                },
+                error: function() {
+                    alert("عفوا لقد حدث خطأ ");
+                }
+
+            });
+        }
     </script>
 @endsection

@@ -22,7 +22,7 @@ class EmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:50',
+            'name' => 'required|string|max:50',
             'email' => 'required|email|max:50', // تعديل في حقل البريد الإلكتروني
             'brith_date' => 'required|date',
             'gender' => 'required',
@@ -41,7 +41,7 @@ class EmployeeRequest extends FormRequest
             'major' => 'required|string|max:100',
             'graduation_estimate' => 'nullable|in:fair,good,very_good,excellent',
             'university' => 'nullable|string|max:100',
-            'national_id' => 'required|max:14', // تعديل في حقل البريد الإلكتروني
+            'national_id' => 'required|max:14',
             'military' => 'required|in:exemption,exemption_temporary,complete,have_not',
             'military_date_from' => 'nullable|date',
             'military_date_to' => 'nullable|date|after:military_date_from',
@@ -86,8 +86,8 @@ class EmployeeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => "يرجى كتابة اسم الفرع",
-            'name.max' => "اسم الفرع يجب ألا يزيد عن 50 حرفًا",
+            'name.required' => "يرجى كتابة اسم الموظف",
+            'name.max' => "اسم الموظف يجب ألا يزيد عن 50 حرفًا",
 
             'email.required' => "يرجى كتابة البريد الإلكتروني",
             'email.email' => "يرجى إدخال بريد إلكتروني صحيح",

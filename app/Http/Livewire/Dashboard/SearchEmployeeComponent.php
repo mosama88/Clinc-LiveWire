@@ -25,7 +25,10 @@ use App\Models\Qualification;
 
 public $search_name = '';
 public $search_employee_code = '';
+public $search_national_id = "";
+
 public $search_gender = '';
+
 public $search_nationality_id = '';
 public $search_department_id = '';
 public $search_branch_id = '';
@@ -33,6 +36,7 @@ public $search_branch_id = '';
 protected $queryString = [
     'search_name'=>['as'=>'اسم الموظف'],
     'search_employee_code'=>['as'=>'كود_الموظف'],
+    'search_national_id' => ['sa' => 'رقم قومى'],
     'search_gender'=>['as'=>'نوع الجنس '],
     'search_nationality_id'=>['as'=>'جنسية_الموظف'],
     'search_department_id'=>['as'=>'ادارة الموظف'],
@@ -64,6 +68,10 @@ public function render()
         $query->where('employee_code', $this->search_employee_code);
     }
 
+    if ($this->search_national_id) {
+        $query->where('national_id', 'like', '%' . $this->search_national_id . '%');
+    }
+
     if ($this->search_gender) {
         $query->where('gender', $this->search_gender);
     }
@@ -84,7 +92,7 @@ public function render()
     $data = $query->orderBy('id','DESC')->paginate(10);
 
 
- 
+
     // Fetch other data for filters
     $other = [
         'nationalities' => Nationality::all(),

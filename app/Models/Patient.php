@@ -24,6 +24,11 @@ class Patient extends Model
         return $this->belongsTo(Admin::class, 'updated_by');
     }
 
+    public function insurance()
+    {
+        return $this->belongsTo(InsuranceCompany::class, 'insurance_id');
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
@@ -37,6 +42,11 @@ class Patient extends Model
     public function nationality()
     {
         return $this->belongsTo(Nationality::class, 'nationality_id');
+    }
+
+    public function getAgeAttribute()
+    {
+        return now()->diffInYears($this->date_of_birth);
     }
 
 

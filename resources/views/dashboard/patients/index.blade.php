@@ -35,14 +35,12 @@
                 </div>
                 <div class="card-header">
                     {{-- <Search Location --}}
-                    @livewire('search-patient-component')
-                    {{-- Search Location /> --}}
+
+
+                       @livewire('search-patient-component')
+
+
                 </div>
-
-
-            </div>
-
-        </div>
 
     </div>
     <!-- /.row -->

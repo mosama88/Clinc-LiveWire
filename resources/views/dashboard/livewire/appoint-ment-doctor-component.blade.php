@@ -168,7 +168,7 @@
         </table>
         <hr>
         <div class="col-12">
-            {{ $data->render('pagination::bootstrap-5') }}
+            {{ $data->links() }}
         </div>
 
     </div>
