@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Dashboard\RadiologyServiceController;
+use App\Http\Controllers\Dashboard\SingleRadiologyServiceController;
+use App\Http\Controllers\Dashboard\SingleTestsServiceController;
 use App\Http\Controllers\Dashboard\TestsServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -85,6 +87,12 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
         // الشفتات
     Route::resource('shiftTypes', ShiftTypeController::class);
 
+    // خدمه الأشعه
+    Route::resource('radiologyServices',RadiologyServiceController::class);
+
+    // خدمه التحاليل
+    Route::resource('testsServices',TestsServiceController::class);
+
     // الفروع
     Route::resource('branches',  BranchController::class);
     Route::post('branches/getCities', [BranchController::class, 'getCities'])->name('branches.getCities');
@@ -110,11 +118,9 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     Route::resource('patients',  PatientController::class);
     Route::post('patients/getCities', [PatientController::class, 'getCities'])->name('patients.getCities');
 
-    // خدمه الأشعه
-    Route::resource('radiologyServices',RadiologyServiceController::class);
+    Route::resource('singleRadiologyServices',  SingleRadiologyServiceController::class);
+    Route::resource('singleTestsServices',  SingleTestsServiceController::class);
 
-    // خدمه التحاليل
-    Route::resource('testsServices',TestsServiceController::class);
 
 });
 

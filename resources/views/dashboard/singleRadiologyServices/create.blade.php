@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'أضافة شركة تامين')
+@section('admin_title', 'حجز أشعه جديده')
 @section('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
@@ -11,8 +11,8 @@
     </style>
 @endsection
 @section('active-insuranceCompanies', 'active')
-@section('page-header', ' أضافة شركة تامين')
-@section('page-header_desc', 'أضافة شركة تامين')
+@section('page-header', ' حجز أشعه جديده')
+@section('page-header_desc', 'حجز أشعه جديده')
 @section('page-header_link')
     <li class="breadcrumb-item"><a href="{{ route('dashboard.insuranceCompanies.index') }}">جدول شركة التأمين</a></li>
 @endsection
@@ -32,24 +32,34 @@
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">أضف شركة تامين</h3>
+                    <h3 class="card-title">أحجز أشعه جديده</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="{{ route('dashboard.insuranceCompanies.store') }}" method="POST" role="form"
+                <form action="{{ route('dashboard.singleRadiologyServices.store') }}" method="POST" role="form"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row col-md-12">
-                            {{-- أسم الشركة تامين --}}
-                            <div class="form-group col-md-6">
-                                <label for="exampleInputName">أسم الشركة تامين</label>
-                                <input type="text" class="font-w form-control" name="name" value="{{ old('name') }}"
-                                    id="exampleInputName" placeholder="أدخل اسم الشركة تامين">
-                                @error('name')
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ $message }}
-                                    </div>
+                            {{-- المحافظة --}}
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="exampleInputName">المحافظة</label>
+                                <select name="governorate_id" id="governorate_id" class="font-w form-control select2 font-w"
+                                        style="width: 100%;">
+                                    <option selected>-- أختر المحافظة --</option>
+                                    @if (!empty($other['governorates']) && isset($other['governorates']))
+                                        @foreach ($other['governorates'] as $governorate)
+                                            <option @if (old('governorate_id') == $governorate->id) selected="selected" @endif
+                                            value="{{ $governorate->id }}">{{ $governorate->name }}</option>
+                                        @endforeach
+                                    @else
+                                        لا توجد بيانات
+                                    @endif
+                                </select>
+                                @error('governorate_id')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
 

@@ -1,10 +1,10 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'شركات التأمين')
+@section('admin_title', 'حجز الاشعه')
 @section('css')
 @endsection
-@section('active-insuranceCompanies', 'active')
-@section('page-header', 'جدول شركات التأمين')
-@section('page-header_desc', 'جدول شركات التأمين')
+@section('active-singleRadiologyServices', 'active')
+@section('page-header', 'جدول حجوزات الاشعه')
+@section('page-header_desc', 'جدول حجوزات الاشعه')
 @section('page-header_link')
     <li class="breadcrumb-item">
         <a href="{{ url('/') }}">لوحة التحكم</a>
@@ -30,9 +30,9 @@
             {{-- Content --}}
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('dashboard.insuranceCompanies.create') }}" type="button"
+                    <a href="{{ route('dashboard.singleRadiologyServices.create') }}" type="button"
                         class="btn btn-md btn-primary btn-flat">
-                        <i class="fas fa-plus ml-2"></i> أضافة شركة تأمين جديدة
+                        <i class="fas fa-plus ml-2"></i> أضافة حجز أشعه جديدة
                     </a>
                 </div>
                 <div class="card-header">
@@ -170,7 +170,7 @@
 
                                                 <a class="dropdown-item" type="button"
                                                     class="btn btn-md btn-primary btn-flat"
-                                                    href="{{ route('dashboard.insuranceCompanies.show', $info->id) }}">
+                                                    href="{{ route('dashboard.singleRadiologyServices.show', $info->id) }}">
                                                     <i class="fas fa-eye ml-2"></i>
                                                     عرض بيانات
                                                 </a>
@@ -178,7 +178,7 @@
 
                                                 <a class="dropdown-item" type="button"
                                                     class="btn btn-md btn-primary btn-flat"
-                                                    href="{{ route('dashboard.insuranceCompanies.edit', $info->id) }}">
+                                                    href="{{ route('dashboard.singleRadiologyServices.edit', $info->id) }}">
                                                     <i class="fas fa-edit ml-2"></i>
                                                     تعديل
                                                 </a>
@@ -192,7 +192,7 @@
 
                                             </div>
                                         </div>
-                                        @include('dashboard.insuranceCompanies.delete')
+                                        @include('dashboard.singleRadiologyServices.delete')
                                     </td>
 
                                 </tr>

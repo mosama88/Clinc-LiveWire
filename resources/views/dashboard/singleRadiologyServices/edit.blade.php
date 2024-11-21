@@ -14,7 +14,7 @@
 @section('page-header', ' تعديل شركة تامين')
 @section('page-header_desc', 'تعديل شركة تامين')
 @section('page-header_link')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard.insuranceCompanies.index') }}">جدول شركة التأمين</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard.singleRadiologyServices.index') }}">جدول شركة التأمين</a></li>
 @endsection
 @section('content')
 

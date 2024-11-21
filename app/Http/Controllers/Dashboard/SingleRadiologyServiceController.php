@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\SingleRadiologyService;
 use Illuminate\Http\Request;
 
 class SingleRadiologyServiceController extends Controller
@@ -12,7 +13,9 @@ class SingleRadiologyServiceController extends Controller
      */
     public function index()
     {
-        //
+        $com_code = auth()->user()->com_code;
+        $data = SingleRadiologyService::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->paginate(10);
+        return view('dashboard.singleRadiologyServices.index',compact('data'));
     }
 
     /**
@@ -20,7 +23,8 @@ class SingleRadiologyServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.singleRadiologyServices.create');
+
     }
 
     /**

@@ -243,9 +243,9 @@
                     </ul>
                 </li>
 
-                <li class="nav-item has-treeview    {{ request()->is('admin/radiologyServices*') ||request()->is('admin/testsServices*') ? 'menu-open' : '' }} ">
+                <li class="nav-item has-treeview    {{ request()->is('admin/singleRadiologyServices*') ||request()->is('admin/singleTestsServices*') ? 'menu-open' : '' }} ">
                     <a href="{{ url('/') }}"
-                       class="nav-link {{ request()->is('radiologyServices*') ||request()->is('testsServices*') ? 'active' : '' }} ">
+                       class="nav-link {{ request()->is('singleRadiologyServices*') ||request()->is('singleTestsServices*') ? 'active' : '' }} ">
 
                         <i class="fas fa-x-ray"></i>
 
@@ -256,14 +256,14 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('dashboard.radiologyServices.index') }}" class="nav-link @yield('active-radiologyServices')">
+                            <a href="{{ route('dashboard.singleRadiologyServices.index') }}" class="nav-link @yield('active-singleRadiologyServices')">
                                 <i class="fas fa-dot-circle"></i>
-                                <p>الاشعه</p>
+                                <p>حجز اشعه</p>
                             </a>
 
-                            <a href="{{ route('dashboard.testsServices.index') }}" class="nav-link @yield('active-testsServices')">
+                            <a href="{{ route('dashboard.singleTestsServices.index') }}" class="nav-link @yield('active-singleTestsServices')">
                                 <i class="fas fa-dot-circle"></i>
-                                <p>التحاليل</p>
+                                <p>حجز تحاليل</p>
                             </a>
                         </li>
                     </ul>
