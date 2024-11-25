@@ -19,5 +19,7 @@
 <!-- Custom style for RTL -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/custom.css">
 
+<!--Internal   Notify -->
+<link href="{{ asset('dashboard') }}/assets/plugins/notify/css/notifIt.css" rel="stylesheet" />
 
 @yield('css')

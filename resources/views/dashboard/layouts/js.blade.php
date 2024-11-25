@@ -10,6 +10,12 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/demo.js"></script>
     <script src="{{ asset('dashboard') }}/assets/dist/js/pages/dashboard3.js"></script>
 
+
+    <!--Internal  Notify js -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/notify/js/notifIt.js"></script>
+    <script src="{{ asset('dashboard') }}/assets/plugins/notify/js/notifit-custom.js"></script>
+
+    
     @yield('scripts')
 
     @livewireScripts

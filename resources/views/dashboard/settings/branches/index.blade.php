@@ -15,18 +15,8 @@
     {{-- ./row --}}
     <div class="row">
         <div class="col-md-12">
-            @if (session('success') != null)
-                <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger" role="alert">
-                        {{ $error }}
-                    </div>
-                @endforeach
-            @endif
+    
+
             {{-- Content --}}
             <div class="card">
                 <div class="card-header">
@@ -104,12 +94,12 @@
                                                 </button>
 
                                                 @if ($info->counterUsed == 0)
-                                                <button class="dropdown-item" type="button"
-                                                    class="btn btn-md btn-primary btn-flat" data-toggle="modal"
-                                                    data-target="#delete{{ $info->id }}">
-                                                    <i class="fas fa-trash-alt ml-1"></i>حذف
-                                                </button>
-                                            @endif
+                                                    <button class="dropdown-item" type="button"
+                                                        class="btn btn-md btn-primary btn-flat" data-toggle="modal"
+                                                        data-target="#delete{{ $info->id }}">
+                                                        <i class="fas fa-trash-alt ml-1"></i>حذف
+                                                    </button>
+                                                @endif
 
                                             </div>
                                         </div>
@@ -190,18 +180,18 @@
         }
     </script>
 
-<script>
-    $(function() {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
+    <script>
+        $(function() {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
         });
-    });
-</script>
+    </script>
 
 @endsection

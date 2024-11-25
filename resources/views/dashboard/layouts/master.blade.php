@@ -48,6 +48,7 @@ to get the desired effect
                 <div class="container-fluid">
 
 
+                    @include('dashboard.messages_alert')
 
 
 
