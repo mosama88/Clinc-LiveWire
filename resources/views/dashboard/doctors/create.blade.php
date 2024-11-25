@@ -220,8 +220,8 @@
                                 <label for="exampleInputFile">صورة الطبيب</label>
                                 <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
                                     name="photo" type="file" id="example-text-input" onchange="loadFile(event)">
-                                <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
-                                    id="output" />
+                                    <div id="output" class="d-flex flex-wrap my-4"></div>
+
                                 @error('photo')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
@@ -291,13 +291,28 @@
         });
     </script>
 
-    <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
+<script>
+    var loadFile = function(event) {
+        var container = document.getElementById('output');
+        container.innerHTML = ''; // تفريغ المحتوى السابق
+
+        if (event.target.files[0]) {
+            var file = event.target.files[0];
+            if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                var img = document.createElement('img');
+                img.className = 'rounded-circle avatar-xl mx-2';
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover'; // ضبط تناسب الصورة
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                };
+
+                container.appendChild(img); // إضافة الصورة إلى العنصر
             }
-        };
-    </script>
+        }
+    };
+</script>
 @endsection

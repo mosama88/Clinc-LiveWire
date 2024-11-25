@@ -112,7 +112,7 @@ $maleNames = [
             'department_id' => Department::all()->random()->id,
             'job_category_id' => JobCategory::all()->random()->id,
             'job_grade_id' => JobGrade::all()->random()->id,
-            'has_fixed_shift' => fake()->randomElement([1, 2]),
+            'has_fixed_shift' => fake()->randomElement([1, 0]),
             'daily_work_hour' => rand(7, 12),
             'salary' => $salary = fake()->randomFloat(2, 10500, 50000),
             'day_price' => $salary / 30,
@@ -120,18 +120,17 @@ $maleNames = [
             'motivation_value' => $motivation_type === 'fixed' ? fake()->randomFloat(2, 1000, 2000) : null,
             'fixed_allowances' => fake()->randomElement([0, 1]),
             'social_insurance' => $social_insurance = fake()->randomElement([1, 0]),
-            'social_insurance' => $social_insurance = fake()->randomElement([1, 0]),
             'social_insurance_cut_monthely' => $social_insurance === 1 ? fake()->randomFloat(2, 500, 1000) : null,
             'social_insurance_number' => $social_insurance === 1 ? fake()->numerify('##############') : null,
             'medical_insurance' => $medical_insurance = fake()->randomElement([1, 0]),
             'medical_insurance_cut_monthely' => $medical_insurance === 1 ? fake()->randomFloat(2, 500, 1000) : null,
             'medical_insurance_number' => $medical_insurance === 1 ? fake()->numerify('##############') : null,
 
-            'Type_salary_receipt' => fake()->randomElement([0, 1]), // تصحيح هنا
+            'Type_salary_receipt' => fake()->randomElement([1, 2]), // تصحيح هنا
             'bank_number_account' => fake()->bankAccountNumber(),
             'created_by' => Admin::all()->random()->id,
             'com_code' => 1,
-             
+
         ];
     }
 }

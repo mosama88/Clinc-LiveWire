@@ -37,7 +37,7 @@ class EmployeeRequest extends FormRequest
             'blood_types_id' => 'nullable|exists:blood_types,id',
             'branch_id' => 'required|exists:branches,id',
             'qualification_id' => 'required|exists:qualifications,id',
-            'qualification_year' => 'nullable|date',
+            'qualification_year' => 'nullable',
             'major' => 'required|string|max:100',
             'graduation_estimate' => 'nullable|in:fair,good,very_good,excellent',
             'university' => 'nullable|string|max:100',
@@ -60,7 +60,7 @@ class EmployeeRequest extends FormRequest
             'job_grade_id' => 'required|exists:job_grades,id',
             'job_category_id' => 'required|exists:job_categories,id',
             'has_fixed_shift' => 'required',
-//            'shift_type_id' => 'required|exists:shift_types,id',
+            //            'shift_type_id' => 'required|exists:shift_types,id',
             'daily_work_hour' => 'required',
             'salary' => 'required',
             'motivation_type' => 'required|in:changeable,none,fixed',
@@ -134,7 +134,6 @@ class EmployeeRequest extends FormRequest
             'qualification_id.required' => 'المؤهل العلمي مطلوب.',
             'qualification_id.exists' => 'المؤهل العلمي المختار غير موجود.',
 
-            'qualification_year.date' => 'يجب أن يكون سنة المؤهل رقماً.',
 
             'major.required' => 'التخصص مطلوب.',
             'major.string' => 'يجب أن يكون التخصص نصاً.',
@@ -205,5 +204,4 @@ class EmployeeRequest extends FormRequest
             'Type_salary_receipt.required' => 'نوع استلام الراتب مطلوب.',
         ];
     }
-
 }

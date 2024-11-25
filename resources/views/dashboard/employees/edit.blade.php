@@ -408,9 +408,9 @@
                                     {{-- تاريخ الحصول على المؤهل --}}
                                     <div class="form-group col-6">
                                         <label for="exampleInput">تاريخ الحصول على المؤهل</label>
-                                        <input type="date" class="form-control font-w" name="qualification_year"
+                                        <input type="text" class="form-control font-w" name="qualification_year"
                                             value="{{ old('qualification_year', $data['qualification_year']) }}"
-                                            id="qualification_year">
+                                            id="qualification_year" oninput="this.value=this.value.replace(/[^0-9.]/g,'');">
                                         @error('qualification_year')
                                             <div class="alert alert-danger" role="alert">
                                                 {{ $message }}
@@ -617,7 +617,7 @@
                                             <option @if (old('functional_status', $data['functional_status']) == '1') selected @endif value="1">
                                                 يعمل
                                             </option>
-                                            <option @if (old('functional_status', $data['functional_status']) == '2') selected @endif value="0">
+                                            <option @if (old('functional_status', $data['functional_status']) == '2') selected @endif value="2">
                                                 لا يعمل
                                             </option>
                                         </select>
@@ -1198,21 +1198,21 @@
                                         @enderror
                                     </div>
 
-                                    {{-- صورة الموظف --}}
-                                    <div class="form-group col-12">
-                                        <label for="exampleInput">صورة الموظف</label>
+                                   {{-- صورة الموظف --}}
+                                   <div class="form-group col-12">
+                                    <label for="exampleInput">صورة الموظف</label>
 
-                                        <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
-                                            name="photo" type="file" id="example-text-input"
-                                            onchange="loadFile(event)">
-                                        <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
-                                            id="output" />
-                                        @error('photo')
-                                            <div class="alert alert-danger" role="alert">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
+                                    <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
+                                        name="photo" type="file" id="example-text-input"
+                                        onchange="loadFile(event)">
+                                        <div id="output" class="d-flex flex-wrap my-4"></div>
+
+                                    @error('photo')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
 
                                 </div>{{-- End Seconed Row of From --}}
                             </div>
@@ -1403,13 +1403,29 @@
 
         });
     </script>
-    <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
+
+<script>
+    var loadFile = function(event) {
+        var container = document.getElementById('output');
+        container.innerHTML = ''; // تفريغ المحتوى السابق
+
+        if (event.target.files[0]) {
+            var file = event.target.files[0];
+            if (file.type.startsWith('image/')) { // التحقق من أن الملف صورة
+                var img = document.createElement('img');
+                img.className = 'rounded-circle avatar-xl mx-2';
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover'; // ضبط تناسب الصورة
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src); // تحرير الذاكرة
+                };
+
+                container.appendChild(img); // إضافة الصورة إلى العنصر
             }
-        };
-    </script>
+        }
+    };
+</script>
 @endsection

@@ -98,10 +98,6 @@
 
                     </ul>
 
-                    <form action="{{ route('dashboard.employees.update', $data['id']) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
 
                         <div class="tab-content" id="custom-content-below-tabContent">
                             <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
@@ -414,8 +410,8 @@
                                     {{-- تاريخ الحصول على المؤهل --}}
                                     <div class="form-group col-6">
                                         <label for="exampleInput">تاريخ الحصول على المؤهل</label>
-                                        <input disabled type="date" class="form-control font-w"
-                                            name="qualification_year"
+                                        <input disabled type="text" class="form-control font-w"
+                                            name="qualification_year" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
                                             value="{{ old('qualification_year', $data['qualification_year']) }}"
                                             id="qualification_year">
                                         @error('qualification_year')
@@ -1171,27 +1167,11 @@
                                         @enderror
                                     </div>
 
-                                    {{-- صورة الموظف --}}
-                                    <div class="form-group col-12">
-                                        <label for="exampleInput">صورة الموظف</label>
-
-                                        <input class="form-control @error('photo') is-invalid @enderror" accept="image/*"
-                                            name="photo" type="file" id="example-text-input"
-                                            onchange="loadFile(event)">
-                                        <img class="rounded-circle avatar-xl my-4 mx-3" style="width: 100px;height: 100px"
-                                            id="output" />
-                                        @error('photo')
-                                            <div class="alert alert-danger" role="alert">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
 
                                 </div>{{-- End Seconed Row of From --}}
                             </div>
 
                         </div>
-                    </form>
                 </div>
             </div>
             <!-- /.card -->
@@ -1213,104 +1193,4 @@
         });
     </script>
 
-    <script>
-        $(document).on('change', '#governorate_id', function() {
-            let governorate_id = $(this).val();
-            if (governorate_id) {
-                getCities(governorate_id);
-            }
-        });
-
-        function getCities(governorate_id) {
-            $.ajax({
-                url: '{{ route('dashboard.employees.getCities') }}',
-                type: 'POST',
-                dataType: 'html',
-                cache: false,
-                data: {
-                    "_token": '{{ csrf_token() }}',
-                    governorate_id: governorate_id,
-                },
-                success: function(data) {
-                    $("#city_Div").html(data);
-                },
-                error: function() {
-                    alert("عفوا لقد حدث خطأ ");
-                }
-
-            });
-        }
-    </script>
-
-
-    <script>
-        $('select[name="social_status"]').change(function() {
-            let social_status = $("#social_status").val();
-            let children_number = $("#children_number_hideandshow").val();
-
-            if (social_status != "single") {
-                $("#children_number_hideandshow").removeClass('d-none');
-
-            } else {
-                $("#children_number_hideandshow").addClass('d-none');
-            }
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-
-            $('select[name="military"]').change(function() {
-
-                let military = $("#military").val();
-
-                if (military === 'exemption') {
-                    $("#military_exemption_date_Div").removeClass('d-none');
-                    $("#military_exemption_reason_Div").removeClass('d-none');
-                    $("#military_date_from_Div").addClass('d-none');
-                    $("#military_date_to_Div").addClass('d-none');
-                    $("#military_wepon_Div").addClass('d-none');
-                    $("#military_postponement_reason_Div").addClass('d-none');
-                    $("#military_postponement_date_Div").addClass('d-none');
-                } else if (military === 'exemption_temporary') {
-                    $("#military_postponement_reason_Div").removeClass('d-none');
-                    $("#military_postponement_date_Div").removeClass('d-none');
-                    $("#military_exemption_date_Div").addClass('d-none');
-                    $("#military_exemption_reason_Div").addClass('d-none');
-                    $("#military_date_from_Div").addClass('d-none');
-                    $("#military_date_to_Div").addClass('d-none');
-                    $("#military_wepon_Div").addClass('d-none');
-
-                } else if (military === 'complete') {
-                    $("#military_date_from_Div").removeClass('d-none');
-                    $("#military_date_to_Div").removeClass('d-none');
-                    $("#military_wepon_Div").removeClass('d-none');
-                    $("#military_exemption_date_Div").addClass('d-none');
-                    $("#military_exemption_reason_Div").addClass('d-none');
-                    $("#military_postponement_reason_Div").addClass('d-none');
-                    $("#military_postponement_date_Div").addClass('d-none');
-                } else if (military === 'have_not') {
-                    $("#military_exemption_date_Div").addClass('d-none');
-                    $("#military_exemption_reason_Div").addClass('d-none');
-                    $("#military_date_from_Div").addClass('d-none');
-                    $("#military_date_to_Div").addClass('d-none');
-                    $("#military_wepon_Div").addClass('d-none');
-                    $("#military_postponement_reason_Div").addClass('d-none');
-                    $("#military_postponement_date_Div").addClass('d-none');
-                }
-            });
-        });
-    </script>
-
-
-    <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
-            }
-        };
-    </script>
 @endsection
