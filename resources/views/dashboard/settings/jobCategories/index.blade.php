@@ -90,11 +90,13 @@
                                                 </button>
 
 
+                                                @if ($info->counterUsed == 0)
                                                 <button class="dropdown-item" type="button"
                                                     class="btn btn-md btn-primary btn-flat" data-toggle="modal"
                                                     data-target="#delete{{ $info->id }}">
                                                     <i class="fas fa-trash-alt ml-1"></i>حذف
                                                 </button>
+                                            @endif
 
                                             </div>
                                         </div>

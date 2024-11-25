@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Employee;
 use App\Models\City;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
@@ -17,6 +18,11 @@ class CityController extends Controller
         $com_code = auth()->user()->com_code;
         $other['governorates'] = Governorate::get();
         $data = City::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("city_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.cities.index',compact('data','other'));
     }
 

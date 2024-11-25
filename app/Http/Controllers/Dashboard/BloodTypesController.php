@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\BloodTypes;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,8 +17,14 @@ class BloodTypesController extends Controller
     public function index()
     {
         $com_code = auth()->user()->com_code;
-        $data = BloodTypes::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
-        return view('dashboard.settings.BloodTypes.index',compact('data'));
+        $data = BloodTypes::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->get();
+
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("blood_types_id", $info->id)->count();
+            }
+        }
+        return view('dashboard.settings.BloodTypes.index', compact('data'));
     }
 
     /**
@@ -33,27 +40,26 @@ class BloodTypesController extends Controller
      */
     public function store(BloodTypesRequest $request)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
 
 
-            $checkExistsName = BloodTypes::select('id')->where('com_code',$com_code)->where('name',$request->name)->first();
-    if(!empty($checkExistsName)){
-        return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ أسم فصيلة الدم مسجلة من قبل !!'])->withInput();
-    }
+            $checkExistsName = BloodTypes::select('id')->where('com_code', $com_code)->where('name', $request->name)->first();
+            if (!empty($checkExistsName)) {
+                return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ أسم فصيلة الدم مسجلة من قبل !!'])->withInput();
+            }
 
             DB::beginTransaction();
-           $blood = new BloodTypes();
-           $blood['name'] = $request->name;
-           $blood['created_by'] = auth()->user()->id;
-           $blood['com_code'] = $com_code;
-           $blood->save();
+            $blood = new BloodTypes();
+            $blood['name'] = $request->name;
+            $blood['created_by'] = auth()->user()->id;
+            $blood['com_code'] = $com_code;
+            $blood->save();
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم أضافة فصيلة الدم بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -71,8 +77,7 @@ class BloodTypesController extends Controller
     public function edit(string $id)
     {
         $info = BloodTypes::findOrFail($id);
-        return view('dashboard.settings.BloodTypes.edit',compact('info'));
-
+        return view('dashboard.settings.BloodTypes.edit', compact('info'));
     }
 
     /**
@@ -80,24 +85,23 @@ class BloodTypesController extends Controller
      */
     public function update(BloodTypesRequest $request, string $id)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
-            $checkExistsName = BloodTypes::select('id')->where('com_code',$com_code)->where('name',$request->name)->where('id','!=',$id)->first();
-            if(!empty($checkExistsName)){
+            $checkExistsName = BloodTypes::select('id')->where('com_code', $com_code)->where('name', $request->name)->where('id', '!=', $id)->first();
+            if (!empty($checkExistsName)) {
                 return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ أسم فصيلة الدم مسجلة من قبل !!'])->withInput();
             }
             DB::beginTransaction();
-           $Updateblood = BloodTypes::findOrFail($id);
-           $Updateblood['name'] = $request->name;
-           $Updateblood['updated_by'] = auth()->user()->id;
-           $Updateblood['com_code'] = $com_code;
-           $Updateblood->save();
+            $Updateblood = BloodTypes::findOrFail($id);
+            $Updateblood['name'] = $request->name;
+            $Updateblood['updated_by'] = auth()->user()->id;
+            $Updateblood['com_code'] = $com_code;
+            $Updateblood->save();
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم تعديل فصيلة الدم بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -106,18 +110,16 @@ class BloodTypesController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-           $Deleteblood = BloodTypes::findOrFail($id);
-           $Deleteblood->delete();
+            $Deleteblood = BloodTypes::findOrFail($id);
+            $Deleteblood->delete();
             DB::commit();
             return redirect()->route('dashboard.BloodTypes.index')->with('success', 'تم حذف فصيلة الدم بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.BloodTypes.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
-
     }
 }

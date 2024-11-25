@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Employee;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,11 @@ class DepartmentController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = Department::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("department_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.departments.index',compact('data'));
     }
 

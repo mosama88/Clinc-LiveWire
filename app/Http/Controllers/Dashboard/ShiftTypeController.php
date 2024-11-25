@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use DateTime;
+use App\Models\Employee;
 use App\Models\ShiftType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,11 @@ class ShiftTypeController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = ShiftType::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("shift_type_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.shiftTypes.index',compact('data'));
     }
 
@@ -48,7 +54,7 @@ class ShiftTypeController extends Controller
             $toTime =new DateTime($request->to_time);
             $totalSeconds = abs(strtotime($fromTime->format('H:i')) - strtotime($toTime->format('H:i')));
             $totalHours = $totalSeconds / 3600;
-            
+
             DB::beginTransaction();
            $insertsShift = new ShiftType();
            $insertsShift['name'] = $request->name;
@@ -103,7 +109,7 @@ class ShiftTypeController extends Controller
             $UpdateToTime = new DateTime($request->to_time);
             $updateSecondeTime = abs(strtotime($UpdateFromTime->format('H:i')) - strtotime($UpdateToTime->format('H:i')));
             $convertHourseUpdate = $updateSecondeTime / 3600;
-            
+
             DB::beginTransaction();
            $UpdateShift = ShiftType::findOrFail($id);
            $UpdateShift['name'] = $request->name;

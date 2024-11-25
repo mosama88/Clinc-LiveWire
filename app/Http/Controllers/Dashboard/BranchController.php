@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\City;
+use App\Models\Employee;
 use App\Models\Branch;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
@@ -22,6 +23,11 @@ class BranchController extends Controller
         $other['governorates'] = Governorate::get();
         $other['cities'] = City::get();
         $data = Branch::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("branch_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.branches.index',compact('data','other'));
     }
 

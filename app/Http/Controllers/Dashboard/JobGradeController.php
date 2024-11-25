@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Employee;
 use App\Models\JobGrade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,11 @@ class JobGradeController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = JobGrade::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("job_grade_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.jobGrades.index',compact('data'));
     }
 

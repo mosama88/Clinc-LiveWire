@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
 use App\Models\Qualification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,11 @@ class QualificationController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = Qualification::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("qualification_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.qualifications.index',compact('data'));
     }
 

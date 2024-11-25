@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Employee;
 use App\Models\Nationality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,11 @@ class NationalityController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = Nationality::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("nationality_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.nationalities.index',compact('data'));
     }
 
