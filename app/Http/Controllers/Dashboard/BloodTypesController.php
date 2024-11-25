@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\BloodTypes;
 use App\Models\Employee;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -19,11 +20,11 @@ class BloodTypesController extends Controller
         $com_code = auth()->user()->com_code;
         $data = BloodTypes::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->get();
 
-        if (!empty($data)) {
-            foreach ($data as $info) {
-                $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("blood_types_id", $info->id)->count();
-            }
-        }
+        // if (!empty($data)) {
+        //     foreach ($data as $info) {
+        //         $info->counterUsed = Employee::select('id')->where("com_code", $com_code)->where("blood_types_id", $info->id)->count();
+        //     }
+        // }
         return view('dashboard.settings.BloodTypes.index', compact('data'));
     }
 
@@ -112,6 +113,14 @@ class BloodTypesController extends Controller
     {
         try {
             $com_code = auth()->user()->com_code;
+            $counterUsed =  Employee::where("com_code", $com_code)->where("blood_types_id", $id)->count();
+            if ($counterUsed > 0) {
+                return redirect()->route('dashboard.BloodTypes.index')->with(['error' => 'عفوآ غير قادر على الحذف لانه قد تم أستخدامه من قبل']);
+            }
+            $counterUsedPatient =  Patient::where("com_code", $com_code)->where("blood_types_id", $id)->count();
+            if ($counterUsedPatient > 0) {
+                return redirect()->route('dashboard.BloodTypes.index')->with(['error' => 'عفوآ غير قادر على الحذف لانه قد تم أستخدامه من قبل']);
+            }
             DB::beginTransaction();
             $Deleteblood = BloodTypes::findOrFail($id);
             $Deleteblood->delete();

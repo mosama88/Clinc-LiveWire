@@ -75,7 +75,7 @@ class PatientController extends Controller
             $insertPatient['governorate_id'] = $request->governorate_id;
             $insertPatient['city_id'] = $request->city_id;
             $insertPatient['nationality_id'] = $request->nationality_id;
-            $insertPatient['blood_type_id'] = $request->blood_type_id;
+            $insertPatient['blood_types_id'] = $request->blood_types_id;
             $insertPatient['medical_history'] = $request->medical_history;
             $insertPatient['are_previous_surgeries'] = $request->are_previous_surgeries;
             $insertPatient['previous_surgeries_details'] = $request->previous_surgeries_details;
@@ -156,7 +156,7 @@ class PatientController extends Controller
             $updatePatient['governorate_id'] = $request->governorate_id;
             $updatePatient['city_id'] = $request->city_id;
             $updatePatient['nationality_id'] = $request->nationality_id;
-            $updatePatient['blood_type_id'] = $request->blood_type_id;
+            $updatePatient['blood_types_id'] = $request->blood_types_id;
             $updatePatient['medical_history'] = $request->medical_history;
             $updatePatient['are_previous_surgeries'] = $request->are_previous_surgeries;
             $updatePatient['previous_surgeries_details'] = $request->previous_surgeries_details;

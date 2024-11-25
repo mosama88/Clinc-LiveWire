@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('governorate_id')->references('id')->on('governorates')->onUpdate('cascade');
             $table->foreignId('city_id')->references('id')->on('cities')->onUpdate('cascade');
             $table->foreignId('nationality_id')->references('id')->on('nationalities')->onUpdate('cascade');
-            $table->foreignId('blood_type_id')->nullable()->references('id')->on('blood_types')->onUpdate('cascade');
+            $table->foreignId('blood_types_id')->nullable()->references('id')->on('blood_types')->onUpdate('cascade');
             $table->text('medical_history')->nullable();
             $table->tinyInteger('are_previous_surgeries')->comment('  1 نعم | 0 لا::: هل يوجد عمليات جراحية سابقه');
             $table->text('previous_surgeries_details')->nullable();

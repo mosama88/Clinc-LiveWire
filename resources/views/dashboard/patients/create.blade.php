@@ -211,19 +211,19 @@
                             {{-- نوع فصيلة الدم --}}
                             <div class="form-group col-md-4">
                                 <label for="exampleInputName">نوع فصيلة الدم</label>
-                                <select name="blood_type_id" id="blood_type_id" class="form-control select2 font-w"
+                                <select name="blood_types_id" id="blood_types_id" class="form-control select2 font-w"
                                     style="width: 100%;">
                                     <option selected>-- أختر نوع فصيلة الدم --</option>
                                     @if (!empty($other['blood_types']) && isset($other['blood_types']))
                                         @foreach ($other['blood_types'] as $blood_type)
-                                            <option @if (old('blood_type_id') == $blood_type->id) selected="selected" @endif
+                                            <option @if (old('blood_types_id') == $blood_type->id) selected="selected" @endif
                                                 value="{{ $blood_type->id }}">{{ $blood_type->name }}</option>
                                         @endforeach
                                     @else
                                         لا توجد بيانات
                                     @endif
                                 </select>
-                                @error('blood_type_id')
+                                @error('blood_types_id')
                                     <div class="alert alert-danger" role="alert">
                                         {{ $message }}
                                     </div>

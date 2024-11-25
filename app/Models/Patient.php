@@ -29,6 +29,11 @@ class Patient extends Model
         return $this->belongsTo(InsuranceCompany::class, 'insurance_id');
     }
 
+    public function blood()
+    {
+        return $this->belongsTo(BloodTypes::class, 'blood_types_id');
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
@@ -48,6 +53,4 @@ class Patient extends Model
     {
         return now()->diffInYears($this->date_of_birth);
     }
-
-
 }

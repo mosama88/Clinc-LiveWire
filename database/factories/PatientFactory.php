@@ -106,7 +106,7 @@ class PatientFactory extends Factory
             'governorate_id' => Governorate::all()->random()->id,
             'city_id' => City::all()->random()->id,
             'insurance_id' => InsuranceCompany::all()->random()->id,
-            'blood_type_id' => BloodTypes::all()->random()->id,
+            'blood_types_id' => BloodTypes::all()->random()->id,
             'national_id' => fake()->numerify('##############'),
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'alt_mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
