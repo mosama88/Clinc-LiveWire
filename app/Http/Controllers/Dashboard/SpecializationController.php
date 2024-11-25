@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Doctor;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\Specialization;
@@ -12,15 +13,20 @@ use App\Http\Requests\Dashboard\SpecializationsUpdateRequest;
 
 class SpecializationController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $com_code = auth()->user()->com_code;
         $other['sections'] = Section::get();
-        $data = Specialization::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
-        return view('dashboard.settings.specializations.index',compact('data','other'));
+        $data = Specialization::select("*")->where('com_code', $com_code)->orderBy('id', 'DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Doctor::select('id')->where("com_code", $com_code)->where("specialization_id", $info->id)->count();
+            }
+        }
+        return view('dashboard.settings.specializations.index', compact('data', 'other'));
     }
 
     /**
@@ -29,7 +35,7 @@ class SpecializationController extends Controller
     public function create()
     {
         $other['sections'] = Section::get();
-        return view('dashboard.settings.specializations.create',compact('other'));
+        return view('dashboard.settings.specializations.create', compact('other'));
     }
 
     /**
@@ -37,25 +43,24 @@ class SpecializationController extends Controller
      */
     public function store(SpecializationsRequest $request)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
-            $checkExistsName = Specialization::select('id')->where('com_code',$com_code)->where('name',$request->name)->first();
-            if(!empty($checkExistsName)){
+            $checkExistsName = Specialization::select('id')->where('com_code', $com_code)->where('name', $request->name)->first();
+            if (!empty($checkExistsName)) {
                 return redirect()->route('dashboard.specializations.index')->withErrors(['error' => 'عفوآ أسم التخصص  مسجلة من قبل !!'])->withInput();
             }
             DB::beginTransaction();
-           $specialization= new Specialization();
-           $specialization['name'] = $request->name;
-           $specialization['section_id'] = $request->section_id;
-           $specialization['created_by'] = 1;
-           $specialization['com_code'] = $com_code;
-           $specialization->save();
+            $specialization = new Specialization();
+            $specialization['name'] = $request->name;
+            $specialization['section_id'] = $request->section_id;
+            $specialization['created_by'] = 1;
+            $specialization['com_code'] = $com_code;
+            $specialization->save();
             DB::commit();
             return redirect()->route('dashboard.specializations.index')->with('success', 'تم أضافة التخصص بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.specializations.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.specializations.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -74,8 +79,7 @@ class SpecializationController extends Controller
     {
         $info = Specialization::findOrFail($id);
         $other['sections'] = Section::get();
-        return view('dashboard.settings.specializations.edit',compact('info','other'));
-
+        return view('dashboard.settings.specializations.edit', compact('info', 'other'));
     }
 
     /**
@@ -83,25 +87,24 @@ class SpecializationController extends Controller
      */
     public function update(SpecializationsUpdateRequest $request, string $id)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
-            $checkExistsName = Specialization::select('id')->where('com_code',$com_code)->where('name',$request->name)->where('id','!=',$id)->first();
-            if(!empty($checkExistsName)){
+            $checkExistsName = Specialization::select('id')->where('com_code', $com_code)->where('name', $request->name)->where('id', '!=', $id)->first();
+            if (!empty($checkExistsName)) {
                 return redirect()->route('dashboard.specializations.index')->withErrors(['error' => 'عفوآ أسم التخصص  مسجلة من قبل !!'])->withInput();
             }
             DB::beginTransaction();
-           $UpdateSpecialization = Specialization::findOrFail($id);
-           $UpdateSpecialization['name'] = $request->name;
-           $UpdateSpecialization['section_id'] = $request->section_id;
-           $UpdateSpecialization['updated_by'] = 1;
-           $UpdateSpecialization['com_code'] = $com_code;
-           $UpdateSpecialization->save();
+            $UpdateSpecialization = Specialization::findOrFail($id);
+            $UpdateSpecialization['name'] = $request->name;
+            $UpdateSpecialization['section_id'] = $request->section_id;
+            $UpdateSpecialization['updated_by'] = 1;
+            $UpdateSpecialization['com_code'] = $com_code;
+            $UpdateSpecialization->save();
             DB::commit();
             return redirect()->route('dashboard.specializations.index')->with('success', 'تم تعديل التخصص بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.specializations.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.specializations.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
     }
 
@@ -110,18 +113,16 @@ class SpecializationController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $com_code = auth()->user()->com_code;
             DB::beginTransaction();
-           $DeleteSpecialization = Specialization::findOrFail($id);
-           $DeleteSpecialization->delete();
+            $DeleteSpecialization = Specialization::findOrFail($id);
+            $DeleteSpecialization->delete();
             DB::commit();
             return redirect()->route('dashboard.specializations.index')->with('success', 'تم حذف التخصص بنجاح');
-
-        }catch(\Exception  $ex){
+        } catch (\Exception  $ex) {
             DB::rollback();
-            return redirect()->route('dashboard.specializations.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
+            return redirect()->route('dashboard.specializations.index')->withErrors(['error' => 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
         }
-
     }
 }

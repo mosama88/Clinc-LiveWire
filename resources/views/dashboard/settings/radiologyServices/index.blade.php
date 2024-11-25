@@ -63,7 +63,7 @@
                                     <td>{{ $i }}</td>
                                     <td>{{ $info['radiology_code'] }}</td>
                                     <td>{{ $info['name'] }}</td>
-                                    <td>{{ $info['price']*1 }} </td>
+                                    <td>{{ $info['price'] * 1 }} </td>
                                     <td>
                                         @if ($info->status == 1)
                                             مفعل
@@ -100,11 +100,13 @@
                                                 </button>
 
 
-                                                <button class="dropdown-item" type="button"
-                                                    class="btn btn-md btn-primary btn-flat" data-toggle="modal"
-                                                    data-target="#delete{{ $info->id }}">
-                                                    <i class="fas fa-trash-alt ml-1"></i>حذف
-                                                </button>
+                                                @if ($info->counterUsed == 0)
+                                                    <button class="dropdown-item" type="button"
+                                                        class="btn btn-md btn-primary btn-flat" data-toggle="modal"
+                                                        data-target="#delete{{ $info->id }}">
+                                                        <i class="fas fa-trash-alt ml-1"></i>حذف
+                                                    </button>
+                                                @endif
 
                                             </div>
                                         </div>
@@ -157,18 +159,18 @@
     </script>
 
 
-<script>
-    $(function() {
-        $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
+    <script>
+        $(function() {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
         });
-    });
-</script>
+    </script>
 
 @endsection

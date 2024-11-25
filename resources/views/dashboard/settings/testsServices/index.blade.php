@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-header">
                     <button type="button" class="btn btn-md btn-primary btn-flat" data-toggle="modal"
-                            data-target="#modal-default">
+                        data-target="#modal-default">
                         <i class="fas fa-plus ml-2"></i> أضافة تحاليل جديدة
                     </button>
                     @include('dashboard.settings.testsServices.create')
@@ -43,77 +43,79 @@
                 <div class="card-body p-2">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>كود التحاليل</th>
-                            <th>أسم التحاليل</th>
-                            <th> السعر</th>
-                            <th> الحالة</th>
-                            <th>ملاحظات</th>
-                            <th>أضافة بواسطة</th>
-                            <th>تعديل بواسطة</th>
-                            <th>العمليات</th>
-                        </tr>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>كود التحاليل</th>
+                                <th>أسم التحاليل</th>
+                                <th> السعر</th>
+                                <th> الحالة</th>
+                                <th>ملاحظات</th>
+                                <th>أضافة بواسطة</th>
+                                <th>تعديل بواسطة</th>
+                                <th>العمليات</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <?php $i = 0; ?>
-                        @foreach ($data as $info)
+                            <?php $i = 0; ?>
+                            @foreach ($data as $info)
                                 <?php $i++; ?>
-                            <tr>
-                                <td>{{ $i }}</td>
-                                <td>{{ $info['tests_services_code'] }}</td>
-                                <td>{{ $info['name'] }}</td>
-                                <td>{{ $info['price']*1 }} </td>
-                                <td>
-                                    @if ($info->status == 1)
-                                        مفعل
-                                    @else
-                                        غير مفعل
-                                    @endif
-                                </td>
-                                <td>{{ Str::limit($info['notes'], 20) }}</td>
-                                <td>{{ $info->createdBy->name }}</td>
-                                <td>
-                                    @if ($info->updated_by > 0)
-                                        {{ $info->updatedBy->name }}
-                                    @else
-                                        لا يوجد تحديث
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-info">العلميات</button>
-                                        <button type="button" class="btn btn-info dropdown-toggle"
+                                <tr>
+                                    <td>{{ $i }}</td>
+                                    <td>{{ $info['tests_services_code'] }}</td>
+                                    <td>{{ $info['name'] }}</td>
+                                    <td>{{ $info['price'] * 1 }} </td>
+                                    <td>
+                                        @if ($info->status == 1)
+                                            مفعل
+                                        @else
+                                            غير مفعل
+                                        @endif
+                                    </td>
+                                    <td>{{ Str::limit($info['notes'], 20) }}</td>
+                                    <td>{{ $info->createdBy->name }}</td>
+                                    <td>
+                                        @if ($info->updated_by > 0)
+                                            {{ $info->updatedBy->name }}
+                                        @else
+                                            لا يوجد تحديث
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info">العلميات</button>
+                                            <button type="button" class="btn btn-info dropdown-toggle"
                                                 data-toggle="dropdown" aria-expanded="true">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <div class="dropdown-menu" role="menu" x-placement="top-start"
-                                             style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, -165px, 0px);">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu" x-placement="top-start"
+                                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, -165px, 0px);">
 
 
-                                            <button class="dropdown-item" type="button"
+                                                <button class="dropdown-item" type="button"
                                                     class="btn btn-md btn-primary btn-flat" data-toggle="modal"
                                                     data-target="#edit{{ $info->id }}">
-                                                <i class="fas fa-edit ml-2"></i>
-                                                تعديل
-                                            </button>
+                                                    <i class="fas fa-edit ml-2"></i>
+                                                    تعديل
+                                                </button>
 
 
-                                            <button class="dropdown-item" type="button"
-                                                    class="btn btn-md btn-primary btn-flat" data-toggle="modal"
-                                                    data-target="#delete{{ $info->id }}">
-                                                <i class="fas fa-trash-alt ml-1"></i>حذف
-                                            </button>
+                                                @if ($info->counterUsed == 0)
+                                                    <button class="dropdown-item" type="button"
+                                                        class="btn btn-md btn-primary btn-flat" data-toggle="modal"
+                                                        data-target="#delete{{ $info->id }}">
+                                                        <i class="fas fa-trash-alt ml-1"></i>حذف
+                                                    </button>
+                                                @endif
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    @include('dashboard.settings.testsServices.delete')
-                                    @include('dashboard.settings.testsServices.edit')
-                                </td>
+                                        @include('dashboard.settings.testsServices.delete')
+                                        @include('dashboard.settings.testsServices.edit')
+                                    </td>
 
-                            </tr>
-                        @endforeach
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 

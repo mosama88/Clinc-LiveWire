@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Doctor;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,11 @@ class SectionController extends Controller
     {
         $com_code = auth()->user()->com_code;
         $data = Section::select("*")->where('com_code',$com_code)->orderBy('id','DESC')->get();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info->counterUsed = Doctor::select('id')->where("com_code", $com_code)->where("section_id", $info->id)->count();
+            }
+        }
         return view('dashboard.settings.sections.index',compact('data'));
     }
 
@@ -47,8 +53,8 @@ class SectionController extends Controller
            $section['com_code'] = $com_code;
            $section->save();
             DB::commit();
-            return redirect()->route('dashboard.sections.index')->with('success', 'تم أضافة القسم بنجاح');            
-            
+            return redirect()->route('dashboard.sections.index')->with('success', 'تم أضافة القسم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
@@ -91,8 +97,8 @@ class SectionController extends Controller
            $UpdateSection['com_code'] = $com_code;
            $UpdateSection->save();
             DB::commit();
-            return redirect()->route('dashboard.sections.index')->with('success', 'تم تعديل القسم بنجاح');            
-            
+            return redirect()->route('dashboard.sections.index')->with('success', 'تم تعديل القسم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
@@ -110,8 +116,8 @@ class SectionController extends Controller
            $DeleteSection = Section::findOrFail($id);
            $DeleteSection->delete();
             DB::commit();
-            return redirect()->route('dashboard.sections.index')->with('success', 'تم حذف القسم بنجاح');            
-            
+            return redirect()->route('dashboard.sections.index')->with('success', 'تم حذف القسم بنجاح');
+
         }catch(\Exception  $ex){
             DB::rollback();
             return redirect()->route('dashboard.sections.index')->withErrors(['error'=> 'عفوآ لقد حدث خطأ !!' . $ex->getMessage()]);
